@@ -12,6 +12,7 @@ import {
   CartSummary,
   PaymentGatewaysList,
   translateAdyenConfirmationError,
+  CreateJobTitleForm
 } from "@components/organisms";
 import { Checkout } from "@components/templates";
 import { useRedirectToCorrectCheckoutStep } from "@hooks";
@@ -99,7 +100,8 @@ const CheckoutPage: React.FC<NextPage> = () => {
 
   const checkoutSubpage = useMemo(() => {
     const subpageMapping: Partial<Record<CheckoutStep, JSX.Element>> = {
-      [CheckoutStep.Address]: <CheckoutAddressSubpage {...pageProps} />,
+      // [CheckoutStep.Address]: <CheckoutAddressSubpage {...pageProps} />,
+      [CheckoutStep.Address]: <CreateJobTitleForm />,
       [CheckoutStep.Shipping]: <CheckoutShippingSubpage {...pageProps} />,
       [CheckoutStep.Payment]: (
         <CheckoutPaymentSubpage
