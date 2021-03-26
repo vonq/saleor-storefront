@@ -2,11 +2,9 @@ import React, { useCallback } from "react";
 import { Formik, Form, Field } from "formik";
 import * as S from "./styles";
 
-import { InputSelect, TextField } from "@components/molecules";
+import { CreateJobContent } from "./CreateJobContent";
 
-import { CreateJobContent } from './CreateJobTitleContent';
-
-export interface ICreateJobTitleFormProps {}
+export interface ICreateJobAdProps {}
 
 interface FormValues {
   jobTitle: string;
@@ -28,7 +26,7 @@ interface FormValues {
   contactPhone: string;
 }
 
-export const CreateJobTitleForm: React.FC<ICreateJobTitleFormProps> = () => {
+export const CreateJobAd: React.FC<ICreateJobAdProps> = () => {
   const initialValues: FormValues = {
     jobTitle: "",
     industry: "",
@@ -59,26 +57,28 @@ export const CreateJobTitleForm: React.FC<ICreateJobTitleFormProps> = () => {
           actions.setSubmitting(false);
         }}
       >
-        {({ handleChange,
+        {({
+          handleChange,
           handleSubmit,
           handleBlur,
           values,
           setFieldValue,
-          setFieldTouched, }) => (
-            <CreateJobContent
-              {...{
-                handleChange,
-                handleSubmit,
-                handleBlur,
-                values,
-                setFieldValue,
-                setFieldTouched
-              }}
-            />
-          )}
+          setFieldTouched,
+        }) => (
+          <CreateJobContent
+            {...{
+              handleChange,
+              handleSubmit,
+              handleBlur,
+              values,
+              setFieldValue,
+              setFieldTouched,
+            }}
+          />
+        )}
       </Formik>
     </>
   );
 };
-CreateJobTitleForm.displayName = "CreateJobTitleForm";
-export default CreateJobTitleForm;
+CreateJobAd.displayName = "CreateJobAd";
+export default CreateJobAd;

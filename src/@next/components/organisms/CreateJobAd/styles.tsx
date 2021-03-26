@@ -1,4 +1,4 @@
-import { media, styled } from "@styles";
+import { DefaultTheme, media, styled } from "@styles";
 
 export const JobForm = styled.form`
   width: 100%;

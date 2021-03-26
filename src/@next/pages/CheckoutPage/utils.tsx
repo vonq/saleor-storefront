@@ -33,7 +33,8 @@ export const CHECKOUT_STEPS: CheckoutStepDefinition[] = [
   {
     index: 0,
     link: paths.checkoutAddress,
-    name: "Address",
+    // name: "Address",
+    name: "Create Job ad(s)",
     nextActionName: "Continue to Shipping",
     onlyIfShippingRequired: false,
     step: CheckoutStep.Address,

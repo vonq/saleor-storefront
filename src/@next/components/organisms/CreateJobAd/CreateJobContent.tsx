@@ -2,7 +2,8 @@ import React, { useCallback, useState } from "react";
 import { Formik, Form, Field, FieldArray } from "formik";
 import * as S from "./styles";
 import { InputSelect, TextField } from "@components/molecules";
-import { Editor } from "@tinymce/tinymce-react";
+// import { Editor } from "@tinymce/tinymce-react";
+import { Editor } from '@tinymce/tinymce-react';
 import {
   industries,
   employmentTypes,
@@ -76,7 +77,7 @@ export const CreateJobContent = ({
             <S.Label>
               <S.Radio
                 type="radio"
-                id="radio"
+                id="radio2"
                 name="text-editor"
                 onClick={() => setIsChecked(prev => !prev)}
                 // onChange={e => setRadio(e.target.name)}
@@ -87,7 +88,7 @@ export const CreateJobContent = ({
             {isChecked ? (
               <S.TextArea>
                 <Editor
-                  initialValue=""
+                  initialValue="alo"
                   init={{
                     height: 200,
                     menubar: false,
