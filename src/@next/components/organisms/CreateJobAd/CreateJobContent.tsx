@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { Formik, Form, Field, FieldArray } from "formik";
+import { Form, FieldArray } from "formik";
 import * as S from "./styles";
 import { InputSelect, TextField } from "@components/molecules";
 // import { Editor } from "@tinymce/tinymce-react";
@@ -59,7 +59,7 @@ export const CreateJobContent = ({
             <InputSelect
               options={industries}
               optionLabelKey="industry"
-              placeholder="Select"
+              // placeholder="Select"
               name="industry"
               onChange={(value: any, name: any) => setFieldValue(name, value)}
             />
@@ -182,7 +182,7 @@ export const CreateJobContent = ({
               <InputSelect
                 options={employmentTypes}
                 optionLabelKey="type"
-                placeholder="Select"
+                // placeholder="Select"
                 name="employmentType"
                 onChange={(value: any, name: any) => setFieldValue(name, value)}
               />
@@ -192,7 +192,7 @@ export const CreateJobContent = ({
               <InputSelect
                 options={senioritis}
                 optionLabelKey="seniority"
-                placeholder="Select"
+                // placeholder="Select"
                 name="seniority"
                 onChange={(value: any, name: any) => setFieldValue(name, value)}
               />

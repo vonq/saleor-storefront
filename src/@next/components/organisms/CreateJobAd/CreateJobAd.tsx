@@ -1,5 +1,5 @@
-import React, { useCallback } from "react";
-import { Formik, Form, Field } from "formik";
+import React from "react";
+import { Formik } from "formik";
 import * as S from "./styles";
 
 import { CreateJobContent } from "./CreateJobContent";
