@@ -1,11 +1,21 @@
-import { useCreateUserAddress, useUpdateUserAddress } from "@saleor/sdk";
-import { CountryCode } from "@saleor/sdk/lib/gqlTypes/globalTypes";
+// import { useCreateUserAddress, useUpdateUserAddress } from "@saleor/sdk";
+// import { CountryCode } from "@saleor/sdk/lib/gqlTypes/globalTypes";
 import React from "react";
-import { WorkAddressForm } from '../WorkAddressForm';
 
 import { Modal } from "../Modal";
+import { WorkAddressForm } from "../WorkAddressForm";
 
-export const WorkAddressModal: React.FC<IProps> = ({
+interface Props {
+  hideModal?: any;
+  submitBtnText?: any;
+  target?: any;
+  title?: any;
+  userId?: any;
+  address?: any;
+  formId?: any;
+}
+
+export const WorkAddressModal: React.FC<Props> = ({
   hideModal,
   submitBtnText,
   target,
@@ -14,7 +24,7 @@ export const WorkAddressModal: React.FC<IProps> = ({
   address,
   formId,
   ...props
-}: IProps) => {
+}) => {
   const [show, setShow] = React.useState(true);
 
   return (

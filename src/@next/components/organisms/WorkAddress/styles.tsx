@@ -1,4 +1,4 @@
-import { media, styled } from "@styles";
+import { DefaultTheme, media, styled } from "@styles";
 
 export const JobForm = styled.form`
   width: 100%;
@@ -28,7 +28,7 @@ export const RowWithOneCell = styled.div`
 
 export const Name = styled.div`
   grid-area: name;
-  font-size: ${props => props.theme.typography.h5FontSize};
+  font-size: ${props => props.theme.typography.h4FontSize};
 `;
 
 export const Sku = styled.div`

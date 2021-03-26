@@ -30,4 +30,5 @@ export * from "./AdyenPaymentGateway";
 export * from "./AddToCartSection";
 export * from "./CartSidebar";
 export * from "./CreateJobAd";
-export * from "./WorkAddress";export * from "./WorkAddressForm";
+export * from "./WorkAddress";
+export * from "./WorkAddressForm";

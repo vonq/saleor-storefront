@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import * as S from "./styles";
-import { Modal } from '../Modal';
-import { WorkAddressModal } from './WorkAddressModal';
 
+import * as S from "./styles";
+// import { Modal } from '../Modal';
+import { WorkAddressModal } from "./WorkAddressModal";
 
 export interface IWorkAddressProps {}
 
@@ -17,16 +17,18 @@ export const WorkAddress: React.FC<IWorkAddressProps> = () => {
       <S.Sku>Add the location of where this person will work.</S.Sku>
       {/* <AddressTile /> */}
       <button onClick={() => setShowModal(true)}>Show</button>
-      {showModal &&
+      {showModal && (
         <WorkAddressModal
           hideModal={() => {
             setShowModal(false);
           }}
           submitBtnText="Add"
-          title="alo"
-        />}
+          title="Modal"
+          target=""
+        />
+      )}
     </>
   );
-  };
-  WorkAddress.displayName = "WorkAddress";
-  export default WorkAddress;
+};
+WorkAddress.displayName = "WorkAddress";
+export default WorkAddress;

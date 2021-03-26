@@ -1,18 +1,30 @@
-import React, { useCallback, useState } from "react";
-import { Form, FieldArray } from "formik";
-import * as S from "./styles";
-import { InputSelect, TextField } from "@components/molecules";
+/* eslint-disable react/no-unescaped-entities */
 // import { Editor } from "@tinymce/tinymce-react";
-import { Editor } from '@tinymce/tinymce-react';
-import {
-  industries,
-  employmentTypes,
-  senioritis,
-  currencies,
-  periods,
-} from "./constants";
+import { Editor } from "@tinymce/tinymce-react";
+import { FieldArray, Form } from "formik";
+import React, { useCallback, useState } from "react";
 
-export const CreateJobContent = ({
+import { InputSelect, TextField } from "@components/molecules";
+
+import {
+  currencies,
+  employmentTypes,
+  industries,
+  periods,
+  senioritis,
+} from "./constants";
+import * as S from "./styles";
+
+interface Props {
+  handleChange?: any;
+  handleSubmit?: any;
+  handleBlur?: any;
+  values?: any;
+  setFieldValue?: any;
+  setFieldTouched?: any;
+}
+
+export const CreateJobContent: React.FC<Props> = ({
   handleChange,
   handleSubmit,
   handleBlur,
@@ -60,6 +72,8 @@ export const CreateJobContent = ({
               options={industries}
               optionLabelKey="industry"
               // placeholder="Select"
+              label=""
+              value=""
               name="industry"
               onChange={(value: any, name: any) => setFieldValue(name, value)}
             />
@@ -88,7 +102,7 @@ export const CreateJobContent = ({
             {isChecked ? (
               <S.TextArea>
                 <Editor
-                  initialValue="alo"
+                  initialValue=""
                   init={{
                     height: 200,
                     menubar: false,
@@ -98,14 +112,15 @@ export const CreateJobContent = ({
                       "insertdatetime media table paste code help wordcount",
                     ],
                     toolbar:
+                      // eslint-disable-next-line no-multi-str
                       "undo redo | formatselect | bold italic backcolor | \
                       alignleft aligncenter alignright alignjustify | \
                       bullist numlist outdent indent | removeformat | help",
                   }}
-                  name="text"
+                  // name="text"
                   onEditorChange={(content, editor) => {
-                    console.log("Content was updated:", content);
-                    console.log("editor:", editor);
+                    // console.log("Content was updated:", content);
+                    // console.log("editor:", editor);
                   }}
                 />
               </S.TextArea>
@@ -155,6 +170,7 @@ export const CreateJobContent = ({
                 render={arrayHelpers => (
                   <>
                     {educationLvl.map(level => (
+                      // eslint-disable-next-line jsx-a11y/label-has-associated-control
                       <label key={level.value}>
                         <input
                           type="checkbox"
@@ -184,6 +200,8 @@ export const CreateJobContent = ({
                 optionLabelKey="type"
                 // placeholder="Select"
                 name="employmentType"
+                label=""
+                value=""
                 onChange={(value: any, name: any) => setFieldValue(name, value)}
               />
             </S.InputSelectWrapper>
@@ -194,6 +212,8 @@ export const CreateJobContent = ({
                 optionLabelKey="seniority"
                 // placeholder="Select"
                 name="seniority"
+                label=""
+                value=""
                 onChange={(value: any, name: any) => setFieldValue(name, value)}
               />
             </S.InputSelectWrapper>
@@ -253,6 +273,8 @@ export const CreateJobContent = ({
                   options={currencies}
                   optionLabelKey="currency"
                   name="currency"
+                  label=""
+                  value=""
                   onChange={(value: any, name: any) =>
                     setFieldValue(name, value)
                   }
@@ -263,6 +285,8 @@ export const CreateJobContent = ({
                 <InputSelect
                   options={periods}
                   optionLabelKey="period"
+                  label=""
+                  value=""
                   name="period"
                   onChange={(value: any, name: any) =>
                     setFieldValue(name, value)

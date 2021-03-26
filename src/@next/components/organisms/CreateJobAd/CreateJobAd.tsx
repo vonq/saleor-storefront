@@ -1,8 +1,8 @@
-import React from "react";
 import { Formik } from "formik";
-import * as S from "./styles";
+import React from "react";
 
 import { CreateJobContent } from "./CreateJobContent";
+import * as S from "./styles";
 
 export interface ICreateJobAdProps {}
 
@@ -53,7 +53,7 @@ export const CreateJobAd: React.FC<ICreateJobAdProps> = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={(values, actions) => {
-          console.log({ values, actions });
+          // console.log({ values, actions });
           actions.setSubmitting(false);
         }}
       >

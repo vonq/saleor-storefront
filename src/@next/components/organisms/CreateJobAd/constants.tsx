@@ -57,12 +57,9 @@ export const senioritis = [
 ];
 
 export const currencies = [
-  { currency: '€' },
-  { currency: '£' },
-  { currency: '$' },
+  { currency: "€" },
+  { currency: "£" },
+  { currency: "$" },
 ];
 
-export const periods = [
-  { period: 'Mothly' },
-  { period: 'Yearly' },
-];
+export const periods = [{ period: "Mothly" }, { period: "Yearly" }];

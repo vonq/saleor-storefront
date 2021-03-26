@@ -10,11 +10,11 @@ import { CheckoutProgressBar } from "@components/molecules";
 import {
   adyenNotNegativeConfirmationStatusCodes,
   CartSummary,
-  PaymentGatewaysList,
-  translateAdyenConfirmationError,
   // CreateJobTitleForm
   CreateJobAd,
-  WorkAddress
+  PaymentGatewaysList,
+  translateAdyenConfirmationError,
+  WorkAddress,
 } from "@components/organisms";
 import { Checkout } from "@components/templates";
 import { useRedirectToCorrectCheckoutStep } from "@hooks";
@@ -22,10 +22,10 @@ import { paths } from "@paths";
 import { ICardData, IFormError } from "@types";
 
 import {
-  CheckoutAddressSubpage,
+  // CheckoutAddressSubpage,
   CheckoutPaymentSubpage,
   CheckoutReviewSubpage,
-  CheckoutShippingSubpage,
+  // CheckoutShippingSubpage,
 } from "./subpages";
 import {
   CHECKOUT_STEPS,

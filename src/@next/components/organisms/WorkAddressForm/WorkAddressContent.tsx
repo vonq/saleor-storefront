@@ -1,18 +1,28 @@
+import { Form } from "formik";
 import React, { useCallback } from "react";
-import { Formik, Form, Field, FieldArray } from "formik";
-import * as S from "./styles";
 
 import { InputSelect, TextField } from "@components/molecules";
+
+import * as S from "./styles";
 // import { ANONYMOUS_USER_PROPS, LOGGED_IN_USER_PROPS } from "./fixtures";
 
-export const WorkAddressContent = (
+interface Props {
+  handleChange?: any;
+  handleSubmit?: any;
+  handleBlur?: any;
+  values?: any;
+  setFieldValue?: any;
+  setFieldTouched?: any;
+}
+
+export const WorkAddressContent: React.FC<Props> = ({
   handleChange,
   handleSubmit,
   handleBlur,
   values,
   setFieldValue,
-  setFieldTouched
-) => {
+  setFieldTouched,
+}) => {
   const basicInputProps = useCallback(
     () => ({ onBlur: handleBlur, onChange: handleChange }),
     [handleChange, handleBlur]
@@ -46,6 +56,8 @@ export const WorkAddressContent = (
                   // options={ANONYMOUS_USER_PROPS.countries}
                   optionLabelKey="period"
                   name="period"
+                  label=""
+                  value=""
                   onChange={(value: any, name: any) =>
                     setFieldValue(name, value)
                   }

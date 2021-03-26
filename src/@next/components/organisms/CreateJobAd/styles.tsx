@@ -28,7 +28,7 @@ export const RowWithOneCell = styled.div`
 
 export const Name = styled.div`
   grid-area: name;
-  font-size: ${props => props.theme.typography.h5FontSize};
+  font-size: ${props => props.theme.typography.h4FontSize};
 `;
 
 export const Sku = styled.div`
@@ -148,9 +148,9 @@ export const SalaryPeriod = styled.div`
   width: 100px;
 `;
 
-export const Contacts = styled.div`
+// export const Contacts = styled.div`
 
-`;
+// `;
 
 export const InputSelectWrapper = styled.div`
   margin-top: 10px;
