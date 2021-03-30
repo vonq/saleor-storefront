@@ -73,7 +73,7 @@ export const CreateJobContent: React.FC<Props> = ({
               optionLabelKey="industry"
               // placeholder="Select"
               label=""
-              value=""
+              value={values!.industry}
               name="industry"
               onChange={(value: any, name: any) => setFieldValue(name, value)}
             />
@@ -101,7 +101,7 @@ export const CreateJobContent: React.FC<Props> = ({
             </S.Label>
             {isChecked ? (
               <S.TextArea>
-                <Editor
+                {/* <Editor
                   initialValue=""
                   init={{
                     height: 200,
@@ -122,7 +122,7 @@ export const CreateJobContent: React.FC<Props> = ({
                     // console.log("Content was updated:", content);
                     // console.log("editor:", editor);
                   }}
-                />
+                /> */}
               </S.TextArea>
             ) : (
               <div>value2</div>

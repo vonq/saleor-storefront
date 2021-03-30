@@ -22,7 +22,7 @@ import { paths } from "@paths";
 import { ICardData, IFormError } from "@types";
 
 import {
-  // CheckoutAddressSubpage,
+  CheckoutAddressSubpage,
   CheckoutPaymentSubpage,
   CheckoutReviewSubpage,
   // CheckoutShippingSubpage,
@@ -293,15 +293,15 @@ const CheckoutPage: React.FC<NextPage> = () => {
           <CheckoutProgressBar steps={steps} activeStep={activeStepIndex} />
         )
       }
-      cartSummary={
-        <CartSummary
-          shipping={shippingTaxedPrice}
-          subtotal={subtotalPrice}
-          promoCode={promoTaxedPrice}
-          total={totalPrice}
-          products={prepareCartSummaryProducts(items)}
-        />
-      }
+      // cartSummary={
+      //   <CartSummary
+      //     shipping={shippingTaxedPrice}
+      //     subtotal={subtotalPrice}
+      //     promoCode={promoTaxedPrice}
+      //     total={totalPrice}
+      //     products={prepareCartSummaryProducts(items)}
+      //   />
+      // }
       checkout={isFullyLoaded ? checkoutSubpage : <Loader />}
       paymentGateways={paymentGateways}
       hidePaymentGateways={steps[activeStepIndex].step !== CheckoutStep.Payment}

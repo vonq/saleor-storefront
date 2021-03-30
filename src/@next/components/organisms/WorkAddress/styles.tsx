@@ -52,3 +52,29 @@ export const Title = styled.div`
     cursor: pointer;
   `}
 `;
+
+export const WorkLocation = styled.div`
+  width: calc(50% - 8px);
+  padding: 16px;
+  border: 1px solid #f5f5f5;
+  background-color: #f5f5f5;
+`;
+
+export const Text = styled.p`
+  font-size: ${props => props.theme.typography.baseFontSize};
+`;
+
+export const Edit = styled.button`
+  height: 43px;
+  width: 50px;
+  background-color: #c3ddf5;
+  box-shadow: 0 0 0 rgb(10 135 248 / 0%);
+  color: #0a87f8;
+  line-height: 20px;
+  transition: box-shadow 0.1s ease;
+
+  &:hover {
+    box-shadow: 0 3px 6px rgb(10 135 248 / 51%);
+    text-decoration: none;
+  }
+`;

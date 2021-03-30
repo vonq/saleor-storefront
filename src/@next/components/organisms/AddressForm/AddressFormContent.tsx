@@ -133,7 +133,10 @@ export const AddressFormContent: React.FC<PropsWithFormik> = ({
                 option => option.code === values!.country!.code
               )
             }
-            onChange={(value: any, name: any) => setFieldValue(name, value)}
+            onChange={(value: any, name: any) => {
+              console.log('value', value);
+              setFieldValue(name, value);
+            }}
             optionLabelKey="country"
             optionValueKey="code"
             errors={fieldErrors!.country}

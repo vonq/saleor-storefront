@@ -13,6 +13,8 @@ interface Props {
   values?: any;
   setFieldValue?: any;
   setFieldTouched?: any;
+  checkoutWorkAddressFormId?: any;
+  checkoutWorkAddressFormRef?: any;
 }
 
 export const WorkAddressContent: React.FC<Props> = ({
@@ -22,14 +24,24 @@ export const WorkAddressContent: React.FC<Props> = ({
   values,
   setFieldValue,
   setFieldTouched,
+
+  checkoutWorkAddressFormId,
+  checkoutWorkAddressFormRef,
 }) => {
   const basicInputProps = useCallback(
     () => ({ onBlur: handleBlur, onChange: handleChange }),
     [handleChange, handleBlur]
   );
 
+  const countries = [
+    { country: "Netherlands" },
+    { country: "Ukraine" },
+    { country: "USA" },
+    { country: "Great Britain" },
+  ];
+
   return (
-    <Form>
+    <Form id={checkoutWorkAddressFormId}>
       <S.JobForm>
         <S.Wrapper>
           <S.RowWithOneCell>
@@ -39,14 +51,14 @@ export const WorkAddressContent: React.FC<Props> = ({
               your company name at the published job posting.
             </S.Sku>
             <TextField
-              // name="jobTitle"
-              // value={values!.jobTitle}
+              name="companyName"
+              value={values?.companyName}
               {...basicInputProps()}
             />
             <S.Name>Company department (optional)</S.Name>
             <TextField
-              // name="jobTitle"
-              // value={values!.jobTitle}
+              name="companyDepartment"
+              value={values?.companyDepartment}
               {...basicInputProps()}
             />
             <S.RowWithTwoCells>
@@ -54,21 +66,22 @@ export const WorkAddressContent: React.FC<Props> = ({
                 <S.Name>Working location. Country</S.Name>
                 <InputSelect
                   // options={ANONYMOUS_USER_PROPS.countries}
-                  optionLabelKey="period"
-                  name="period"
+                  options={countries}
+                  optionLabelKey="country"
+                  name="companyCountry"
                   label=""
-                  value=""
-                  onChange={(value: any, name: any) =>
-                    setFieldValue(name, value)
-                  }
+                  value={values?.companyCountry.country}
+                  onChange={(value: any, name: any) => {
+                    setFieldValue(name, value);
+                  }}
                 />
               </div>
               <div>
                 <S.Name>Working location. Zip code</S.Name>
                 <TextField
-                  // name="jobTitle"
+                  name="companyZipCode"
                   // label="Enter a valid zip code of the work location."
-                  // value={values!.jobTitle}
+                  value={values?.companyZipCode}
                   {...basicInputProps()}
                 />
               </div>
@@ -77,19 +90,18 @@ export const WorkAddressContent: React.FC<Props> = ({
               <div>
                 <S.Name>Working location. City</S.Name>
                 <TextField
-                  // name="jobTitle"
+                  name="companyCity"
                   // label="e.g. Amsterdam"
-                  // value={values!.jobTitle}
+                  value={values?.companyCity}
                   {...basicInputProps()}
                 />
               </div>
               <div>
                 <S.Name>Working location. Address</S.Name>
                 <TextField
-                  // name="jobTitle"
-                  // label="Enter a street name and number."
-                  // value={values!.jobTitle}
-                  required
+                  name="companyAddress"
+                  // required
+                  value={values?.companyAddress}
                   {...basicInputProps()}
                 />
               </div>

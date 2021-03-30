@@ -1,6 +1,6 @@
 // import { useCreateUserAddress, useUpdateUserAddress } from "@saleor/sdk";
 // import { CountryCode } from "@saleor/sdk/lib/gqlTypes/globalTypes";
-import React from "react";
+import React, { useRef } from "react";
 
 import { Modal } from "../Modal";
 import { WorkAddressForm } from "../WorkAddressForm";
@@ -26,6 +26,8 @@ export const WorkAddressModal: React.FC<Props> = ({
   ...props
 }) => {
   const [show, setShow] = React.useState(true);
+  const checkoutWorkAddressFormId = "work-address-form";
+  const checkoutWorkAddressFormRef = useRef<HTMLFormElement>(null);
 
   return (
     <Modal
@@ -39,9 +41,15 @@ export const WorkAddressModal: React.FC<Props> = ({
       disabled={false}
       show={show}
       submitBtnText={submitBtnText}
-      onSubmit={() => hideModal()}
+      formId={checkoutWorkAddressFormId}
     >
-      <WorkAddressForm />
+      <WorkAddressForm
+        {...{
+          checkoutWorkAddressFormId,
+          checkoutWorkAddressFormRef,
+          hideModal,
+        }}
+      />
     </Modal>
   );
 };
