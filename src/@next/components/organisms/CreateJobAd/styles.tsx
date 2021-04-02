@@ -1,6 +1,6 @@
 import { DefaultTheme, media, styled } from "@styles";
 
-export const JobForm = styled.form`
+export const JobForm = styled.div`
   width: 100%;
 `;
 
@@ -39,7 +39,7 @@ export const Sku = styled.div`
 `;
 
 export const Label = styled.label`
-  margin: 0px;
+  margin: 0px 20px 0px 0px;
   display: inline-block;
 `;
 // export const Label = styled.label`
@@ -47,6 +47,12 @@ export const Label = styled.label`
 //   display: flex;
 //   justify-content: space-between;
 // `;
+
+export const LabelRight = styled.label`
+  display: inline-block;
+  margin: 0px 0px 0px 4px;
+`;
+
 export const Radio = styled.input``;
 
 export const Title = styled.div`

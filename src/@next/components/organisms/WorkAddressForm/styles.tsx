@@ -29,6 +29,7 @@ export const RowWithOneCell = styled.div`
 export const Name = styled.div`
   grid-area: name;
   font-size: ${props => props.theme.typography.h4FontSize};
+  margin-bottom: 5px;
 `;
 
 export const Sku = styled.div`

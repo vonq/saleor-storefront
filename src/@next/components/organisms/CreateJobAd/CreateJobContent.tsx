@@ -22,6 +22,8 @@ interface Props {
   values?: any;
   setFieldValue?: any;
   setFieldTouched?: any;
+  checkoutCreateJobFormId: any;
+  checkoutCreateJobFormRef: any;
 }
 
 export const CreateJobContent: React.FC<Props> = ({
@@ -31,6 +33,8 @@ export const CreateJobContent: React.FC<Props> = ({
   values,
   setFieldValue,
   setFieldTouched,
+  checkoutCreateJobFormId,
+  checkoutCreateJobFormRef,
 }) => {
   const basicInputProps = useCallback(
     () => ({ onBlur: handleBlur, onChange: handleChange }),
@@ -48,7 +52,11 @@ export const CreateJobContent: React.FC<Props> = ({
   ];
 
   return (
-    <Form>
+    <form
+      id={checkoutCreateJobFormId}
+      ref={checkoutCreateJobFormRef}
+      onSubmit={handleSubmit}
+    >
       <S.JobForm>
         <S.Wrapper>
           <S.SubTitle>1 Job posting details</S.SubTitle>
@@ -71,18 +79,22 @@ export const CreateJobContent: React.FC<Props> = ({
             <InputSelect
               options={industries}
               optionLabelKey="industry"
+              optionValueKey="industry"
               // placeholder="Select"
               label=""
               value={values!.industry}
               name="industry"
-              onChange={(value: any, name: any) => setFieldValue(name, value)}
+              onChange={(value: any, name: any) => {
+                console.log(value);
+                setFieldValue(name, value);
+              }}
             />
             <S.Label>
               <S.Radio
                 type="radio"
                 id="radio"
                 name="text-editor"
-                onClick={() => setIsChecked(prev => !prev)}
+                onChange={() => setIsChecked(prev => !prev)}
                 checked={isChecked}
                 // onChange={e => setRadio(e.target.name)}
               />
@@ -93,7 +105,7 @@ export const CreateJobContent: React.FC<Props> = ({
                 type="radio"
                 id="radio2"
                 name="text-editor"
-                onClick={() => setIsChecked(prev => !prev)}
+                onChange={() => setIsChecked(prev => !prev)}
                 // onChange={e => setRadio(e.target.name)}
                 checked={!isChecked}
               />
@@ -198,10 +210,11 @@ export const CreateJobContent: React.FC<Props> = ({
               <InputSelect
                 options={employmentTypes}
                 optionLabelKey="type"
+                optionValueKey="type"
                 // placeholder="Select"
                 name="employmentType"
                 label=""
-                value=""
+                value={values!.employmentType}
                 onChange={(value: any, name: any) => setFieldValue(name, value)}
               />
             </S.InputSelectWrapper>
@@ -210,10 +223,11 @@ export const CreateJobContent: React.FC<Props> = ({
               <InputSelect
                 options={senioritis}
                 optionLabelKey="seniority"
+                optionValueKey="seniority"
                 // placeholder="Select"
                 name="seniority"
                 label=""
-                value=""
+                value={values.seniority}
                 onChange={(value: any, name: any) => setFieldValue(name, value)}
               />
             </S.InputSelectWrapper>
@@ -230,7 +244,7 @@ export const CreateJobContent: React.FC<Props> = ({
                   }
                 />
               </S.Label>
-              <S.Label>
+              <S.LabelRight>
                 Max.
                 <S.Number
                   type="number"
@@ -240,7 +254,7 @@ export const CreateJobContent: React.FC<Props> = ({
                     setFieldValue(event.target.name, event.target.value)
                   }
                 />
-              </S.Label>
+              </S.LabelRight>
             </S.Hours>
             <S.Name>Salary</S.Name>
             <S.Sku>
@@ -272,9 +286,10 @@ export const CreateJobContent: React.FC<Props> = ({
                 <InputSelect
                   options={currencies}
                   optionLabelKey="currency"
+                  optionValueKey="currency"
                   name="currency"
                   label=""
-                  value=""
+                  value={values!.currency}
                   onChange={(value: any, name: any) =>
                     setFieldValue(name, value)
                   }
@@ -285,8 +300,9 @@ export const CreateJobContent: React.FC<Props> = ({
                 <InputSelect
                   options={periods}
                   optionLabelKey="period"
+                  optionValueKey="period"
                   label=""
-                  value=""
+                  value={values.period}
                   name="period"
                   onChange={(value: any, name: any) =>
                     setFieldValue(name, value)
@@ -325,10 +341,10 @@ export const CreateJobContent: React.FC<Props> = ({
                 />
               </div>
             </S.RowWithTwoCells>
-            <button type="submit">Submit</button>
+            {/* <button type="submit">Submit</button> */}
           </S.RowWithOneCell>
         </S.Wrapper>
       </S.JobForm>
-    </Form>
+    </form>
   );
 };

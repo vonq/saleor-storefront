@@ -152,6 +152,7 @@ export const stepSubmitSuccessHandler = (
   steps: CheckoutStepDefinition[],
   activeStepIndex: number
 ) => (currentStep: CheckoutStep, data?: object) => {
+  console.log("steps in function", steps, "activeStepIndex", activeStepIndex);
   if (currentStep === CheckoutStep.Review) {
     push(
       {

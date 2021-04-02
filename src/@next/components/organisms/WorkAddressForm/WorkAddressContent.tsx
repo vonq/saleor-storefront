@@ -41,7 +41,7 @@ export const WorkAddressContent: React.FC<Props> = ({
   ];
 
   return (
-    <Form id={checkoutWorkAddressFormId}>
+    <Form>
       <S.JobForm>
         <S.Wrapper>
           <S.RowWithOneCell>
@@ -68,9 +68,10 @@ export const WorkAddressContent: React.FC<Props> = ({
                   // options={ANONYMOUS_USER_PROPS.countries}
                   options={countries}
                   optionLabelKey="country"
+                  optionValueKey="country"
                   name="companyCountry"
                   label=""
-                  value={values?.companyCountry.country}
+                  value={values!.companyCountry}
                   onChange={(value: any, name: any) => {
                     setFieldValue(name, value);
                   }}

@@ -25,7 +25,7 @@ import {
   CheckoutAddressSubpage,
   CheckoutPaymentSubpage,
   CheckoutReviewSubpage,
-  // CheckoutShippingSubpage,
+  CheckoutShippingSubpage,
 } from "./subpages";
 import {
   CHECKOUT_STEPS,
@@ -77,7 +77,6 @@ const CheckoutPage: React.FC<NextPage> = () => {
   >([]);
   const checkoutGatewayFormRef = useRef<HTMLFormElement>(null);
   const pageCompleteRef = useRef<SubpageCompleteHandler>(null);
-
   const steps = getAvailableSteps(items);
   const { activeStepIndex, activeStep } = getCurrentStep(pathname, steps);
   const handleStepSubmitSuccess = stepSubmitSuccessHandler(
@@ -103,9 +102,9 @@ const CheckoutPage: React.FC<NextPage> = () => {
   const checkoutSubpage = useMemo(() => {
     const subpageMapping: Partial<Record<CheckoutStep, JSX.Element>> = {
       // [CheckoutStep.Address]: <CheckoutAddressSubpage {...pageProps} />,
-      [CheckoutStep.Address]: <CreateJobAd />,
+      [CheckoutStep.Address]: <CreateJobAd {...pageProps} />,
       // [CheckoutStep.Shipping]: <CheckoutShippingSubpage {...pageProps} />,
-      [CheckoutStep.Shipping]: <WorkAddress />,
+      [CheckoutStep.Shipping]: <WorkAddress {...pageProps} />,
       [CheckoutStep.Payment]: (
         <CheckoutPaymentSubpage
           {...pageProps}
@@ -282,6 +281,7 @@ const CheckoutPage: React.FC<NextPage> = () => {
       handlePaymentConfirm();
     }
   }, [pathname, query, submitInProgress, checkout]);
+  // console.log(activeStep.step);
 
   return cartLoaded && !items?.length ? (
     <Redirect url={paths.cart} />
@@ -293,15 +293,15 @@ const CheckoutPage: React.FC<NextPage> = () => {
           <CheckoutProgressBar steps={steps} activeStep={activeStepIndex} />
         )
       }
-      // cartSummary={
-      //   <CartSummary
-      //     shipping={shippingTaxedPrice}
-      //     subtotal={subtotalPrice}
-      //     promoCode={promoTaxedPrice}
-      //     total={totalPrice}
-      //     products={prepareCartSummaryProducts(items)}
-      //   />
-      // }
+      cartSummary={
+        <CartSummary
+          shipping={shippingTaxedPrice}
+          subtotal={subtotalPrice}
+          promoCode={promoTaxedPrice}
+          total={totalPrice}
+          products={prepareCartSummaryProducts(items)}
+        />
+      }
       checkout={isFullyLoaded ? checkoutSubpage : <Loader />}
       paymentGateways={paymentGateways}
       hidePaymentGateways={steps[activeStepIndex].step !== CheckoutStep.Payment}

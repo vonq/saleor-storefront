@@ -54,10 +54,19 @@ export const Title = styled.div`
 `;
 
 export const WorkLocation = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const WorkCard = styled.div`
   width: calc(50% - 8px);
   padding: 16px;
   border: 1px solid #f5f5f5;
   background-color: #f5f5f5;
+`;
+
+export const SelectContainer = styled.form`
+  width: calc(50% - 8px);
 `;
 
 export const Text = styled.p`
@@ -77,4 +86,26 @@ export const Edit = styled.button`
     box-shadow: 0 3px 6px rgb(10 135 248 / 51%);
     text-decoration: none;
   }
+`;
+
+export const CreateNew = styled.button`
+  color: rgb(6, 81, 118);
+  float: right;
+`;
+
+export const ImageContainer = styled.div`
+  width: 120px;
+  height: 64px;
+  display: flex;
+  justify-content: center;
+`;
+
+export const Image = styled.img`
+  width: 64px;
+`;
+
+export const Preview = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
 `;

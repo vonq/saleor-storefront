@@ -35,12 +35,17 @@ export const AddressFormContent: React.FC<PropsWithFormik> = ({
         : [{ message }];
     });
   }
+  console.log("countriesOptions", countriesOptions);
 
   return (
     <S.AddressForm
       id={formId}
       ref={formRef}
-      onSubmit={handleSubmit}
+      // onSubmit={handleSubmit}
+      onSubmit={(event) => {
+        event.preventDefault();
+        console.log(values);
+      }}
       data-test={testingContext}
     >
       <S.Wrapper>
@@ -163,6 +168,7 @@ export const AddressFormContent: React.FC<PropsWithFormik> = ({
             />
           </S.RowWithTwoCells>
         )}
+        <button type="submit">submit</button>
       </S.Wrapper>
     </S.AddressForm>
   );

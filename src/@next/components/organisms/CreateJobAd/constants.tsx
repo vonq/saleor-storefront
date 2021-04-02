@@ -63,3 +63,11 @@ export const currencies = [
 ];
 
 export const periods = [{ period: "Mothly" }, { period: "Yearly" }];
+
+export enum CheckoutStep {
+  Address = 1,
+  Shipping,
+  Payment,
+  Review,
+  PaymentConfirm,
+}
