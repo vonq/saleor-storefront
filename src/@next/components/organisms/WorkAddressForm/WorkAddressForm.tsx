@@ -21,23 +21,20 @@ export const WorkAddressForm: React.FC<IWorkAddressFormProps> = ({
     setWorkLocationData,
     setIsNewLocation,
     isNewLocation,
-    companies,
+    // companies,
     setCompanies,
   } = useContext(WorkAddressContext);
-
-  // console.log(workLocationData);
 
   return (
     <>
       <Formik
         initialValues={workLocationData}
         onSubmit={(values, actions) => {
-          console.log({ values, actions });
           setWorkLocationData(values);
           if (isNewLocation) {
-            setCompanies(prevState => [...prevState, values]);
+            setCompanies((prevState: any) => [...prevState, values]);
           } else {
-            setCompanies(prevState =>
+            setCompanies((prevState: any[]) =>
               prevState.map(company => {
                 if (company.id === values.id) {
                   return { ...company, ...values };

@@ -42,6 +42,7 @@
     "dompurify": "^2.0.17",
     "draftjs-to-html": "^0.8.4",
     "editorjs-inline-tool": "^0.4.0",
+    "filestack-react": "^4.0.0",
     "formik": "^1.5.7",
     "fs-extra": "^9.0.1",
     "graphql": "^14.5.8",

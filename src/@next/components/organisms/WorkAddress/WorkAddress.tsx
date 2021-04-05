@@ -21,7 +21,7 @@ export interface IWorkAddressProps {
 
 export const WorkAddress: React.FC<IWorkAddressProps> = forwardRef(
   ({ changeSubmitProgress, onSubmitSuccess }, ref) => {
-    const checkoutWorkAddressFormId = "work-address-form";
+    const checkoutWorkAddressFormId = "work-address";
     const checkoutWorkAddressFormRef = useRef<HTMLFormElement>(null);
 
     const [showModal, setShowModal] = useState(false);
@@ -32,6 +32,7 @@ export const WorkAddress: React.FC<IWorkAddressProps> = forwardRef(
       companyCity: "Groningen",
       companyZipCode: "9722 TB",
       companyCountry: { country: "Netherlands" },
+      url: "https://cdn.filestackcontent.com/lPKX9kuRSMqVqLlsNPH2",
       id: "1",
     });
     // const [constNewLocation, setNew] = useState();
@@ -44,6 +45,7 @@ export const WorkAddress: React.FC<IWorkAddressProps> = forwardRef(
         companyCity: "Groningen",
         companyZipCode: "9722 TB",
         companyCountry: { country: "Netherlands" },
+        url: "https://cdn.filestackcontent.com/lPKX9kuRSMqVqLlsNPH2",
         id: "1",
       },
     ]);
@@ -65,6 +67,7 @@ export const WorkAddress: React.FC<IWorkAddressProps> = forwardRef(
                 companyCity: "",
                 companyZipCode: "",
                 companyCountry: { country: "" },
+                url: "",
                 id: new Date().toString(),
               }
             : workLocationData,
@@ -81,10 +84,7 @@ export const WorkAddress: React.FC<IWorkAddressProps> = forwardRef(
           <S.WorkCard>
             <S.Preview>
               <S.ImageContainer>
-                <S.Image
-                  src="https://www.bullhorn.com/marketplace/wp-content/uploads/sites/12/2017/06/IGB_VONQ_Logo_quadrat.jpg"
-                  alt="Company logo"
-                />
+                <S.Image src={workLocationData.url} alt="Company logo" />
               </S.ImageContainer>
               <S.Edit onClick={() => setShowModal(true)}>Edit</S.Edit>
             </S.Preview>
@@ -94,7 +94,6 @@ export const WorkAddress: React.FC<IWorkAddressProps> = forwardRef(
           <Formik
             initialValues={{}}
             onSubmit={(values, actions) => {
-              console.log({ values, actions });
               actions.setSubmitting(false);
               onSubmitSuccess(CheckoutStep.Payment);
             }}
@@ -120,7 +119,6 @@ export const WorkAddress: React.FC<IWorkAddressProps> = forwardRef(
                   label=""
                   value={workLocationData}
                   onChange={event => {
-                    console.log(event);
                     setWorkLocationData(event);
                   }}
                 />
@@ -136,35 +134,6 @@ export const WorkAddress: React.FC<IWorkAddressProps> = forwardRef(
               </S.SelectContainer>
             )}
           </Formik>
-          {/* <form
-            id={checkoutWorkAddressFormId}
-            ref={checkoutWorkAddressFormRef}
-            onSubmit={() => {
-              console.log("workLocationData", workLocationData);
-              onSubmitSuccess(CheckoutStep.Payment);
-            }}
-          >
-            <InputSelect
-              options={companies}
-              optionLabelKey="companyName"
-              optionValueKey="companyName"
-              // value={workLocationData.companyName}
-              label=""
-              value={workLocationData}
-              onChange={event => {
-                console.log(event);
-                setWorkLocationData(event);
-              }}
-            />
-            <S.CreateNew
-              onClick={() => {
-                setShowModal(true);
-                setIsNewLocation(true);
-              }}
-            >
-              Create a new a record
-            </S.CreateNew>
-          </form> */}
         </S.WorkLocation>
         {showModal && (
           <WorkAddressModal
