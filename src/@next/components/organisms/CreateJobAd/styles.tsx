@@ -81,6 +81,30 @@ export const TextArea = styled.div`
   z-index: 0;
 `;
 
+export const MoreInfo = styled.button`
+  padding-left: 4px;
+  color: #0a87f8;
+`;
+
+export const ModalName = styled.div`
+  font-size: ${props => props.theme.typography.h4FontSize};
+  margin-bottom: 16px;
+`;
+
+export const ModalDesc = styled.div`
+  font-size: ${props => props.theme.typography.smallFontSize};
+  margin-bottom: 15px;
+`;
+
+export const ModalLink = styled.a`
+  color: #0a87f8;
+
+  &:hover {
+    color: #0a7acc;
+    text-decoration: underline;
+  }
+`;
+
 export const Desc = styled.div`
   font-size: ${props => props.theme.typography.baseFontSize};
   margin-bottom: 15px;

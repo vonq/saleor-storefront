@@ -32,7 +32,8 @@ export interface CheckoutStepDefinition {
 export const CHECKOUT_STEPS: CheckoutStepDefinition[] = [
   {
     index: 0,
-    link: paths.checkoutAddress,
+    // link: paths.checkoutAddress,
+    link: paths.checkoutCreateJobAd,
     // name: "Address",
     name: "Create Job ad(s)",
     nextActionName: "Continue to Shipping",
@@ -41,8 +42,10 @@ export const CHECKOUT_STEPS: CheckoutStepDefinition[] = [
   },
   {
     index: 1,
-    link: paths.checkoutShipping,
-    name: "Shipping",
+    // link: paths.checkoutShipping,
+    link: paths.checkoutAddress,
+    // name: "Shipping",
+    name: "Address",
     nextActionName: "Continue to Payment",
     onlyIfShippingRequired: true,
     step: CheckoutStep.Shipping,
@@ -152,7 +155,6 @@ export const stepSubmitSuccessHandler = (
   steps: CheckoutStepDefinition[],
   activeStepIndex: number
 ) => (currentStep: CheckoutStep, data?: object) => {
-  console.log("steps in function", steps, "activeStepIndex", activeStepIndex);
   if (currentStep === CheckoutStep.Review) {
     push(
       {

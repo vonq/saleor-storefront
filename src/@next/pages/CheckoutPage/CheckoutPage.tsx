@@ -22,10 +22,10 @@ import { paths } from "@paths";
 import { ICardData, IFormError } from "@types";
 
 import {
-  CheckoutAddressSubpage,
+  // CheckoutAddressSubpage,
   CheckoutPaymentSubpage,
   CheckoutReviewSubpage,
-  CheckoutShippingSubpage,
+  // CheckoutShippingSubpage,
 } from "./subpages";
 import {
   CHECKOUT_STEPS,

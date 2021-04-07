@@ -48,6 +48,16 @@ export const WorkAddress: React.FC<IWorkAddressProps> = forwardRef(
         url: "https://cdn.filestackcontent.com/lPKX9kuRSMqVqLlsNPH2",
         id: "1",
       },
+      {
+        companyName: "IGBqweqweqwe",
+        companyAddress: "Qwerty 12, 9722 TB",
+        companyDepartment: "",
+        companyCity: "Groningen",
+        companyZipCode: "9722 TB",
+        companyCountry: { country: "Netherlands" },
+        url: "https://cdn.filestackcontent.com/FP3ycQ8oQYuP2HS2IdEj",
+        id: "2",
+      },
     ]);
 
     useImperativeHandle(ref, () => () => {
@@ -120,6 +130,7 @@ export const WorkAddress: React.FC<IWorkAddressProps> = forwardRef(
                   value={workLocationData}
                   onChange={event => {
                     setWorkLocationData(event);
+                    setFieldValue("company", event);
                   }}
                 />
                 <S.CreateNew

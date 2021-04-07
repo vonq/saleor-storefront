@@ -13,7 +13,7 @@ export interface ICreateJobAdProps {
 interface FormValues {
   jobTitle: string;
   industry: string;
-  text: string;
+  jobDescription: string;
   jobDatailLink: string;
   aplicationLink: string;
   jobExperience: string;
@@ -38,7 +38,7 @@ export const CreateJobAd: React.FC<ICreateJobAdProps> = forwardRef(
     const initialValues: FormValues = {
       jobTitle: "",
       industry: "",
-      text: "",
+      jobDescription: "",
       jobDatailLink: "",
       aplicationLink: "",
       jobExperience: "",
@@ -67,7 +67,6 @@ export const CreateJobAd: React.FC<ICreateJobAdProps> = forwardRef(
         <Formik
           initialValues={initialValues}
           onSubmit={(values, actions) => {
-            // console.log({ values, actions });
             actions.setSubmitting(false);
             onSubmitSuccess(CheckoutStep.Shipping);
           }}

@@ -71,3 +71,10 @@ export enum CheckoutStep {
   Review,
   PaymentConfirm,
 }
+
+export const educationLvl = [
+  { value: "Bachelor / Graduate" },
+  { value: "GCSE / A-Level / Highschool / GED" },
+  { value: "Master / Post-Graduate / PhD" },
+  { value: "Vocational / Diploma / Associates degree" },
+];

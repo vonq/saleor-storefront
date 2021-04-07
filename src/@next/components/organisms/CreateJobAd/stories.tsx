@@ -6,7 +6,10 @@ import { IntlProvider } from "react-intl";
 import { CreateJobAd } from ".";
 import { ICreateJobAdProps } from "./CreateJobAd";
 
-const DEFAULT_PROPS: ICreateJobAdProps = {};
+const DEFAULT_PROPS: ICreateJobAdProps = {
+  changeSubmitProgress: () => {},
+  onSubmitSuccess: () => {},
+};
 
 storiesOf("@components/organisms/CreateJobAd", module)
   .addParameters({ component: CreateJobAd })

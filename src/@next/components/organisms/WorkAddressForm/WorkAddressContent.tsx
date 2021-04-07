@@ -1,15 +1,16 @@
 import { PickerOverlay } from "filestack-react";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useContext, useState } from "react";
 
 import { InputSelect, TextField } from "@components/molecules";
+import { ShopContext } from "@temp/components/ShopProvider/context";
 
 import * as S from "./styles";
-// import { ANONYMOUS_USER_PROPS, LOGGED_IN_USER_PROPS } from "./fixtures";
 
 const APIKEY = "A5WLOckASSNScwesJH7mOz";
-// const POLICY = "ewogICJleHBpcnkiOiA1MDEzNzkyMDAKfQ";
-// const SIGNATURE =
-//   "4a5de6d4d185a7d3f993ebc6f607f8abdbeeb83fa06b30c933e536c010976685";
+const POLICY =
+  "eyJleHBpcnkiOjE2NDA5MDE2MDAsImNhbGwiOlsicGljayIsInJlYWQiLCJzdGF0Iiwid3JpdGUiLCJ3cml0ZVVybCIsInN0b3JlIiwiY29udmVydCIsInJlbW92ZSIsImV4aWYiXX0=";
+const SIGNATURE =
+  "8e69569cf5de589955b6b73f46d53c29ba766e92ebf2c516d8e7e5f5220e8b0a";
 
 interface Props {
   handleChange?: any;
@@ -38,13 +39,7 @@ export const WorkAddressContent: React.FC<Props> = ({
     [handleChange, handleBlur]
   );
   const [isPickerOverlayVisible, setIsPickerOverlayVisible] = useState(false);
-
-  const countries = [
-    { country: "Netherlands" },
-    { country: "Ukraine" },
-    { country: "USA" },
-    { country: "Great Britain" },
-  ];
+  const { countries } = useContext(ShopContext);
 
   return (
     <form
@@ -82,14 +77,14 @@ export const WorkAddressContent: React.FC<Props> = ({
                   <S.RemoveButton
                     type="button"
                     onClick={() => {
-                      // const index = values.url.lastIndexOf("/");
-                      // const file = values.url.slice(index + 1);
-                      // fetch(
-                      //   `https://www.filestackapi.com/api/file/${file}?key=${APIKEY}&policy=${POLICY}&signature=${SIGNATURE}`
-                      // ).then(responce => console.log(responce));
-                      // fetch(
-                      //   `https://cdn.filestackcontent.com/remove/security=policy:${POLICY},signature:${SIGNATURE}/${file}`
-                      // ).then(responce => console.log(responce));
+                      const index = values.url.lastIndexOf("/");
+                      const file = values.url.slice(index + 1);
+                      fetch(
+                        `https://www.filestackapi.com/api/file/${file}?key=${APIKEY}&policy=${POLICY}&signature=${SIGNATURE}`,
+                        {
+                          method: "DELETE",
+                        }
+                      );
                       setFieldValue("url", "");
                     }}
                   >
@@ -117,8 +112,6 @@ export const WorkAddressContent: React.FC<Props> = ({
                   }}
                   apikey={APIKEY}
                   onSuccess={(res: { filesUploaded: { url: any }[] }) => {
-                    // console.log(res);
-                    // setImgUrl(res.filesUploaded[0].url);
                     setFieldValue("url", res.filesUploaded[0].url);
                   }}
                 />
@@ -128,7 +121,6 @@ export const WorkAddressContent: React.FC<Props> = ({
               <div>
                 <S.Name>Working location. Country</S.Name>
                 <InputSelect
-                  // options={ANONYMOUS_USER_PROPS.countries}
                   options={countries}
                   optionLabelKey="country"
                   optionValueKey="country"

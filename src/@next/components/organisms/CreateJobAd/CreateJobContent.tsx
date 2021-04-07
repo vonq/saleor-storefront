@@ -1,18 +1,20 @@
 /* eslint-disable react/no-unescaped-entities */
 // import { Editor } from "@tinymce/tinymce-react";
 import { Editor } from "@tinymce/tinymce-react";
-import { FieldArray, Form } from "formik";
+import { FieldArray } from "formik";
 import React, { useCallback, useState } from "react";
 
 import { InputSelect, TextField } from "@components/molecules";
 
 import {
   currencies,
+  educationLvl,
   employmentTypes,
   industries,
   periods,
   senioritis,
 } from "./constants";
+import { MoreInfoModal } from "./MoreInfoModal";
 import * as S from "./styles";
 
 interface Props {
@@ -42,14 +44,14 @@ export const CreateJobContent: React.FC<Props> = ({
   );
 
   const [isChecked, setIsChecked] = useState(true);
-  // console.log(handleChange);
+  const [moreInfo, setMoreInfo] = useState(false);
 
-  const educationLvl = [
-    { value: "Bachelor / Graduate" },
-    { value: "GCSE / A-Level / Highschool / GED" },
-    { value: "Master / Post-Graduate / PhD" },
-    { value: "Vocational / Diploma / Associates degree" },
-  ];
+  // const educationLvl = [
+  //   { value: "Bachelor / Graduate" },
+  //   { value: "GCSE / A-Level / Highschool / GED" },
+  //   { value: "Master / Post-Graduate / PhD" },
+  //   { value: "Vocational / Diploma / Associates degree" },
+  // ];
 
   return (
     <form
@@ -85,10 +87,22 @@ export const CreateJobContent: React.FC<Props> = ({
               value={values!.industry}
               name="industry"
               onChange={(value: any, name: any) => {
-                console.log(value);
                 setFieldValue(name, value);
               }}
             />
+            <S.Name>Job description</S.Name>
+            <S.Sku>
+              Choose how you want to fill in your job description.
+              <S.MoreInfo
+                type="button"
+                onClick={() => {
+                  setMoreInfo(true);
+                }}
+              >
+                More info
+              </S.MoreInfo>
+            </S.Sku>
+            {moreInfo && <MoreInfoModal hideModal={() => setMoreInfo(false)} />}
             <S.Label>
               <S.Radio
                 type="radio"
@@ -113,7 +127,8 @@ export const CreateJobContent: React.FC<Props> = ({
             </S.Label>
             {isChecked ? (
               <S.TextArea>
-                {/* <Editor
+                <Editor
+                  apiKey="dy0aqtllm0lgrod3ysxqvq8wrmv84k07gj0ylhnqbr2w2uu1"
                   initialValue=""
                   init={{
                     height: 200,
@@ -131,10 +146,11 @@ export const CreateJobContent: React.FC<Props> = ({
                   }}
                   // name="text"
                   onEditorChange={(content, editor) => {
+                    setFieldValue("jobDescription", content);
                     // console.log("Content was updated:", content);
                     // console.log("editor:", editor);
                   }}
-                /> */}
+                />
               </S.TextArea>
             ) : (
               <div>value2</div>

@@ -6,7 +6,10 @@ import { IntlProvider } from "react-intl";
 import { WorkAddress } from ".";
 import { IWorkAddressProps } from "./WorkAddress";
 
-const DEFAULT_PROPS: IWorkAddressProps = {};
+const DEFAULT_PROPS: IWorkAddressProps = {
+  changeSubmitProgress: () => {},
+  onSubmitSuccess: () => {},
+};
 
 storiesOf("@components/organisms/WorkAddress", module)
   .addParameters({ component: WorkAddress })
