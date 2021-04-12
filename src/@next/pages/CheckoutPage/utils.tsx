@@ -12,7 +12,9 @@ export const checkIfShippingRequiredForProducts = (items?: IItems) =>
   items?.some(({ variant }) => variant.product?.productType.isShippingRequired);
 
 export enum CheckoutStep {
-  Address = 1,
+  SetTargetGroup = 1,
+  // Address = 1,
+  Address,
   Shipping,
   Payment,
   Review,
@@ -32,22 +34,37 @@ export interface CheckoutStepDefinition {
 export const CHECKOUT_STEPS: CheckoutStepDefinition[] = [
   {
     index: 0,
-    link: paths.checkoutAddress,
-    name: "Address",
+    link: paths.checkoutSetTargetGroup,
+    name: "Set target group",
+    nextActionName: "Continue to Create job ad(s)",
+    onlyIfShippingRequired: false,
+    step: CheckoutStep.SetTargetGroup,
+  },
+  {
+    // index: 0,
+    index: 1,
+    // link: paths.checkoutAddress,
+    link: paths.checkoutCreateJobAd,
+    // name: "Address",
+    name: "Create Job ad(s)",
     nextActionName: "Continue to Shipping",
     onlyIfShippingRequired: false,
     step: CheckoutStep.Address,
   },
   {
-    index: 1,
-    link: paths.checkoutShipping,
-    name: "Shipping",
+    // index: 1,
+    index: 2,
+    // link: paths.checkoutShipping,
+    link: paths.checkoutAddress,
+    // name: "Shipping",
+    name: "Address",
     nextActionName: "Continue to Payment",
     onlyIfShippingRequired: true,
     step: CheckoutStep.Shipping,
   },
   {
-    index: 2,
+    // index: 2,
+    index: 3,
     link: paths.checkoutPayment,
     name: "Payment",
     nextActionName: "Continue to Review",
@@ -55,7 +72,8 @@ export const CHECKOUT_STEPS: CheckoutStepDefinition[] = [
     step: CheckoutStep.Payment,
   },
   {
-    index: 3,
+    // index: 3,
+    index: 4,
     link: paths.checkoutReview,
     name: "Review",
     nextActionName: "Place order",
@@ -63,7 +81,8 @@ export const CHECKOUT_STEPS: CheckoutStepDefinition[] = [
     step: CheckoutStep.Review,
   },
   {
-    index: 4,
+    // index: 4,
+    index: 5,
     link: paths.checkoutPaymentConfirm,
     name: "Payment confirm",
     onlyIfShippingRequired: false,
@@ -105,6 +124,9 @@ export const prepareCartSummaryProducts = (
   }));
 
 const continueButtonTextMap: Partial<Record<CheckoutStep, JSX.Element>> = {
+  [CheckoutStep.SetTargetGroup]: (
+    <FormattedMessage {...checkoutMessages.setTargetGroup} />
+  ),
   [CheckoutStep.Address]: (
     <FormattedMessage {...checkoutMessages.addressNextActionName} />
   ),

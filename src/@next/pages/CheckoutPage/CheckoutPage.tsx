@@ -10,8 +10,12 @@ import { CheckoutProgressBar } from "@components/molecules";
 import {
   adyenNotNegativeConfirmationStatusCodes,
   CartSummary,
+  // CreateJobTitleForm
+  CreateJobAd,
   PaymentGatewaysList,
+  SetTargetGroup,
   translateAdyenConfirmationError,
+  WorkAddress,
 } from "@components/organisms";
 import { Checkout } from "@components/templates";
 import { useRedirectToCorrectCheckoutStep } from "@hooks";
@@ -19,10 +23,10 @@ import { paths } from "@paths";
 import { ICardData, IFormError } from "@types";
 
 import {
-  CheckoutAddressSubpage,
+  // CheckoutAddressSubpage,
   CheckoutPaymentSubpage,
   CheckoutReviewSubpage,
-  CheckoutShippingSubpage,
+  // CheckoutShippingSubpage,
 } from "./subpages";
 import {
   CHECKOUT_STEPS,
@@ -62,6 +66,25 @@ const CheckoutPage: React.FC<NextPage> = () => {
   const [submitInProgress, setSubmitInProgress] = useState(false);
   const [paymentConfirmation, setPaymentConfirmation] = useState(false);
 
+  const [campaignId, setCampaignId] = useState("");
+
+  const [jobData, setJobData] = useState({
+    title: "",
+    industry: "",
+    education: "",
+    jobDescription: "",
+    linkToJobDetailPage: "",
+    linkToJobAppPage: "",
+    expYear: "",
+    hoursPerWeek: [],
+    salaryInterval: "",
+    contactInfoName: "",
+    contactPhone: "",
+    currency: "",
+    period: "",
+    employmentType: "",
+  });
+
   const [selectedPaymentGateway, setSelectedPaymentGateway] = useState<
     string | undefined
   >(payment?.gateway);
@@ -74,7 +97,6 @@ const CheckoutPage: React.FC<NextPage> = () => {
   >([]);
   const checkoutGatewayFormRef = useRef<HTMLFormElement>(null);
   const pageCompleteRef = useRef<SubpageCompleteHandler>(null);
-
   const steps = getAvailableSteps(items);
   const { activeStepIndex, activeStep } = getCurrentStep(pathname, steps);
   const handleStepSubmitSuccess = stepSubmitSuccessHandler(
@@ -99,8 +121,21 @@ const CheckoutPage: React.FC<NextPage> = () => {
 
   const checkoutSubpage = useMemo(() => {
     const subpageMapping: Partial<Record<CheckoutStep, JSX.Element>> = {
-      [CheckoutStep.Address]: <CheckoutAddressSubpage {...pageProps} />,
-      [CheckoutStep.Shipping]: <CheckoutShippingSubpage {...pageProps} />,
+      [CheckoutStep.SetTargetGroup]: (
+        <SetTargetGroup {...pageProps} setCampaignId={setCampaignId} />
+      ),
+      // [CheckoutStep.Address]: <CheckoutAddressSubpage {...pageProps} />,
+      [CheckoutStep.Address]: (
+        <CreateJobAd
+          {...pageProps}
+          campaignId={campaignId}
+          setJobData={setJobData}
+          // setIndustry={setIndustry}
+          // setTitle={setTitle}
+        />
+      ),
+      // [CheckoutStep.Shipping]: <CheckoutShippingSubpage {...pageProps} />,
+      [CheckoutStep.Shipping]: <WorkAddress {...pageProps} />,
       [CheckoutStep.Payment]: (
         <CheckoutPaymentSubpage
           {...pageProps}
@@ -111,6 +146,7 @@ const CheckoutPage: React.FC<NextPage> = () => {
       [CheckoutStep.Review]: (
         <CheckoutReviewSubpage
           {...pageProps}
+          jobData={jobData}
           paymentGatewayFormRef={checkoutGatewayFormRef}
           selectedPaymentGatewayToken={selectedPaymentGatewayToken}
         />
@@ -277,6 +313,7 @@ const CheckoutPage: React.FC<NextPage> = () => {
       handlePaymentConfirm();
     }
   }, [pathname, query, submitInProgress, checkout]);
+  // console.log(activeStep.step);
 
   return cartLoaded && !items?.length ? (
     <Redirect url={paths.cart} />

@@ -29,3 +29,5 @@ declare module ".*/scss/variables.scss" {
   };
   export = content;
 }
+
+declare module "filestack-react";

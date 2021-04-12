@@ -137,7 +137,8 @@ export const checkoutMessages = defineMessages({
     defaultMessage: "Address",
   },
   stepNameShipping: {
-    defaultMessage: "Shipping",
+    // defaultMessage: "Shipping",
+    defaultMessage: "Address",
   },
   stepNamePayment: {
     defaultMessage: "Payment",
@@ -145,8 +146,12 @@ export const checkoutMessages = defineMessages({
   stepNameReview: {
     defaultMessage: "Review",
   },
+  setTargetGroup: {
+    defaultMessage: "Continue to Create job ad(s)",
+  },
   addressNextActionName: {
-    defaultMessage: "Continue to Shipping",
+    // defaultMessage: "Continue to Shipping",
+    defaultMessage: "Continue to Address",
   },
   shippingNextActionName: {
     defaultMessage: "Continue to Payment",

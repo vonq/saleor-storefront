@@ -69,6 +69,12 @@ const generateSteps = (
       case "Shipping":
         name = intl.formatMessage(checkoutMessages.stepNameShipping);
         break;
+      // case "Create Job ad(s)":
+      //   name = intl.formatMessage(checkoutMessages.stepNameAddress);
+      //   break;
+      // case "Address":
+      //   name = intl.formatMessage(checkoutMessages.stepNameShipping);
+      //   break;
       case "Payment":
         name = intl.formatMessage(checkoutMessages.stepNamePayment);
         break;
@@ -76,6 +82,7 @@ const generateSteps = (
         name = intl.formatMessage(checkoutMessages.stepNameReview);
         break;
     }
+
     return (
       <S.Step key={step.index}>
         <Link href={step.link}>
