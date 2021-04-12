@@ -1,5 +1,5 @@
 export const industries = [
-  { industry: "Advertising / Communications / Media" },
+  { industry: "Advertising / Communications / Media", enum: "" },
   { industry: "Agriculture" },
   { industry: "Army / Police / Fire brigade" },
   { industry: "Automotive" },
@@ -98,15 +98,12 @@ export const inds = [
 ];
 
 export const employmentTypes = [
-  { type: "Fixed term", enum: "FIXED_TERM" },
-  {
-    type: "Fixed term with option for permanent",
-    enum: "FIXED_TERM_WITH_PERMAMENT",
-  },
-  { type: "Freelance", enum: "FREELANCE" },
-  { type: "Internship", enum: "INTERSHIP" },
-  { type: "Permanent", enum: "PERMAMENT" },
-  { type: "Traineeship", enum: "TRAINEESHIP" },
+  { type: "Fixed term" },
+  { type: "Fixed term with option for permanent" },
+  { type: "Freelance" },
+  { type: "Internship" },
+  { type: "Permanent" },
+  { type: "Traineeship" },
 ];
 
 export const senioritis = [
@@ -118,15 +115,12 @@ export const senioritis = [
 ];
 
 export const currencies = [
-  { currency: "€", enum: "EUR" },
-  { currency: "£", enum: "GBP" },
-  { currency: "$", enum: "USD" },
+  { currency: "€" },
+  { currency: "£" },
+  { currency: "$" },
 ];
 
-export const periods = [
-  { period: "Mothly", enum: "MONTHLY" },
-  { period: "Yearly", enum: "YEARLY" },
-];
+export const periods = [{ period: "Mothly" }, { period: "Yearly" }];
 
 export enum CheckoutStep {
   Address = 1,

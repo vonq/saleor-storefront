@@ -7,4 +7,5 @@ export interface IProps {
   paymentMethodName?: string;
   email?: string;
   errors?: IFormError[];
+  jobData?: any;
 }

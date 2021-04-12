@@ -13,6 +13,7 @@ import {
   // CreateJobTitleForm
   CreateJobAd,
   PaymentGatewaysList,
+  SetTargetGroup,
   translateAdyenConfirmationError,
   WorkAddress,
 } from "@components/organisms";
@@ -65,6 +66,25 @@ const CheckoutPage: React.FC<NextPage> = () => {
   const [submitInProgress, setSubmitInProgress] = useState(false);
   const [paymentConfirmation, setPaymentConfirmation] = useState(false);
 
+  const [campaignId, setCampaignId] = useState("");
+
+  const [jobData, setJobData] = useState({
+    title: "",
+    industry: "",
+    education: "",
+    jobDescription: "",
+    linkToJobDetailPage: "",
+    linkToJobAppPage: "",
+    expYear: "",
+    hoursPerWeek: [],
+    salaryInterval: "",
+    contactInfoName: "",
+    contactPhone: "",
+    currency: "",
+    period: "",
+    employmentType: "",
+  });
+
   const [selectedPaymentGateway, setSelectedPaymentGateway] = useState<
     string | undefined
   >(payment?.gateway);
@@ -101,8 +121,19 @@ const CheckoutPage: React.FC<NextPage> = () => {
 
   const checkoutSubpage = useMemo(() => {
     const subpageMapping: Partial<Record<CheckoutStep, JSX.Element>> = {
+      [CheckoutStep.SetTargetGroup]: (
+        <SetTargetGroup {...pageProps} setCampaignId={setCampaignId} />
+      ),
       // [CheckoutStep.Address]: <CheckoutAddressSubpage {...pageProps} />,
-      [CheckoutStep.Address]: <CreateJobAd {...pageProps} />,
+      [CheckoutStep.Address]: (
+        <CreateJobAd
+          {...pageProps}
+          campaignId={campaignId}
+          setJobData={setJobData}
+          // setIndustry={setIndustry}
+          // setTitle={setTitle}
+        />
+      ),
       // [CheckoutStep.Shipping]: <CheckoutShippingSubpage {...pageProps} />,
       [CheckoutStep.Shipping]: <WorkAddress {...pageProps} />,
       [CheckoutStep.Payment]: (
@@ -115,6 +146,7 @@ const CheckoutPage: React.FC<NextPage> = () => {
       [CheckoutStep.Review]: (
         <CheckoutReviewSubpage
           {...pageProps}
+          jobData={jobData}
           paymentGatewayFormRef={checkoutGatewayFormRef}
           selectedPaymentGatewayToken={selectedPaymentGatewayToken}
         />

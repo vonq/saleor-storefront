@@ -1,8 +1,8 @@
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-import { ErrorMessage } from "@components/atoms";
-import { AddressSummary } from "@components/molecules";
+// import { ErrorMessage } from "@components/atoms";
+// import { AddressSummary } from "@components/molecules";
 import { checkoutMessages } from "@temp/intl";
 
 import * as S from "./styles";
@@ -18,13 +18,38 @@ const CheckoutReview: React.FC<IProps> = ({
   paymentMethodName,
   email,
   errors,
+  jobData,
 }) => {
   return (
     <S.Wrapper data-test="sectionTitle">
       <S.Title data-test="checkoutPageSubtitle">
         <FormattedMessage {...checkoutMessages.reviewOrder} />
       </S.Title>
-      <S.Grid>
+      <S.ReviewCard>
+        <p>{`Job title: ${jobData.title}`}</p>
+        <p>{`Industry: ${jobData.industry}`}</p>
+        <p>{`Education: ${jobData.education}`}</p>
+        <p>{`Experiance: ${jobData.expYear} ${
+          jobData.expYear === 1 ? "year" : "years"
+        }`}</p>
+        <p>{`Hours per week: ${jobData.hoursPerWeek[0]} - ${jobData.hoursPerWeek[1]}`}</p>
+        <p>{`Salary: ${jobData.salaryInterval[0]} - ${jobData.salaryInterval[1]} ${jobData.currency} ${jobData.period}`}</p>
+        <p>{`Employment type: ${jobData.employmentType}`}</p>
+        <p>{`Contacts: ${jobData.contactInfoName} ${jobData.contactPhone}`}</p>
+        <p>
+          Job detail page:{" "}
+          <S.ReviewLink
+            href={jobData.linkToJobDetailPage}
+          >{`${jobData.linkToJobDetailPage}`}</S.ReviewLink>
+        </p>
+        <p>
+          Job application page:{" "}
+          <S.ReviewLink
+            href={jobData.linkToJobAppPage}
+          >{`${jobData.linkToJobAppPage}`}</S.ReviewLink>
+        </p>
+      </S.ReviewCard>
+      {/* <S.Grid>
         <section data-test="shippingAddressSection">
           <S.SubTitle>
             <FormattedMessage {...checkoutMessages.shippingAddress} />
@@ -60,7 +85,7 @@ const CheckoutReview: React.FC<IProps> = ({
       </S.Grid>
       <S.ErrorMessages>
         <ErrorMessage errors={errors} />
-      </S.ErrorMessages>
+      </S.ErrorMessages> */}
     </S.Wrapper>
   );
 };

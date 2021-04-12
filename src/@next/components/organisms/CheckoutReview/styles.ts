@@ -38,3 +38,16 @@ export const TextSummary = styled.p`
 export const ErrorMessages = styled.div`
   margin-top: 30px;
 `;
+
+export const ReviewCard = styled.div`
+  padding: 16px;
+  background-color: #f5f5f5;
+`;
+
+export const ReviewLink = styled.a`
+  color: blue;
+
+  $:hover {
+    text-decoration: underline;
+  }
+`;

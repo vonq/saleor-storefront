@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 // import { Editor } from "@tinymce/tinymce-react";
 import { Editor } from "@tinymce/tinymce-react";
-import { FieldArray } from "formik";
+// import { FieldArray } from "formik";
 import React, { useCallback, useState } from "react";
 
 import { InputSelect, TextField } from "@components/molecules";
@@ -10,7 +10,8 @@ import {
   currencies,
   educationLvl,
   employmentTypes,
-  industries,
+  inds,
+  // industries,
   periods,
   senioritis,
 } from "./constants";
@@ -79,7 +80,7 @@ export const CreateJobContent: React.FC<Props> = ({
             <S.Name>Industry</S.Name>
             <S.Sku>Please fill in the industry of the job.</S.Sku>
             <InputSelect
-              options={industries}
+              options={inds}
               optionLabelKey="industry"
               optionValueKey="industry"
               // placeholder="Select"
@@ -161,9 +162,9 @@ export const CreateJobContent: React.FC<Props> = ({
               ads.
             </S.Sku>
             <TextField
-              name="jobDatailLink"
+              name="jobDetailLink"
               label="https://careers.company.com/job"
-              value={values!.jobDatailLink}
+              value={values!.jobDetailLink}
               {...basicInputProps()}
             />
             <S.Name>Link to application page</S.Name>
@@ -173,9 +174,9 @@ export const CreateJobContent: React.FC<Props> = ({
               be the job detail page.
             </S.Sku>
             <TextField
-              name="aplicationLink"
+              name="applicationLink"
               label="https://careers.company.com/job/apply"
-              value={values!.aplicationLink}
+              value={values!.applicationLink}
               {...basicInputProps()}
             />
             <S.SubTitle>2 Job criteria</S.SubTitle>
@@ -193,33 +194,38 @@ export const CreateJobContent: React.FC<Props> = ({
             </S.Experience>
             <S.Name>Level of education</S.Name>
             <S.CheckboxArea>
-              <FieldArray
+              {/* <FieldArray
                 name="educationLevel"
                 render={arrayHelpers => (
-                  <>
-                    {educationLvl.map(level => (
-                      // eslint-disable-next-line jsx-a11y/label-has-associated-control
-                      <label key={level.value}>
-                        <input
-                          type="checkbox"
-                          checked={values.educationLevel.includes(level.value)}
-                          onChange={e => {
-                            if (e.target.checked) {
-                              arrayHelpers.push(level.value);
-                            } else {
-                              const idx = values.educationLevel.indexOf(
-                                level.value
-                              );
-                              arrayHelpers.remove(idx);
-                            }
-                          }}
-                        />
-                        <S.CheckboxSpan>{`${level.value}`}</S.CheckboxSpan>
-                      </label>
-                    ))}
-                  </>
-                )}
-              />
+                  <> */}
+              {educationLvl.map(level => (
+                // eslint-disable-next-line jsx-a11y/label-has-associated-control
+                <label key={level.value}>
+                  <input
+                    type="checkbox"
+                    name="educationLevel"
+                    // checked={values.educationLevel.includes(level.value)}
+                    // onChange={e => {
+                    //   if (e.target.checked) {
+                    //     arrayHelpers.push(level.value);
+                    //   } else {
+                    //     const idx = values.educationLevel.indexOf(
+                    //       level.value
+                    //     );
+                    //     arrayHelpers.remove(idx);
+                    //   }
+                    // }}
+                    value={level.enum}
+                    onChange={event => {
+                      setFieldValue(event.target.name, event.target.value);
+                    }}
+                  />
+                  <S.CheckboxSpan>{`${level.value}`}</S.CheckboxSpan>
+                </label>
+              ))}
+              {/* </> */}
+              {/* )}
+              /> */}
             </S.CheckboxArea>
             <S.Name>Employment Type</S.Name>
             <S.InputSelectWrapper>

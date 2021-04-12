@@ -27,6 +27,7 @@ export const paths = {
   checkoutReview: `${checkoutBaseUrl}review`,
   checkoutShipping: `${checkoutBaseUrl}shipping`,
   checkoutCreateJobAd: `${checkoutBaseUrl}create-job-ad`,
+  checkoutSetTargetGroup: `${checkoutBaseUrl}set-target-group`,
   /**
    * Account section
    */
