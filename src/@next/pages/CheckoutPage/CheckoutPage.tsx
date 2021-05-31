@@ -315,7 +315,7 @@ const CheckoutPage: React.FC<NextPage> = () => {
   }, [pathname, query, submitInProgress, checkout]);
   // console.log(activeStep.step);
 
-  return cartLoaded && !items?.length ? (
+  return isFullyLoaded && !items?.length ? (
     <Redirect url={paths.cart} />
   ) : (
     <Checkout
