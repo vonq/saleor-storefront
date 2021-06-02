@@ -98,7 +98,9 @@ const CheckoutPage: React.FC<NextPage> = () => {
   const checkoutGatewayFormRef = useRef<HTMLFormElement>(null);
   const pageCompleteRef = useRef<SubpageCompleteHandler>(null);
   const steps = getAvailableSteps(items);
-  const { activeStepIndex, activeStep } = getCurrentStep(pathname, steps);
+  const { activeStepIndex, activeStep } = useMemo(() => {
+    return getCurrentStep(pathname, steps, campaignId);
+  }, [pathname, steps, campaignId]);
   const handleStepSubmitSuccess = stepSubmitSuccessHandler(
     push,
     steps,
@@ -122,7 +124,11 @@ const CheckoutPage: React.FC<NextPage> = () => {
   const checkoutSubpage = useMemo(() => {
     const subpageMapping: Partial<Record<CheckoutStep, JSX.Element>> = {
       [CheckoutStep.SetTargetGroup]: (
-        <SetTargetGroup {...pageProps} setCampaignId={setCampaignId} />
+        <SetTargetGroup
+          {...pageProps}
+          campaignId={campaignId}
+          setCampaignId={setCampaignId}
+        />
       ),
       // [CheckoutStep.Address]: <CheckoutAddressSubpage {...pageProps} />,
       [CheckoutStep.Address]: (
@@ -153,7 +159,7 @@ const CheckoutPage: React.FC<NextPage> = () => {
       ),
     };
     return subpageMapping[activeStep.step];
-  }, [activeStep.step]);
+  }, [activeStep.step, campaignId]);
 
   const handleProcessPayment = async (
     gateway: string,

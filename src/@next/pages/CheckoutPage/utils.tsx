@@ -157,9 +157,13 @@ export const getAvailableSteps = (items: IItems | undefined) => {
 
 export const getCurrentStep = (
   pathname: string,
-  steps: CheckoutStepDefinition[]
+  steps: CheckoutStepDefinition[],
+  campaignId: string
 ) => {
   const activeStepIndex = (() => {
+    if (!campaignId) {
+      return 0;
+    }
     const matchingStepIndex = steps.findIndex(({ link }) => link === pathname);
     return matchingStepIndex !== -1 ? matchingStepIndex : steps.length - 1;
   })();
