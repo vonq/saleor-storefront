@@ -1,15 +1,24 @@
 /* eslint-disable no-console */
+import { useCart } from "@saleor/sdk";
 import { Formik } from "formik";
-import React, { forwardRef, useImperativeHandle, useRef } from "react";
+import React, {
+  forwardRef,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
+
+import { TypedMetadataUpdateMutation } from "@app/queries/updateMetadata";
 
 import { CheckoutStep } from "../../../pages/CheckoutPage/utils";
-import { TypedCampaingCreateMutation } from "./queries";
+import { TypedCheckoutCreateMutation } from "./queries";
 import { SetTargetGroupContent } from "./SetTargetGroupContent";
 import * as S from "./styles";
 
 export interface ISetTargetGroupProps {
   changeSubmitProgress: any;
   onSubmitSuccess: any;
+  campaignId?: any;
   setCampaignId: (args?: any) => void;
 }
 
@@ -23,9 +32,14 @@ interface FormValues {
 }
 
 export const SetTargetGroup: React.FC<ISetTargetGroupProps> = forwardRef(
-  ({ changeSubmitProgress, onSubmitSuccess, setCampaignId }, ref) => {
+  (
+    { changeSubmitProgress, onSubmitSuccess, campaignId, setCampaignId },
+    ref
+  ) => {
     const checkoutSetTargetGroupFormId = "set-target-group";
     const checkoutSetTargetGroupFormRef = useRef<HTMLFormElement>(null);
+    const { items } = useCart();
+    const [checkoutCreated, setCheckoutCreated] = useState(false);
 
     const initialValues: FormValues = {
       title: "",
@@ -42,6 +56,36 @@ export const SetTargetGroup: React.FC<ISetTargetGroupProps> = forwardRef(
       );
     });
 
+    if (!campaignId) {
+      return (
+        <TypedCheckoutCreateMutation
+          onCompleted={data => {
+            const id = data?.checkoutCreate?.checkout?.id;
+            if (id) {
+              setCampaignId(id);
+            }
+          }}
+          onError={error => console.log(error, "error from on Error")}
+        >
+          {(mutation, { loading, data }) => {
+            if (checkoutCreated) {
+              return null;
+            }
+            setCheckoutCreated(true);
+            mutation({
+              variables: {
+                lines: (items || []).map(item => ({
+                  quantity: item.quantity,
+                  variantId: item.variant.id,
+                })),
+              },
+            });
+            return null;
+          }}
+        </TypedCheckoutCreateMutation>
+      );
+    }
+
     return (
       <>
         <S.Title>Set target group</S.Title>
@@ -49,17 +93,16 @@ export const SetTargetGroup: React.FC<ISetTargetGroupProps> = forwardRef(
           Fill in the needed information for your job posting(s). Some fields
           are required by job boards to be able to post on it.
         </S.Desc>
-        <TypedCampaingCreateMutation
+        <TypedMetadataUpdateMutation
           onCompleted={data => {
-            // console.log(data, "data from onCompleted");
-            // console.log(data.campaignCreate.campaign.id);
-            setCampaignId(data.campaignCreate.campaign.id);
+            console.log(
+              data,
+              "SetTargetGroup on metadata update mutation complete"
+            );
           }}
           onError={error => console.log(error, "error from on Error")}
         >
           {(mutation, { loading, data }) => {
-            console.log(data, "dataaaaaaaaaaaaaa");
-
             return (
               <Formik
                 initialValues={initialValues}
@@ -74,22 +117,35 @@ export const SetTargetGroup: React.FC<ISetTargetGroupProps> = forwardRef(
                   },
                   actions
                 ) => {
-                  console.log(
-                    title,
-                    jobFunction,
-                    country,
-                    seniority,
-                    industry,
-                    education
-                  );
                   mutation({
                     variables: {
-                      title,
-                      jobFunction,
-                      country: country.code,
-                      seniority: seniority.enum,
-                      industry: industry.enum,
-                      education: education.enum,
+                      id: campaignId,
+                      metadata: [
+                        {
+                          key: "jobTitle",
+                          value: title,
+                        },
+                        {
+                          key: "jobFunction",
+                          value: jobFunction,
+                        },
+                        {
+                          key: "country",
+                          value: country.code,
+                        },
+                        {
+                          key: "seniority",
+                          value: seniority.enum,
+                        },
+                        {
+                          key: "industry",
+                          value: industry.enum,
+                        },
+                        {
+                          key: "education",
+                          value: education.enum,
+                        },
+                      ],
                     },
                   });
                   actions.setSubmitting(false);
@@ -120,7 +176,7 @@ export const SetTargetGroup: React.FC<ISetTargetGroupProps> = forwardRef(
               </Formik>
             );
           }}
-        </TypedCampaingCreateMutation>
+        </TypedMetadataUpdateMutation>
       </>
     );
   }
