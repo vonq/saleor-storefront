@@ -5,39 +5,7 @@ import gql from "graphql-tag";
 
 import { TypedMutation } from "../../../../core/mutations";
 
-const campaingCreate = gql`
-  mutation CampaingCreate(
-    $title: String!
-    $jobFunction: String!
-    $country: CountryCode!
-    $seniority: SeniorityEnum!
-    $industry: IndustryEnum!
-    $education: EducationLeavelEnum!
-  ) {
-    campaignCreate(
-      input: {
-        title: $title,
-        jobFunction: $jobFunction,
-        country: $country,
-        seniority: $seniority,
-        industry: $industry,
-        education: $education
-      }
-    ) {
-      campaignErrors {
-        message
-      }
-      campaign {
-        title
-        id
-        user {
-          id
-        }
-      }
-    }
-  }
-`;
-
+// ToDo: remove and merge with common updateMetadata
 enum CampaignCountry {
   AF,
   AX,
@@ -291,20 +259,6 @@ enum CampaignCountry {
   ZW,
 }
 
-enum CampaignErrorCode {
-  INVALID,
-  DUPLICATED_INPUT_ITEM,
-  GRAPHQL_ERROR,
-  UNIQUE,
-  REQUIRED,
-}
-
-type CampaignError = {
-  field: String;
-  message: String;
-  code: CampaignErrorCode;
-};
-
 export type CampaignType = {
   title: String;
   country: CampaignCountry;
@@ -316,29 +270,80 @@ export type CampaignType = {
   user: User;
 };
 
-export interface CampaignCreate {
-  campaignCreate: any;
+// Creating Checkout Object
+
+export type CheckoutType = {
+  id: any;
+};
+
+enum CheckoutErrorCode {
+  INVALID,
+  DUPLICATED_INPUT_ITEM,
+  GRAPHQL_ERROR,
+  UNIQUE,
+  REQUIRED,
+}
+
+type CheckoutError = {
+  field: String;
+  message: String;
+  code: CheckoutErrorCode;
+};
+
+export type CheckoutLineInput = {
+  quantity: number;
+  variantId: string;
+};
+export interface CheckoutCreate {
+  checkoutCreate: any;
   data: any;
-  campaignErrors: [CampaignError];
-  campaign: CampaignType;
+  checkoutErrors: [CheckoutError];
+  checkout: CheckoutType;
 }
 
-export interface CampaignCreateVariables {
-  title: string;
-  jobFunction: string;
-  country: string;
-  seniority: string;
-  industry: string;
-  education: string;
+export interface CheckoutCreateVariables {
+  lines: CheckoutLineInput[];
 }
 
-export interface RegisterAccountVariables {
-  email: string;
-  password: string;
-  redirectUrl: string;
-}
+export const createCheckout = gql`
+  mutation CheckoutCreate($lines: [CheckoutLineInput]!) {
+    checkoutCreate(
+      input: {
+        channel: "default-channel"
+        email: "customer@example.com"
+        lines: $lines
+        shippingAddress: {
+          firstName: "John"
+          lastName: "Doe"
+          streetAddress1: "1470  Pinewood Avenue"
+          city: "Michigan"
+          postalCode: "49855"
+          country: US
+          countryArea: "MI"
+        }
+        billingAddress: {
+          firstName: "John"
+          lastName: "Doe"
+          streetAddress1: "1470  Pinewood Avenue"
+          city: "Michigan"
+          postalCode: "49855"
+          country: US
+          countryArea: "MI"
+        }
+      }
+    ) {
+      checkout {
+        id
+      }
+      checkoutErrors {
+        field
+        code
+      }
+    }
+  }
+`;
 
-export const TypedCampaingCreateMutation = TypedMutation<
-  CampaignCreate,
-  CampaignCreateVariables
->(campaingCreate);
+export const TypedCheckoutCreateMutation = TypedMutation<
+  CheckoutCreate,
+  CheckoutCreateVariables
+>(createCheckout);
