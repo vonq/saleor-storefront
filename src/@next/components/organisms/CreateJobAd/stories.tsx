@@ -9,7 +9,6 @@ import { ICreateJobAdProps } from "./CreateJobAd";
 const DEFAULT_PROPS: ICreateJobAdProps = {
   changeSubmitProgress: () => {},
   onSubmitSuccess: () => {},
-  campaignId: "",
 };
 
 storiesOf("@components/organisms/CreateJobAd", module)

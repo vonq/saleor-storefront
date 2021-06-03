@@ -26,7 +26,6 @@ export interface ISubmitCheckoutData {
 interface CheckoutReviewSubpageProps extends SubpageBaseProps {
   selectedPaymentGatewayToken?: string;
   paymentGatewayFormRef: React.RefObject<HTMLFormElement>;
-  jobData: any;
 }
 
 const CheckoutReviewSubpageWithRef: RefForwardingComponent<
@@ -38,7 +37,6 @@ const CheckoutReviewSubpageWithRef: RefForwardingComponent<
     paymentGatewayFormRef,
     changeSubmitProgress,
     onSubmitSuccess,
-    jobData,
   },
   ref
 ) => {
@@ -113,7 +111,6 @@ const CheckoutReviewSubpageWithRef: RefForwardingComponent<
       paymentMethodName={getPaymentMethodDescription()}
       email={checkout?.email}
       errors={errors}
-      jobData={jobData}
     />
   );
 };

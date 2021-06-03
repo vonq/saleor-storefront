@@ -1,6 +1,6 @@
 import gql from "graphql-tag";
 
-import { TypedMutation } from "../../../../core/mutations";
+import { TypedMutation } from "@temp/core/mutations";
 
 export type CheckoutType = {
   id: any;
@@ -24,79 +24,43 @@ export type CheckoutLineInput = {
   quantity: number;
   variantId: string;
 };
-export interface CheckoutCreate {
+export interface ShippingAddressUpdate {
   checkoutCreate: any;
   data: any;
   checkoutErrors: [CheckoutError];
   checkout: CheckoutType;
 }
 
-export interface CheckoutCreateVariables {
-  lines: CheckoutLineInput[];
+type CountryDisplay = {
+  code: string;
+  country: string;
+};
+
+type Address = {
+  id: string;
+  firstName: string;
+  lastName: string;
+  companyName: string;
+  streetAddress1: string;
+  streetAddress2: string;
+  city: string;
+  cityArea: string;
+  postalCode: string;
+  country: CountryDisplay;
+  countryArea: string;
+  phone: String;
+  isDefaultShippingAddress: Boolean;
+  isDefaultBillingAddress: Boolean;
+};
+
+export interface ShippingAddressUpdateVariables {
+  email: string;
+  shippingAddress: Address;
 }
 
-const TaxedMoney = `
-  gross {
-    currency
-    amount
-  }
-  net {
-    currency
-    amount
-  }
-`;
-
-const Product = `
-  id
-  name
-  productType {
-    id
-    isShippingRequired
-  }
-  thumbnail {
-    alt
-    url
-  }
-`;
-
-const VariantPricingInfo = `
-  onSale
-  price {
-    ${TaxedMoney}
-  }
-  priceUndiscounted {
-    ${TaxedMoney}
-  }
-`;
-
-const ProductVariant = `
-  id
-  name
-  pricing {
-    ${VariantPricingInfo}
-  }
-  product {
-    ${Product}
-  }
-  quantityAvailable
-  sku
-`;
-
-const CheckoutLine = `
-  id
-  quantity
-  variant {
-    ${ProductVariant}
-  }
-  totalPrice {
-    ${TaxedMoney}
-  }
-  requiresShipping
-`;
-
-export const createCheckout = gql`
-  mutation CheckoutCreate($lines: [CheckoutLineInput]!) {
-    checkoutCreate(
+export const shippingAddressUpdate = gql`
+  mutation checkoutShippingAddressUpdate($email: String!; $shippingAddres: Address) {
+    shippingAddressUpdate(
       input: {
         channel: "default-channel"
         email: "customer@example.com"
@@ -123,9 +87,7 @@ export const createCheckout = gql`
     ) {
       checkout {
         id
-        lines {
-          ${CheckoutLine}
-        }
+        lines
       }
       checkoutErrors {
         field
@@ -135,7 +97,7 @@ export const createCheckout = gql`
   }
 `;
 
-export const TypedCheckoutCreateMutation = TypedMutation<
-  CheckoutCreate,
-  CheckoutCreateVariables
->(createCheckout);
+export const TypedShippingAddressUpdateMutation = TypedMutation<
+  ShippingAddressUpdate,
+  ShippingAddressUpdateVariables
+>(shippingAddressUpdate);

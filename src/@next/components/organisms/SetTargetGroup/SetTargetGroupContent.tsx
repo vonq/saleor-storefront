@@ -4,6 +4,7 @@ import React, { useCallback } from "react";
 
 import { InputSelect, TextField } from "@components/molecules";
 
+import { educationLvl } from "../CreateJobAd/constants";
 import { /* educationLvl, */ inds, senioritis } from "./constants";
 import * as S from "./styles";
 
@@ -82,7 +83,7 @@ export const SetTargetGroupContent: React.FC<Props> = ({
                   }}
                 />
               </div>
-              {/* <div>
+              <div>
                 <S.Name>Level of Education</S.Name>
                 <InputSelect
                   options={educationLvl}
@@ -95,7 +96,7 @@ export const SetTargetGroupContent: React.FC<Props> = ({
                     setFieldValue(name, value);
                   }}
                 />
-              </div> */}
+              </div>
             </S.RowWithTwoCells>
           </S.RowWithOneCell>
         </S.Wrapper>
