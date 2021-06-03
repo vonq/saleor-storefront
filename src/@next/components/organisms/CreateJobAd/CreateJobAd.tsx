@@ -7,9 +7,10 @@ import React, {
   useState,
 } from "react";
 
+import { TypedMetadataUpdateMutation } from "@app/queries/updateMetadata";
+
 import { CheckoutStep } from "./constants";
 import { CreateJobContent } from "./CreateJobContent";
-import { TypedJobInfoCreateMutation } from "./queries";
 import * as S from "./styles";
 
 export interface ICreateJobAdProps {
@@ -86,30 +87,30 @@ export const CreateJobAd: React.FC<ICreateJobAdProps> = forwardRef(
     return (
       <>
         <S.Title>Create your job ad(s)</S.Title>
-        <TypedJobInfoCreateMutation
+        <TypedMetadataUpdateMutation
           onCompleted={data => {
-            // console.log(data, "data from onCompleted");
-            if (data.jobInfoCreate.jobInfo === null) {
-              setJobData(backupData);
-            } else {
-              setJobData({
-                title: data.jobInfoCreate.jobInfo.title,
-                industry: data.jobInfoCreate.jobInfo.industry,
-                education: data.jobInfoCreate.jobInfo.education,
-                jobDescription: data.jobInfoCreate.jobInfo.jobDescription,
-                linkToJobDetailPage:
-                  data.jobInfoCreate.jobInfo.linkToJobDetailPage,
-                linkToJobAppPage: data.jobInfoCreate.jobInfo.linkToJobAppPage,
-                expYear: data.jobInfoCreate.jobInfo.expYear,
-                hoursPerWeek: data.jobInfoCreate.jobInfo.hoursPerWeek,
-                salaryInterval: data.jobInfoCreate.jobInfo.salaryInterval,
-                contactInfoName: data.jobInfoCreate.jobInfo.contactInfoName,
-                contactPhone: data.jobInfoCreate.jobInfo.contactPhone,
-                currency: data.jobInfoCreate.jobInfo.currency,
-                period: data.jobInfoCreate.jobInfo.period,
-                employmentType: data.jobInfoCreate.jobInfo.employmentType,
-              });
-            }
+            console.log(data, "data from onCompleted");
+            // if (data.jobInfoCreate.jobInfo === null) {
+            //   setJobData(backupData);
+            // } else {
+            //   setJobData({
+            //     title: data.jobInfoCreate.jobInfo.title,
+            //     industry: data.jobInfoCreate.jobInfo.industry,
+            //     education: data.jobInfoCreate.jobInfo.education,
+            //     jobDescription: data.jobInfoCreate.jobInfo.jobDescription,
+            //     linkToJobDetailPage:
+            //       data.jobInfoCreate.jobInfo.linkToJobDetailPage,
+            //     linkToJobAppPage: data.jobInfoCreate.jobInfo.linkToJobAppPage,
+            //     expYear: data.jobInfoCreate.jobInfo.expYear,
+            //     hoursPerWeek: data.jobInfoCreate.jobInfo.hoursPerWeek,
+            //     salaryInterval: data.jobInfoCreate.jobInfo.salaryInterval,
+            //     contactInfoName: data.jobInfoCreate.jobInfo.contactInfoName,
+            //     contactPhone: data.jobInfoCreate.jobInfo.contactPhone,
+            //     currency: data.jobInfoCreate.jobInfo.currency,
+            //     period: data.jobInfoCreate.jobInfo.period,
+            //     employmentType: data.jobInfoCreate.jobInfo.employmentType,
+            //   });
+            // }
             onSubmitSuccess(CheckoutStep.Shipping);
             // setIndustry(data.jobInfoCreate.jobInfo.industry);
             // setTitle(data.jobInfoCreate.jobInfo.title);
@@ -169,22 +170,50 @@ export const CreateJobAd: React.FC<ICreateJobAdProps> = forwardRef(
                   actions.setSubmitting(false);
                   mutation({
                     variables: {
-                      campaign: campaignId,
-                      title: jobTitle,
-                      industry: industry.enum,
-                      jobDescription,
-                      linkToJobDetailPage: jobDetailLink,
-                      linkToJobAppPage: applicationLink,
-                      expYear: jobExperience,
-                      education: educationLevel,
-                      employmentType: employmentType.enum,
-                      seniority: seniority.enum,
-                      hoursPerWeek: [minHours, maxHours],
-                      salaryInterval: [minSalary, maxSalary],
-                      currency: currency.enum,
-                      period: period.enum,
-                      contactInfoName: contactName,
-                      contactPhone,
+                      id: campaignId,
+                      metadata: [
+                        { key: "vacancy.jobTitle", value: jobTitle },
+                        { key: "vacancy.industry", value: industry.enum },
+                        { key: "vacancy.description", value: jobDescription },
+                        {
+                          key: "vacancy.tracking.vacancyUrl",
+                          value: jobDetailLink,
+                        },
+                        {
+                          key: "vacancy.tracking.applicationUrl",
+                          value: applicationLink,
+                        },
+                        { key: "vacancy.expYear", value: jobExperience },
+                        { key: "vacancy.education", value: educationLevel },
+                        {
+                          key: "vacancy.employmentType",
+                          value: employmentType.enum,
+                        },
+                        { key: "vacancy.seniority", value: seniority.enum },
+                        {
+                          key: "vacancy.workingHours.minimum",
+                          value: minHours,
+                        },
+                        {
+                          key: "vacancy.workingHours.maximum",
+                          value: maxHours,
+                        },
+                        {
+                          key: "vacancy.salary.minimumAmount",
+                          value: minSalary,
+                        },
+                        {
+                          key: "vacancy.salary.maximumAmount",
+                          value: maxSalary,
+                        },
+                        {
+                          key: "vacancy.salary.currency",
+                          value: currency.enum,
+                        },
+                        { key: "vacancy.salary.perPeriod", value: period.enum },
+                        { key: "contactInfo.name", value: contactName },
+                        { key: "contactInfo.phoneNumber", value: contactPhone },
+                      ],
                     },
                   });
                   // onSubmitSuccess(CheckoutStep.Shipping);
@@ -214,7 +243,7 @@ export const CreateJobAd: React.FC<ICreateJobAdProps> = forwardRef(
               </Formik>
             );
           }}
-        </TypedJobInfoCreateMutation>
+        </TypedMetadataUpdateMutation>
       </>
     );
   }
