@@ -165,7 +165,7 @@ export const getCurrentStep = (
       return 0;
     }
     const matchingStepIndex = steps.findIndex(({ link }) => link === pathname);
-    return matchingStepIndex !== -1 ? matchingStepIndex : steps.length - 1;
+    return matchingStepIndex !== -1 ? matchingStepIndex : 0;
   })();
   const activeStep = steps[activeStepIndex];
 

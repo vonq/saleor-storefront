@@ -18,7 +18,7 @@ import {
   WorkAddress,
 } from "@components/organisms";
 import { Checkout } from "@components/templates";
-import { useRedirectToCorrectCheckoutStep } from "@hooks";
+// import { useRedirectToCorrectCheckoutStep } from "@hooks";
 import { paths } from "@paths";
 import { ICardData, IFormError } from "@types";
 
@@ -60,6 +60,7 @@ const CheckoutPage: React.FC<NextPage> = () => {
     createPayment,
     completeCheckout,
   } = useCheckout();
+  console.log("checkout:", checkout);
   const intl = useIntl();
   const isFullyLoaded = cartLoaded && checkoutLoaded;
 
@@ -298,7 +299,7 @@ const CheckoutPage: React.FC<NextPage> = () => {
     }
   };
 
-  useRedirectToCorrectCheckoutStep(cartLoaded);
+  // useRedirectToCorrectCheckoutStep(isFullyLoaded);
   useEffect(() => setSelectedPaymentGateway(payment?.gateway), [
     payment?.gateway,
   ]);
