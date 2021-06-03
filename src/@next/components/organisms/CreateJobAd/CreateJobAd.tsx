@@ -18,20 +18,17 @@ export interface ICreateJobAdProps {
   onSubmitSuccess: any;
   campaignId: any;
   setJobData?: any;
-  setIndustry?: any;
   setTitle?: any;
 }
 
 interface FormValues {
   jobTitle: string;
-  industry: any;
   jobDescription: string;
   jobDetailLink: string;
   applicationLink: string;
   jobExperience: string;
   educationLevel: string;
   employmentType: any;
-  seniority: any;
   minHours: string;
   maxHours: string;
   minSalary: string;
@@ -60,14 +57,12 @@ export const CreateJobAd: React.FC<ICreateJobAdProps> = forwardRef(
 
     const initialValues: FormValues = {
       jobTitle: "",
-      industry: { industry: "" },
       jobDescription: "",
       jobDetailLink: "",
       applicationLink: "",
       jobExperience: "",
       educationLevel: "",
       employmentType: "",
-      seniority: "",
       minHours: "",
       maxHours: "",
       minSalary: "",
@@ -95,7 +90,6 @@ export const CreateJobAd: React.FC<ICreateJobAdProps> = forwardRef(
             // } else {
             //   setJobData({
             //     title: data.jobInfoCreate.jobInfo.title,
-            //     industry: data.jobInfoCreate.jobInfo.industry,
             //     education: data.jobInfoCreate.jobInfo.education,
             //     jobDescription: data.jobInfoCreate.jobInfo.jobDescription,
             //     linkToJobDetailPage:
@@ -112,8 +106,6 @@ export const CreateJobAd: React.FC<ICreateJobAdProps> = forwardRef(
             //   });
             // }
             onSubmitSuccess(CheckoutStep.Shipping);
-            // setIndustry(data.jobInfoCreate.jobInfo.industry);
-            // setTitle(data.jobInfoCreate.jobInfo.title);
           }}
           onError={error => {
             console.log(error, "error from on Error");
@@ -131,14 +123,12 @@ export const CreateJobAd: React.FC<ICreateJobAdProps> = forwardRef(
                 onSubmit={(
                   {
                     jobTitle,
-                    industry,
                     jobDescription,
                     jobDetailLink,
                     applicationLink,
                     jobExperience,
                     educationLevel,
                     employmentType,
-                    seniority,
                     minHours,
                     maxHours,
                     minSalary,
@@ -152,14 +142,12 @@ export const CreateJobAd: React.FC<ICreateJobAdProps> = forwardRef(
                 ) => {
                   setBackupData({
                     title: jobTitle,
-                    industry: industry.industry,
                     jobDescription,
                     linkToJobDetailPage: jobDetailLink,
                     linkToJobAppPage: applicationLink,
                     expYear: jobExperience,
                     education: educationLevel,
                     employmentType: employmentType.type,
-                    seniority: seniority.seniority,
                     hoursPerWeek: [minHours, maxHours],
                     salaryInterval: [minSalary, maxSalary],
                     currency: currency.enum,
@@ -172,47 +160,45 @@ export const CreateJobAd: React.FC<ICreateJobAdProps> = forwardRef(
                     variables: {
                       id: campaignId,
                       metadata: [
-                        { key: "vacancy.jobTitle", value: jobTitle },
-                        { key: "vacancy.industry", value: industry.enum },
-                        { key: "vacancy.description", value: jobDescription },
+                        { key: "vacancy_jobTitle", value: jobTitle },
+                        { key: "vacancy_description", value: jobDescription },
                         {
-                          key: "vacancy.tracking.vacancyUrl",
+                          key: "vacancy_tracking_vacancy_url",
                           value: jobDetailLink,
                         },
                         {
-                          key: "vacancy.tracking.applicationUrl",
+                          key: "vacancy_tracking_applicationUrl",
                           value: applicationLink,
                         },
-                        { key: "vacancy.expYear", value: jobExperience },
-                        { key: "vacancy.education", value: educationLevel },
-                        {
-                          key: "vacancy.employmentType",
-                          value: employmentType.enum,
-                        },
-                        { key: "vacancy.seniority", value: seniority.enum },
-                        {
-                          key: "vacancy.workingHours.minimum",
-                          value: minHours,
-                        },
-                        {
-                          key: "vacancy.workingHours.maximum",
-                          value: maxHours,
-                        },
-                        {
-                          key: "vacancy.salary.minimumAmount",
-                          value: minSalary,
-                        },
-                        {
-                          key: "vacancy.salary.maximumAmount",
-                          value: maxSalary,
-                        },
-                        {
-                          key: "vacancy.salary.currency",
-                          value: currency.enum,
-                        },
-                        { key: "vacancy.salary.perPeriod", value: period.enum },
-                        { key: "contactInfo.name", value: contactName },
-                        { key: "contactInfo.phoneNumber", value: contactPhone },
+                        // { key: "vacancy.expYear", value: jobExperience },
+                        // { key: "vacancy.education", value: educationLevel },
+                        // {
+                        //   key: "vacancy.employmentType",
+                        //   value: employmentType.enum,
+                        // },
+                        // {
+                        //   key: "vacancy.workingHours.minimum",
+                        //   value: minHours,
+                        // },
+                        // {
+                        //   key: "vacancy.workingHours.maximum",
+                        //   value: maxHours,
+                        // },
+                        // {
+                        //   key: "vacancy.salary.minimumAmount",
+                        //   value: minSalary,
+                        // },
+                        // {
+                        //   key: "vacancy.salary.maximumAmount",
+                        //   value: maxSalary,
+                        // },
+                        // {
+                        //   key: "vacancy.salary.currency",
+                        //   value: currency.enum,
+                        // },
+                        // { key: "vacancy.salary.perPeriod", value: period.enum },
+                        { key: "contactInfo_name", value: contactName },
+                        { key: "contactInfo_phoneNumber", value: contactPhone },
                       ],
                     },
                   });
