@@ -23,9 +23,7 @@ export interface ISetTargetGroupProps {
 }
 
 interface FormValues {
-  title: any;
   jobFunction: any;
-  country: any;
   seniority: any;
   industry: any;
   education: any;
@@ -42,9 +40,7 @@ export const SetTargetGroup: React.FC<ISetTargetGroupProps> = forwardRef(
     const [checkoutCreated, setCheckoutCreated] = useState(false);
 
     const initialValues: FormValues = {
-      title: "",
       jobFunction: "",
-      country: "",
       seniority: "",
       industry: "",
       education: "",
@@ -107,14 +103,7 @@ export const SetTargetGroup: React.FC<ISetTargetGroupProps> = forwardRef(
               <Formik
                 initialValues={initialValues}
                 onSubmit={(
-                  {
-                    title,
-                    jobFunction,
-                    country,
-                    seniority,
-                    industry,
-                    education,
-                  },
+                  { jobFunction, seniority, industry, education },
                   actions
                 ) => {
                   mutation({
@@ -122,29 +111,21 @@ export const SetTargetGroup: React.FC<ISetTargetGroupProps> = forwardRef(
                       id: campaignId,
                       metadata: [
                         {
-                          key: "jobTitle",
-                          value: title,
-                        },
-                        {
-                          key: "jobFunction",
+                          key: "vacancy_taxonomy_jobCategoryId",
                           value: jobFunction,
                         },
                         {
-                          key: "country",
-                          value: country.code,
-                        },
-                        {
-                          key: "seniority",
+                          key: "vacancy_taxonomy_seniority",
                           value: seniority.enum,
                         },
                         {
-                          key: "industry",
+                          key: "vacancy_taxonomy_industry",
                           value: industry.enum,
                         },
-                        {
-                          key: "education",
-                          value: education.enum,
-                        },
+                        // {
+                        //   key: "education",
+                        //   value: education.enum,
+                        // },
                       ],
                     },
                   });

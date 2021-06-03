@@ -1,11 +1,10 @@
 /* eslint-disable react/no-unescaped-entities */
 // import { Editor } from "@tinymce/tinymce-react";
-import React, { useCallback, useContext } from "react";
+import React, { useCallback } from "react";
 
 import { InputSelect, TextField } from "@components/molecules";
-import { ShopContext } from "@temp/components/ShopProvider/context";
 
-import { educationLvl, inds, senioritis } from "./constants";
+import { /* educationLvl, */ inds, senioritis } from "./constants";
 import * as S from "./styles";
 
 interface Props {
@@ -33,7 +32,6 @@ export const SetTargetGroupContent: React.FC<Props> = ({
     () => ({ onBlur: handleBlur, onChange: handleChange }),
     [handleChange, handleBlur]
   );
-  const { countries } = useContext(ShopContext);
 
   return (
     <form
@@ -44,13 +42,6 @@ export const SetTargetGroupContent: React.FC<Props> = ({
       <S.JobForm>
         <S.Wrapper>
           <S.RowWithOneCell>
-            <S.SubTitle>Job</S.SubTitle>
-            <S.Name>Title</S.Name>
-            <TextField
-              name="title"
-              value={values!.title}
-              {...basicInputProps()}
-            />
             <S.SubTitle>Categorize the job</S.SubTitle>
             <S.Sku>
               Choose from thousands of job functions available in our database.
@@ -62,22 +53,6 @@ export const SetTargetGroupContent: React.FC<Props> = ({
               {...basicInputProps()}
             />
             <S.RowWithTwoCells>
-              <div>
-                <S.Name>Region</S.Name>
-                <InputSelect
-                  options={countries}
-                  optionLabelKey="country"
-                  optionValueKey="country"
-                  name="country"
-                  value={values!.country}
-                  label=""
-                  onChange={(value: any, name: any) => {
-                    // eslint-disable-next-line no-console
-                    console.log("value country", value);
-                    setFieldValue(name, value);
-                  }}
-                />
-              </div>
               <div>
                 <S.Name>Industry</S.Name>
                 <InputSelect
@@ -92,9 +67,6 @@ export const SetTargetGroupContent: React.FC<Props> = ({
                   }}
                 />
               </div>
-            </S.RowWithTwoCells>
-            <S.Name>Candidate</S.Name>
-            <S.RowWithTwoCells>
               <div>
                 <S.Name>Seniority</S.Name>
                 <InputSelect
@@ -110,7 +82,7 @@ export const SetTargetGroupContent: React.FC<Props> = ({
                   }}
                 />
               </div>
-              <div>
+              {/* <div>
                 <S.Name>Level of Education</S.Name>
                 <InputSelect
                   options={educationLvl}
@@ -123,7 +95,7 @@ export const SetTargetGroupContent: React.FC<Props> = ({
                     setFieldValue(name, value);
                   }}
                 />
-              </div>
+              </div> */}
             </S.RowWithTwoCells>
           </S.RowWithOneCell>
         </S.Wrapper>

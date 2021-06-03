@@ -60,7 +60,6 @@ const CheckoutPage: React.FC<NextPage> = () => {
     createPayment,
     completeCheckout,
   } = useCheckout();
-  console.log("checkout:", checkout);
   const intl = useIntl();
   const isFullyLoaded = cartLoaded && checkoutLoaded;
 
