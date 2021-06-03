@@ -10,10 +10,7 @@ import {
   currencies,
   educationLvl,
   employmentTypes,
-  inds,
-  // industries,
   periods,
-  senioritis,
 } from "./constants";
 import { MoreInfoModal } from "./MoreInfoModal";
 import * as S from "./styles";
@@ -47,13 +44,6 @@ export const CreateJobContent: React.FC<Props> = ({
   const [isChecked, setIsChecked] = useState(true);
   const [moreInfo, setMoreInfo] = useState(false);
 
-  // const educationLvl = [
-  //   { value: "Bachelor / Graduate" },
-  //   { value: "GCSE / A-Level / Highschool / GED" },
-  //   { value: "Master / Post-Graduate / PhD" },
-  //   { value: "Vocational / Diploma / Associates degree" },
-  // ];
-
   return (
     <form
       id={checkoutCreateJobFormId}
@@ -76,20 +66,6 @@ export const CreateJobContent: React.FC<Props> = ({
               name="jobTitle"
               value={values!.jobTitle}
               {...basicInputProps()}
-            />
-            <S.Name>Industry</S.Name>
-            <S.Sku>Please fill in the industry of the job.</S.Sku>
-            <InputSelect
-              options={inds}
-              optionLabelKey="industry"
-              optionValueKey="industry"
-              // placeholder="Select"
-              label=""
-              value={values!.industry}
-              name="industry"
-              onChange={(value: any, name: any) => {
-                setFieldValue(name, value);
-              }}
             />
             <S.Name>Job description</S.Name>
             <S.Sku>
@@ -237,19 +213,6 @@ export const CreateJobContent: React.FC<Props> = ({
                 name="employmentType"
                 label=""
                 value={values!.employmentType}
-                onChange={(value: any, name: any) => setFieldValue(name, value)}
-              />
-            </S.InputSelectWrapper>
-            <S.Name>Seniority</S.Name>
-            <S.InputSelectWrapper>
-              <InputSelect
-                options={senioritis}
-                optionLabelKey="seniority"
-                optionValueKey="seniority"
-                // placeholder="Select"
-                name="seniority"
-                label=""
-                value={values.seniority}
                 onChange={(value: any, name: any) => setFieldValue(name, value)}
               />
             </S.InputSelectWrapper>
