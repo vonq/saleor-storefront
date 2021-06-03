@@ -15,7 +15,6 @@ import {
   PaymentGatewaysList,
   SetTargetGroup,
   translateAdyenConfirmationError,
-  WorkAddress,
 } from "@components/organisms";
 import { Checkout } from "@components/templates";
 // import { useRedirectToCorrectCheckoutStep } from "@hooks";
@@ -23,6 +22,7 @@ import { paths } from "@paths";
 import { ICardData, IFormError } from "@types";
 
 import {
+  CheckoutAddressSubpage,
   // CheckoutAddressSubpage,
   CheckoutPaymentSubpage,
   CheckoutReviewSubpage,
@@ -66,24 +66,7 @@ const CheckoutPage: React.FC<NextPage> = () => {
   const [submitInProgress, setSubmitInProgress] = useState(false);
   const [paymentConfirmation, setPaymentConfirmation] = useState(false);
 
-  const [campaignId, setCampaignId] = useState("");
-
-  const [jobData, setJobData] = useState({
-    title: "",
-    industry: "",
-    education: "",
-    jobDescription: "",
-    linkToJobDetailPage: "",
-    linkToJobAppPage: "",
-    expYear: "",
-    hoursPerWeek: [],
-    salaryInterval: "",
-    contactInfoName: "",
-    contactPhone: "",
-    currency: "",
-    period: "",
-    employmentType: "",
-  });
+  const [campaignId] = useState("");
 
   const [selectedPaymentGateway, setSelectedPaymentGateway] = useState<
     string | undefined
@@ -123,25 +106,17 @@ const CheckoutPage: React.FC<NextPage> = () => {
 
   const checkoutSubpage = useMemo(() => {
     const subpageMapping: Partial<Record<CheckoutStep, JSX.Element>> = {
-      [CheckoutStep.SetTargetGroup]: (
-        <SetTargetGroup
-          {...pageProps}
-          campaignId={campaignId}
-          setCampaignId={setCampaignId}
-        />
-      ),
+      [CheckoutStep.SetTargetGroup]: <SetTargetGroup {...pageProps} />,
       // [CheckoutStep.Address]: <CheckoutAddressSubpage {...pageProps} />,
       [CheckoutStep.Address]: (
         <CreateJobAd
           {...pageProps}
-          campaignId={campaignId}
-          setJobData={setJobData}
           // setIndustry={setIndustry}
           // setTitle={setTitle}
         />
       ),
-      // [CheckoutStep.Shipping]: <CheckoutShippingSubpage {...pageProps} />,
-      [CheckoutStep.Shipping]: <WorkAddress {...pageProps} />,
+      [CheckoutStep.Shipping]: <CheckoutAddressSubpage {...pageProps} />,
+      // [CheckoutStep.Shipping]: <WorkAddress {...pageProps} />,
       [CheckoutStep.Payment]: (
         <CheckoutPaymentSubpage
           {...pageProps}
@@ -152,14 +127,13 @@ const CheckoutPage: React.FC<NextPage> = () => {
       [CheckoutStep.Review]: (
         <CheckoutReviewSubpage
           {...pageProps}
-          jobData={jobData}
           paymentGatewayFormRef={checkoutGatewayFormRef}
           selectedPaymentGatewayToken={selectedPaymentGatewayToken}
         />
       ),
     };
     return subpageMapping[activeStep.step];
-  }, [activeStep.step, campaignId]);
+  }, [activeStep.step, checkout?.id]);
 
   const handleProcessPayment = async (
     gateway: string,

@@ -6,8 +6,6 @@ import { SetTargetGroup } from ".";
 import { ISetTargetGroupProps } from "./SetTargetGroup";
 
 const DEFAULT_PROPS: ISetTargetGroupProps = {
-  campaignId: "",
-  setCampaignId: () => {},
   onSubmitSuccess: () => {},
   changeSubmitProgress: () => {},
 };

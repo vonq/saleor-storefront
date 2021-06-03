@@ -1,11 +1,7 @@
 /* eslint-disable no-console */
+import { useCheckout } from "@saleor/sdk";
 import { Formik } from "formik";
-import React, {
-  forwardRef,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from "react";
+import React, { forwardRef, useImperativeHandle, useRef } from "react";
 
 import { TypedMetadataUpdateMutation } from "@app/queries/updateMetadata";
 
@@ -16,8 +12,6 @@ import * as S from "./styles";
 export interface ICreateJobAdProps {
   changeSubmitProgress: any;
   onSubmitSuccess: any;
-  campaignId: any;
-  setJobData?: any;
   setTitle?: any;
 }
 
@@ -44,16 +38,14 @@ export const CreateJobAd: React.FC<ICreateJobAdProps> = forwardRef(
     {
       changeSubmitProgress,
       onSubmitSuccess,
-      campaignId,
-      setJobData,
       // setIndustry,
       // setTitle,
     },
     ref
   ) => {
+    const { checkout } = useCheckout();
     const checkoutCreateJobFormId = "create-job-ad";
     const checkoutCreateJobFormRef = useRef<HTMLFormElement>(null);
-    const [backupData, setBackupData] = useState({});
 
     const initialValues: FormValues = {
       jobTitle: "",
@@ -85,31 +77,10 @@ export const CreateJobAd: React.FC<ICreateJobAdProps> = forwardRef(
         <TypedMetadataUpdateMutation
           onCompleted={data => {
             console.log(data, "data from onCompleted");
-            // if (data.jobInfoCreate.jobInfo === null) {
-            //   setJobData(backupData);
-            // } else {
-            //   setJobData({
-            //     title: data.jobInfoCreate.jobInfo.title,
-            //     education: data.jobInfoCreate.jobInfo.education,
-            //     jobDescription: data.jobInfoCreate.jobInfo.jobDescription,
-            //     linkToJobDetailPage:
-            //       data.jobInfoCreate.jobInfo.linkToJobDetailPage,
-            //     linkToJobAppPage: data.jobInfoCreate.jobInfo.linkToJobAppPage,
-            //     expYear: data.jobInfoCreate.jobInfo.expYear,
-            //     hoursPerWeek: data.jobInfoCreate.jobInfo.hoursPerWeek,
-            //     salaryInterval: data.jobInfoCreate.jobInfo.salaryInterval,
-            //     contactInfoName: data.jobInfoCreate.jobInfo.contactInfoName,
-            //     contactPhone: data.jobInfoCreate.jobInfo.contactPhone,
-            //     currency: data.jobInfoCreate.jobInfo.currency,
-            //     period: data.jobInfoCreate.jobInfo.period,
-            //     employmentType: data.jobInfoCreate.jobInfo.employmentType,
-            //   });
-            // }
             onSubmitSuccess(CheckoutStep.Shipping);
           }}
           onError={error => {
             console.log(error, "error from on Error");
-            setJobData(backupData);
             onSubmitSuccess(CheckoutStep.Shipping);
           }}
         >
@@ -140,25 +111,13 @@ export const CreateJobAd: React.FC<ICreateJobAdProps> = forwardRef(
                   },
                   actions
                 ) => {
-                  setBackupData({
-                    title: jobTitle,
-                    jobDescription,
-                    linkToJobDetailPage: jobDetailLink,
-                    linkToJobAppPage: applicationLink,
-                    expYear: jobExperience,
-                    education: educationLevel,
-                    employmentType: employmentType.type,
-                    hoursPerWeek: [minHours, maxHours],
-                    salaryInterval: [minSalary, maxSalary],
-                    currency: currency.enum,
-                    period: period.period,
-                    contactInfoName: contactName,
-                    contactPhone,
-                  });
+                  if (!checkout?.id) {
+                    return;
+                  }
                   actions.setSubmitting(false);
                   mutation({
                     variables: {
-                      id: campaignId,
+                      id: checkout?.id,
                       metadata: [
                         { key: "vacancy_jobTitle", value: jobTitle },
                         { key: "vacancy_description", value: jobDescription },

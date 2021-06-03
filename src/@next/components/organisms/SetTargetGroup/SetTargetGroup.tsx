@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { useCart } from "@saleor/sdk";
+import { useCart, useCheckout } from "@saleor/sdk";
 import { Formik } from "formik";
 import React, {
   forwardRef,
@@ -18,8 +18,6 @@ import * as S from "./styles";
 export interface ISetTargetGroupProps {
   changeSubmitProgress: any;
   onSubmitSuccess: any;
-  campaignId?: any;
-  setCampaignId: (args?: any) => void;
 }
 
 interface FormValues {
@@ -30,13 +28,11 @@ interface FormValues {
 }
 
 export const SetTargetGroup: React.FC<ISetTargetGroupProps> = forwardRef(
-  (
-    { changeSubmitProgress, onSubmitSuccess, campaignId, setCampaignId },
-    ref
-  ) => {
+  ({ changeSubmitProgress, onSubmitSuccess }, ref) => {
     const checkoutSetTargetGroupFormId = "set-target-group";
     const checkoutSetTargetGroupFormRef = useRef<HTMLFormElement>(null);
     const { items } = useCart();
+    const { checkout } = useCheckout();
     const [checkoutCreated, setCheckoutCreated] = useState(false);
 
     const initialValues: FormValues = {
@@ -52,14 +48,19 @@ export const SetTargetGroup: React.FC<ISetTargetGroupProps> = forwardRef(
       );
     });
 
-    if (!campaignId) {
+    if (!checkout?.id) {
       return (
         <TypedCheckoutCreateMutation
           onCompleted={data => {
             const id = data?.checkoutCreate?.checkout?.id;
-            if (id) {
-              setCampaignId(id);
-            }
+            const lines = data?.checkoutCreate?.checkout?.lines || [];
+            localStorage.setItem(
+              "data_checkout",
+              JSON.stringify({
+                id,
+                lines,
+              })
+            );
           }}
           onError={error => console.log(error, "error from on Error")}
         >
@@ -106,9 +107,12 @@ export const SetTargetGroup: React.FC<ISetTargetGroupProps> = forwardRef(
                   { jobFunction, seniority, industry, education },
                   actions
                 ) => {
+                  if (!checkout.id) {
+                    return;
+                  }
                   mutation({
                     variables: {
-                      id: campaignId,
+                      id: checkout.id,
                       metadata: [
                         {
                           key: "vacancy_taxonomy_jobCategoryId",

@@ -18,8 +18,23 @@ const CheckoutReview: React.FC<IProps> = ({
   paymentMethodName,
   email,
   errors,
-  jobData,
 }) => {
+  const jobData = {
+    title: "",
+    industry: "",
+    education: "",
+    jobDescription: "",
+    linkToJobDetailPage: "",
+    linkToJobAppPage: "",
+    expYear: 1,
+    hoursPerWeek: [],
+    salaryInterval: "",
+    contactInfoName: "",
+    contactPhone: "",
+    currency: "",
+    period: "",
+    employmentType: "",
+  };
   return (
     <S.Wrapper data-test="sectionTitle">
       <S.Title data-test="checkoutPageSubtitle">
