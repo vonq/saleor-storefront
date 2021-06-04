@@ -65,6 +65,24 @@ export const createCheckoutQuery = gql`
     ) {
       checkout {
         id
+        totalPrice {
+          gross {
+            amount
+            currency
+          }
+        }
+        isShippingRequired
+        availableShippingMethods {
+          id
+          name
+        }
+        availablePaymentGateways {
+          name
+          config {
+            field
+            value
+          }
+        }
       }
       checkoutErrors {
         field

@@ -91,6 +91,7 @@ export const CreateJobAd: React.FC<ICreateJobAdProps> = forwardRef(
               ) || [];
             Object.assign(newMetadata, ...newData);
             appendMetadata(newMetadata);
+            onSubmitSuccess(CheckoutStep.Address);
           }}
           onError={error => {
             console.log(error, "error from on Error");
@@ -188,8 +189,6 @@ export const CreateJobAd: React.FC<ICreateJobAdProps> = forwardRef(
                       ],
                     },
                   });
-                  actions.setSubmitting(false);
-                  onSubmitSuccess(CheckoutStep.Address);
                 }}
               >
                 {({

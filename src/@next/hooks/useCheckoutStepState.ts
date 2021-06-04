@@ -46,10 +46,10 @@ export const useCheckoutStepState = (
       !!payment?.id && isCheckoutPriceEqualPaymentPrice;
 
     if (!isShippingAddressSet || !isBillingAddressSet) {
-      return CheckoutStep.Address;
+      return CheckoutStep.Shipping;
     }
     if (!isShippingMethodSet) {
-      return CheckoutStep.Shipping;
+      return CheckoutStep.Payment;
     }
     if (!isPaymentMethodSet) {
       return CheckoutStep.Payment;
@@ -85,7 +85,7 @@ export const useCheckoutStepState = (
     if (recommendedStep !== newRecommendedStep) {
       setRecommendedStep(newRecommendedStep);
     }
-  }, [checkout, items, payment, totalPrice]);
+  }, [checkout, items, payment, totalPrice, metadata]);
 
   return { recommendedStep, maxPossibleStep };
 };

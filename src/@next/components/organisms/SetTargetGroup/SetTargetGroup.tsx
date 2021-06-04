@@ -95,16 +95,13 @@ export const SetTargetGroup: React.FC<ISetTargetGroupProps> = forwardRef(
               })),
             },
           });
-          const id = response?.data?.checkoutCreate?.checkout?.id;
-          if (id) {
-            localStorage.setItem(
-              "data_checkout",
-              JSON.stringify({
-                id,
-                lines: items,
-              })
-            );
-          }
+          localStorage.setItem(
+            "data_checkout",
+            JSON.stringify({
+              ...response?.data?.checkoutCreate?.checkout,
+              lines: items,
+            })
+          );
         } catch (error) {
           console.log("Error on creating checkout", error);
         } finally {
@@ -138,6 +135,7 @@ export const SetTargetGroup: React.FC<ISetTargetGroupProps> = forwardRef(
               ) || [];
             Object.assign(newMetadata, ...newData);
             appendMetadata(newMetadata);
+            onSubmitSuccess(CheckoutStep.SetTargetGroup);
           }}
           onError={error => console.log(error, "error from on Error")}
         >
@@ -175,8 +173,6 @@ export const SetTargetGroup: React.FC<ISetTargetGroupProps> = forwardRef(
                       ],
                     },
                   });
-                  actions.setSubmitting(false);
-                  onSubmitSuccess(CheckoutStep.SetTargetGroup);
                 }}
               >
                 {({
