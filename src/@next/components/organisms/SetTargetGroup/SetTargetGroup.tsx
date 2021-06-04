@@ -47,21 +47,28 @@ export const SetTargetGroup: React.FC<ISetTargetGroupProps> = forwardRef(
     const [checkoutCreated, setCheckoutCreated] = useState(false);
 
     const initialValues: FormValues = {
-      jobFunction: metadata[CheckoutMetadataTypes.JobFunction],
-      seniority: SeniorityOptions.find(
-        option =>
-          Number(option.id) ===
-          Number(metadata[CheckoutMetadataTypes.Seniority])
-      ),
-      industry: IndustryOptions.find(
-        option =>
-          Number(option.id) === Number(metadata[CheckoutMetadataTypes.Industry])
-      ),
-      education: EducationOptions.find(
-        option =>
-          Number(option.id) ===
-          Number(metadata[CheckoutMetadataTypes.EducationLevel])
-      ),
+      jobFunction: metadata && metadata[CheckoutMetadataTypes.JobFunction],
+      seniority:
+        metadata &&
+        SeniorityOptions.find(
+          option =>
+            Number(option.id) ===
+            Number(metadata[CheckoutMetadataTypes.Seniority])
+        ),
+      industry:
+        metadata &&
+        IndustryOptions.find(
+          option =>
+            Number(option.id) ===
+            Number(metadata[CheckoutMetadataTypes.Industry])
+        ),
+      education:
+        metadata &&
+        EducationOptions.find(
+          option =>
+            Number(option.id) ===
+            Number(metadata[CheckoutMetadataTypes.EducationLevel])
+        ),
     };
 
     useImperativeHandle(ref, () => () => {
