@@ -1,4 +1,4 @@
-export const industries = [
+export const IndustryOptions = [
   {
     id: 48,
     name: "Academic",
@@ -185,16 +185,7 @@ export const industries = [
   },
 ];
 
-export const employmentTypes = [
-  { type: "Fixed term" },
-  { type: "Fixed term with option for permanent" },
-  { type: "Freelance" },
-  { type: "Internship" },
-  { type: "Permanent" },
-  { type: "Traineeship" },
-];
-
-export const seniorities = [
+export const SeniorityOptions = [
   {
     id: 1,
     name: "Executive/Director",
@@ -217,23 +208,7 @@ export const seniorities = [
   },
 ];
 
-export const currencies = [
-  { currency: "€" },
-  { currency: "£" },
-  { currency: "$" },
-];
-
-export const periods = [{ period: "Mothly" }, { period: "Yearly" }];
-
-export enum CheckoutStep {
-  Address = 1,
-  Shipping,
-  Payment,
-  Review,
-  PaymentConfirm,
-}
-
-export const educationLevel = [
+export const EducationOptions = [
   {
     id: 1,
     name: "Master / Post-Graduate / PhD",
