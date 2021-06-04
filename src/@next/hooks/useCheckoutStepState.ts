@@ -45,8 +45,10 @@ export const useCheckoutStepState = (
     const isPaymentMethodSet =
       !!payment?.id && isCheckoutPriceEqualPaymentPrice;
 
-    if (!isShippingAddressSet || !isBillingAddressSet) {
-      return CheckoutStep.Shipping;
+    if (isShippingRequiredForProducts) {
+      if (!isShippingAddressSet || !isBillingAddressSet) {
+        return CheckoutStep.Shipping;
+      }
     }
     if (!isShippingMethodSet) {
       return CheckoutStep.Payment;

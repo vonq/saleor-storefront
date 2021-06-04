@@ -1,10 +1,18 @@
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
+import { CheckoutMetadataTypes } from "@app/CheckoutUtils/constants";
+import { findOptionById } from "@app/CheckoutUtils/helpers";
+import { useCheckoutMetadata } from "@hooks/useCheckoutMetadata";
 // import { ErrorMessage } from "@components/atoms";
 // import { AddressSummary } from "@components/molecules";
 import { checkoutMessages } from "@temp/intl";
 
+import {
+  EducationOptions,
+  IndustryOptions,
+  JobFunctionOptions,
+} from "../SetTargetGroup/constants";
 import * as S from "./styles";
 import { IProps } from "./types";
 
@@ -19,21 +27,38 @@ const CheckoutReview: React.FC<IProps> = ({
   email,
   errors,
 }) => {
+  const { metadata } = useCheckoutMetadata();
   const jobData = {
-    title: "",
-    industry: "",
-    education: "",
-    jobDescription: "",
-    linkToJobDetailPage: "",
-    linkToJobAppPage: "",
-    expYear: 1,
-    hoursPerWeek: [],
-    salaryInterval: "",
-    contactInfoName: "",
-    contactPhone: "",
-    currency: "",
-    period: "",
-    employmentType: "",
+    title:
+      metadata &&
+      findOptionById(
+        JobFunctionOptions,
+        metadata[CheckoutMetadataTypes.JobFunction]
+      )?.name,
+    industry:
+      metadata &&
+      findOptionById(IndustryOptions, metadata[CheckoutMetadataTypes.Industry])
+        ?.name,
+    education:
+      metadata &&
+      findOptionById(
+        EducationOptions,
+        metadata[CheckoutMetadataTypes.EducationLevel]
+      )?.name,
+    jobDescription: metadata && metadata[CheckoutMetadataTypes.JobDescription],
+    linkToJobDetailPage: metadata && metadata[CheckoutMetadataTypes.VacancyURL],
+    linkToJobAppPage:
+      metadata && metadata[CheckoutMetadataTypes.ApplicationURL],
+    expYear: metadata && metadata[CheckoutMetadataTypes.MinExp],
+    minWorkingHour: metadata && metadata[CheckoutMetadataTypes.MinWorkingHours],
+    maxWorkingHour: metadata && metadata[CheckoutMetadataTypes.MaxWorkingHours],
+    minSalary: metadata && metadata[CheckoutMetadataTypes.SalaryMinAmount],
+    maxSalary: metadata && metadata[CheckoutMetadataTypes.SalaryMaxAmount],
+    contactInfoName: metadata && metadata[CheckoutMetadataTypes.ContactName],
+    contactPhone: metadata && metadata[CheckoutMetadataTypes.ContactNumber],
+    currency: metadata && metadata[CheckoutMetadataTypes.SalaryCurrency],
+    period: metadata && metadata[CheckoutMetadataTypes.SalaryPerPeriod],
+    employmentType: metadata && metadata[CheckoutMetadataTypes.VacancyType],
   };
   return (
     <S.Wrapper data-test="sectionTitle">
@@ -47,8 +72,8 @@ const CheckoutReview: React.FC<IProps> = ({
         <p>{`Experiance: ${jobData.expYear} ${
           jobData.expYear === 1 ? "year" : "years"
         }`}</p>
-        <p>{`Hours per week: ${jobData.hoursPerWeek[0]} - ${jobData.hoursPerWeek[1]}`}</p>
-        <p>{`Salary: ${jobData.salaryInterval[0]} - ${jobData.salaryInterval[1]} ${jobData.currency} ${jobData.period}`}</p>
+        <p>{`Hours per week: ${jobData.minWorkingHour} - ${jobData.maxWorkingHour}`}</p>
+        <p>{`Salary: ${jobData.minSalary} - ${jobData.maxSalary} ${jobData.currency} ${jobData.period}`}</p>
         <p>{`Employment type: ${jobData.employmentType}`}</p>
         <p>{`Contacts: ${jobData.contactInfoName} ${jobData.contactPhone}`}</p>
         <p>

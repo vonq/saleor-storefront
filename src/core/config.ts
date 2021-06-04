@@ -33,6 +33,9 @@ export const PROVIDERS = {
       crossOrigin: "anonymous",
     },
   },
+  VONQ: {
+    label: "Pay with your Contract Balance",
+  },
 };
 export const STATIC_PAGES = [
   {
