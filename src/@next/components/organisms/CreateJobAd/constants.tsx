@@ -98,15 +98,16 @@ export const inds = [
 ];
 
 export const employmentTypes = [
-  { type: "Fixed term", enum: "FIXED_TERM" },
+  { type: "Fixed term", enum: "fixed_term" },
   {
     type: "Fixed term with option for permanent",
-    enum: "FIXED_TERM_WITH_PERMAMENT",
+    enum: "fixed_term_with_option_for_permanent",
   },
-  { type: "Freelance", enum: "FREELANCE" },
-  { type: "Internship", enum: "INTERSHIP" },
-  { type: "Permanent", enum: "PERMAMENT" },
-  { type: "Traineeship", enum: "TRAINEESHIP" },
+  { type: "Freelance", enum: "freelance" },
+  { type: "Internship", enum: "internship" },
+  { type: "Permanent", enum: "permanent" },
+  { type: "Traineeship", enum: "traineeship" },
+  { type: "Temporary", enum: "temporary" },
 ];
 
 export const senioritis = [
@@ -124,8 +125,11 @@ export const currencies = [
 ];
 
 export const periods = [
-  { period: "Mothly", enum: "MONTHLY" },
-  { period: "Yearly", enum: "YEARLY" },
+  { period: "Mothly", enum: "monthly" },
+  { period: "Yearly", enum: "yearly" },
+  { period: "Weekly", enum: "weekly" },
+  { period: "Daily", enum: "daily" },
+  { period: "Hourly", enum: "hourly" },
 ];
 
 export enum CheckoutStep {
