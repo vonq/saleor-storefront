@@ -226,3 +226,21 @@ export const EducationOptions = [
     name: "GCSE / A-Level / Highschool / GED",
   },
 ];
+
+export const JobFunctionOptions = [
+  {
+    id: 9,
+    name: "Finance",
+    parent: null,
+  },
+  {
+    id: 7,
+    name: "Sales",
+    parent: null,
+  },
+  {
+    id: 6,
+    name: "Software Development",
+    parent: 48,
+  },
+];

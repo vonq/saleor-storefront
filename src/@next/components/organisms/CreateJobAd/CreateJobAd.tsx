@@ -3,7 +3,9 @@ import { useCheckout } from "@saleor/sdk";
 import { Formik } from "formik";
 import React, { forwardRef, useImperativeHandle, useRef } from "react";
 
+import { CheckoutMetadataTypes } from "@app/CheckoutUtils/constants";
 import { TypedMetadataUpdateMutation } from "@app/CheckoutUtils/updateMetadata";
+import { useCheckoutMetadata } from "@hooks/useCheckoutMetadata";
 
 import { CheckoutStep } from "./constants";
 import { CreateJobContent } from "./CreateJobContent";
@@ -21,7 +23,6 @@ interface FormValues {
   jobDetailLink: string;
   applicationLink: string;
   jobExperience: string;
-  educationLevel: string;
   employmentType: any;
   minHours: string;
   maxHours: string;
@@ -44,25 +45,27 @@ export const CreateJobAd: React.FC<ICreateJobAdProps> = forwardRef(
     ref
   ) => {
     const { checkout } = useCheckout();
+    const { metadata } = useCheckoutMetadata();
     const checkoutCreateJobFormId = "create-job-ad";
     const checkoutCreateJobFormRef = useRef<HTMLFormElement>(null);
 
     const initialValues: FormValues = {
-      jobTitle: "",
-      jobDescription: "",
-      jobDetailLink: "",
-      applicationLink: "",
-      jobExperience: "",
-      educationLevel: "",
-      employmentType: "",
-      minHours: "",
-      maxHours: "",
-      minSalary: "",
-      maxSalary: "",
-      currency: "",
-      period: "",
-      contactName: "",
-      contactPhone: "",
+      jobTitle: metadata && metadata[CheckoutMetadataTypes.JobTitle],
+      jobDescription:
+        metadata && metadata[CheckoutMetadataTypes.JobDescription],
+      jobDetailLink: metadata && metadata[CheckoutMetadataTypes.VacancyURL],
+      applicationLink:
+        metadata && metadata[CheckoutMetadataTypes.ApplicationURL],
+      jobExperience: metadata && metadata[CheckoutMetadataTypes.MinExp],
+      employmentType: metadata && metadata[CheckoutMetadataTypes.VacancyType],
+      minHours: metadata && metadata[CheckoutMetadataTypes.MinWorkingHours],
+      maxHours: metadata && metadata[CheckoutMetadataTypes.MaxWorkingHours],
+      minSalary: metadata && metadata[CheckoutMetadataTypes.SalaryMinAmount],
+      maxSalary: metadata && metadata[CheckoutMetadataTypes.SalaryMaxAmount],
+      currency: metadata && metadata[CheckoutMetadataTypes.SalaryCurrency],
+      period: metadata && metadata[CheckoutMetadataTypes.SalaryPerPeriod],
+      contactName: metadata && metadata[CheckoutMetadataTypes.ContactName],
+      contactPhone: metadata && metadata[CheckoutMetadataTypes.ContactNumber],
     };
 
     useImperativeHandle(ref, () => () => {
@@ -81,7 +84,7 @@ export const CreateJobAd: React.FC<ICreateJobAdProps> = forwardRef(
           }}
           onError={error => {
             console.log(error, "error from on Error");
-            onSubmitSuccess(CheckoutStep.Shipping);
+            // onSubmitSuccess(CheckoutStep.Shipping);
           }}
         >
           {(mutation, { loading, data }) => {
@@ -98,7 +101,6 @@ export const CreateJobAd: React.FC<ICreateJobAdProps> = forwardRef(
                     jobDetailLink,
                     applicationLink,
                     jobExperience,
-                    educationLevel,
                     employmentType,
                     minHours,
                     maxHours,
@@ -119,45 +121,62 @@ export const CreateJobAd: React.FC<ICreateJobAdProps> = forwardRef(
                     variables: {
                       id: checkout?.id,
                       metadata: [
-                        { key: "vacancy_jobTitle", value: jobTitle },
-                        { key: "vacancy_description", value: jobDescription },
                         {
-                          key: "vacancy_tracking_vacancy_url",
+                          key: CheckoutMetadataTypes.JobTitle,
+                          value: jobTitle,
+                        },
+                        {
+                          key: CheckoutMetadataTypes.JobDescription,
+                          value: jobDescription,
+                        },
+                        {
+                          key: CheckoutMetadataTypes.VacancyURL,
                           value: jobDetailLink,
                         },
                         {
-                          key: "vacancy_tracking_applicationUrl",
+                          key: CheckoutMetadataTypes.ApplicationURL,
                           value: applicationLink,
                         },
-                        // { key: "vacancy.expYear", value: jobExperience },
-                        // { key: "vacancy.education", value: educationLevel },
-                        // {
-                        //   key: "vacancy.employmentType",
-                        //   value: employmentType.enum,
-                        // },
-                        // {
-                        //   key: "vacancy.workingHours.minimum",
-                        //   value: minHours,
-                        // },
-                        // {
-                        //   key: "vacancy.workingHours.maximum",
-                        //   value: maxHours,
-                        // },
-                        // {
-                        //   key: "vacancy.salary.minimumAmount",
-                        //   value: minSalary,
-                        // },
-                        // {
-                        //   key: "vacancy.salary.maximumAmount",
-                        //   value: maxSalary,
-                        // },
-                        // {
-                        //   key: "vacancy.salary.currency",
-                        //   value: currency.enum,
-                        // },
-                        // { key: "vacancy.salary.perPeriod", value: period.enum },
-                        { key: "contactInfo_name", value: contactName },
-                        { key: "contactInfo_phoneNumber", value: contactPhone },
+                        {
+                          key: CheckoutMetadataTypes.MinExp,
+                          value: jobExperience,
+                        },
+                        {
+                          key: CheckoutMetadataTypes.VacancyType,
+                          value: employmentType.enum,
+                        },
+                        {
+                          key: CheckoutMetadataTypes.MinWorkingHours,
+                          value: minHours,
+                        },
+                        {
+                          key: CheckoutMetadataTypes.MaxWorkingHours,
+                          value: maxHours,
+                        },
+                        {
+                          key: CheckoutMetadataTypes.SalaryMinAmount,
+                          value: minSalary,
+                        },
+                        {
+                          key: CheckoutMetadataTypes.SalaryMaxAmount,
+                          value: maxSalary,
+                        },
+                        {
+                          key: CheckoutMetadataTypes.SalaryCurrency,
+                          value: currency.enum,
+                        },
+                        {
+                          key: CheckoutMetadataTypes.SalaryPerPeriod,
+                          value: period.enum,
+                        },
+                        {
+                          key: CheckoutMetadataTypes.ContactName,
+                          value: contactName,
+                        },
+                        {
+                          key: CheckoutMetadataTypes.ContactNumber,
+                          value: contactPhone,
+                        },
                       ],
                     },
                   });

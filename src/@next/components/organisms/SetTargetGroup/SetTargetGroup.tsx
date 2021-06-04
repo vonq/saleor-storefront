@@ -10,6 +10,7 @@ import React, {
 } from "react";
 
 import { CheckoutMetadataTypes } from "@app/CheckoutUtils/constants";
+import { findOptionById } from "@app/CheckoutUtils/helpers";
 import {
   MetadataInput,
   TypedMetadataUpdateMutation,
@@ -51,24 +52,21 @@ export const SetTargetGroup: React.FC<ISetTargetGroupProps> = forwardRef(
       jobFunction: metadata && metadata[CheckoutMetadataTypes.JobFunction],
       seniority:
         metadata &&
-        SeniorityOptions.find(
-          option =>
-            Number(option.id) ===
-            Number(metadata[CheckoutMetadataTypes.Seniority])
+        findOptionById(
+          SeniorityOptions,
+          metadata[CheckoutMetadataTypes.Seniority]
         ),
       industry:
         metadata &&
-        IndustryOptions.find(
-          option =>
-            Number(option.id) ===
-            Number(metadata[CheckoutMetadataTypes.Industry])
+        findOptionById(
+          IndustryOptions,
+          metadata[CheckoutMetadataTypes.Industry]
         ),
       education:
         metadata &&
-        EducationOptions.find(
-          option =>
-            Number(option.id) ===
-            Number(metadata[CheckoutMetadataTypes.EducationLevel])
+        findOptionById(
+          EducationOptions,
+          metadata[CheckoutMetadataTypes.EducationLevel]
         ),
     };
 
@@ -126,14 +124,13 @@ export const SetTargetGroup: React.FC<ISetTargetGroupProps> = forwardRef(
         <TypedMetadataUpdateMutation
           onCompleted={data => {
             const newMetadata = {};
-            Object.assign(
-              newMetadata,
-              ...data?.updateMetadata?.item?.metadata.map(
+            const newData =
+              data?.updateMetadata?.item?.metadata.map(
                 ({ key, value }: MetadataInput) => ({
                   [key]: value,
                 })
-              )
-            );
+              ) || [];
+            Object.assign(newMetadata, ...newData);
             appendMetadata(newMetadata);
           }}
           onError={error => console.log(error, "error from on Error")}
@@ -173,7 +170,7 @@ export const SetTargetGroup: React.FC<ISetTargetGroupProps> = forwardRef(
                     },
                   });
                   actions.setSubmitting(false);
-                  onSubmitSuccess(CheckoutStep.Address);
+                  onSubmitSuccess(CheckoutStep.SetTargetGroup);
                 }}
               >
                 {({
