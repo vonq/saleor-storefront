@@ -17,7 +17,7 @@ import {
   translateAdyenConfirmationError,
 } from "@components/organisms";
 import { Checkout } from "@components/templates";
-import { useRedirectToCorrectCheckoutStep } from "@hooks";
+// import { useRedirectToCorrectCheckoutStep } from "@hooks";
 // import { useRedirectToCorrectCheckoutStep } from "@hooks";
 import { paths } from "@paths";
 import { ICardData, IFormError } from "@types";
