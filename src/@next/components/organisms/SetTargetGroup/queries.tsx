@@ -1,6 +1,7 @@
+import { InMemoryCache } from "apollo-cache-inmemory";
+import { ApolloClient } from "apollo-client";
+import { createHttpLink } from "apollo-link-http";
 import gql from "graphql-tag";
-
-import { TypedMutation } from "../../../../core/mutations";
 
 export type CheckoutType = {
   id: any;
@@ -35,7 +36,7 @@ export interface CheckoutCreateVariables {
   lines: CheckoutLineInput[];
 }
 
-export const createCheckout = gql`
+export const createCheckoutQuery = gql`
   mutation CheckoutCreate($lines: [CheckoutLineInput]!) {
     checkoutCreate(
       input: {
@@ -73,7 +74,8 @@ export const createCheckout = gql`
   }
 `;
 
-export const TypedCheckoutCreateMutation = TypedMutation<
-  CheckoutCreate,
-  CheckoutCreateVariables
->(createCheckout);
+const API_URL = process.env.NEXT_PUBLIC_API_URI || "/graphql/";
+export const apolloClient = new ApolloClient({
+  cache: new InMemoryCache(),
+  link: createHttpLink({ uri: API_URL, fetch }),
+});

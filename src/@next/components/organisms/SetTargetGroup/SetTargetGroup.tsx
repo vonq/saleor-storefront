@@ -3,6 +3,7 @@ import { useCart, useCheckout } from "@saleor/sdk";
 import { Formik } from "formik";
 import React, {
   forwardRef,
+  useEffect,
   useImperativeHandle,
   useRef,
   useState,
@@ -21,7 +22,7 @@ import {
   IndustryOptions,
   SeniorityOptions,
 } from "./constants";
-import { TypedCheckoutCreateMutation } from "./queries";
+import { apolloClient, createCheckoutQuery } from "./queries";
 import { SetTargetGroupContent } from "./SetTargetGroupContent";
 import * as S from "./styles";
 
@@ -44,7 +45,7 @@ export const SetTargetGroup: React.FC<ISetTargetGroupProps> = forwardRef(
     const { items } = useCart();
     const { checkout } = useCheckout();
     const { metadata, appendMetadata } = useCheckoutMetadata();
-    const [checkoutCreated, setCheckoutCreated] = useState(false);
+    const [checkoutCreating, setCheckoutCreating] = useState(false);
 
     const initialValues: FormValues = {
       jobFunction: metadata && metadata[CheckoutMetadataTypes.JobFunction],
@@ -77,11 +78,21 @@ export const SetTargetGroup: React.FC<ISetTargetGroupProps> = forwardRef(
       );
     });
 
-    if (!checkout?.id) {
-      return (
-        <TypedCheckoutCreateMutation
-          onCompleted={data => {
-            const id = data?.checkoutCreate?.checkout?.id;
+    useEffect(() => {
+      const createCheckout = async () => {
+        setCheckoutCreating(true);
+        try {
+          const response = await apolloClient.mutate({
+            mutation: createCheckoutQuery,
+            variables: {
+              lines: (items || []).map(item => ({
+                quantity: item.quantity,
+                variantId: item.variant.id,
+              })),
+            },
+          });
+          const id = response?.data?.checkoutCreate?.checkout?.id;
+          if (id) {
             localStorage.setItem(
               "data_checkout",
               JSON.stringify({
@@ -89,26 +100,20 @@ export const SetTargetGroup: React.FC<ISetTargetGroupProps> = forwardRef(
                 lines: items,
               })
             );
-          }}
-          onError={error => console.log(error, "error from on Error")}
-        >
-          {(mutation, { loading, data }) => {
-            if (checkoutCreated) {
-              return null;
-            }
-            setCheckoutCreated(true);
-            mutation({
-              variables: {
-                lines: (items || []).map(item => ({
-                  quantity: item.quantity,
-                  variantId: item.variant.id,
-                })),
-              },
-            });
-            return null;
-          }}
-        </TypedCheckoutCreateMutation>
-      );
+          }
+        } catch (error) {
+          console.log("Error on creating checkout", error);
+        } finally {
+          setCheckoutCreating(false);
+        }
+      };
+      if (!checkout?.id) {
+        createCheckout();
+      }
+    }, []);
+
+    if (checkoutCreating) {
+      return null;
     }
 
     return (
@@ -141,7 +146,7 @@ export const SetTargetGroup: React.FC<ISetTargetGroupProps> = forwardRef(
                   { jobFunction, seniority, industry, education },
                   actions
                 ) => {
-                  if (!checkout.id) {
+                  if (!checkout?.id) {
                     return;
                   }
                   mutation({
@@ -168,7 +173,7 @@ export const SetTargetGroup: React.FC<ISetTargetGroupProps> = forwardRef(
                     },
                   });
                   actions.setSubmitting(false);
-                  onSubmitSuccess(CheckoutStep.SetTargetGroup);
+                  onSubmitSuccess(CheckoutStep.Address);
                 }}
               >
                 {({

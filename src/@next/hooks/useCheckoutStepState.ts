@@ -30,9 +30,11 @@ export const useCheckoutStepState = (
     isPriceEqual(payment.total, totalPrice.gross);
 
   const getMaxPossibleStep = () => {
-    if (!checkout?.id && items) {
+    const isJobFunctionSet =
+      metadata && metadata[CheckoutMetadataTypes.JobFunction];
+    if ((!checkout?.id && items) || !isJobFunctionSet) {
       // we are creating checkout during address set up
-      return CheckoutStep.Address;
+      return CheckoutStep.SetTargetGroup;
     }
 
     const isShippingAddressSet =
@@ -42,12 +44,7 @@ export const useCheckoutStepState = (
       !isShippingRequiredForProducts || !!checkout?.shippingMethod;
     const isPaymentMethodSet =
       !!payment?.id && isCheckoutPriceEqualPaymentPrice;
-    const isJobFunctionSet =
-      metadata && metadata[CheckoutMetadataTypes.JobFunction];
 
-    if (!isJobFunctionSet) {
-      return CheckoutStep.SetTargetGroup;
-    }
     if (!isShippingAddressSet || !isBillingAddressSet) {
       return CheckoutStep.Address;
     }
