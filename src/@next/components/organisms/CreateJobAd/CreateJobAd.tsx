@@ -4,7 +4,10 @@ import { Formik } from "formik";
 import React, { forwardRef, useImperativeHandle, useRef } from "react";
 
 import { CheckoutMetadataTypes } from "@app/CheckoutUtils/constants";
-import { TypedMetadataUpdateMutation } from "@app/CheckoutUtils/updateMetadata";
+import {
+  MetadataInput,
+  TypedMetadataUpdateMutation,
+} from "@app/CheckoutUtils/updateMetadata";
 import { useCheckoutMetadata } from "@hooks/useCheckoutMetadata";
 
 import { CheckoutStep } from "./constants";
@@ -45,7 +48,7 @@ export const CreateJobAd: React.FC<ICreateJobAdProps> = forwardRef(
     ref
   ) => {
     const { checkout } = useCheckout();
-    const { metadata } = useCheckoutMetadata();
+    const { metadata, appendMetadata } = useCheckoutMetadata();
     const checkoutCreateJobFormId = "create-job-ad";
     const checkoutCreateJobFormRef = useRef<HTMLFormElement>(null);
 
@@ -79,12 +82,18 @@ export const CreateJobAd: React.FC<ICreateJobAdProps> = forwardRef(
         <S.Title>Create your job ad(s)</S.Title>
         <TypedMetadataUpdateMutation
           onCompleted={data => {
-            console.log(data, "data from onCompleted");
-            onSubmitSuccess(CheckoutStep.Shipping);
+            const newMetadata = {};
+            const newData =
+              data?.updateMetadata?.item?.metadata.map(
+                ({ key, value }: MetadataInput) => ({
+                  [key]: value,
+                })
+              ) || [];
+            Object.assign(newMetadata, ...newData);
+            appendMetadata(newMetadata);
           }}
           onError={error => {
             console.log(error, "error from on Error");
-            // onSubmitSuccess(CheckoutStep.Shipping);
           }}
         >
           {(mutation, { loading, data }) => {
@@ -116,7 +125,6 @@ export const CreateJobAd: React.FC<ICreateJobAdProps> = forwardRef(
                   if (!checkout?.id) {
                     return;
                   }
-                  actions.setSubmitting(false);
                   mutation({
                     variables: {
                       id: checkout?.id,
@@ -180,7 +188,8 @@ export const CreateJobAd: React.FC<ICreateJobAdProps> = forwardRef(
                       ],
                     },
                   });
-                  // onSubmitSuccess(CheckoutStep.Shipping);
+                  actions.setSubmitting(false);
+                  onSubmitSuccess(CheckoutStep.Address);
                 }}
               >
                 {({

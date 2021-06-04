@@ -1,12 +1,13 @@
 /* eslint-disable react/no-unescaped-entities */
 // import { Editor } from "@tinymce/tinymce-react";
-import React, { useCallback } from "react";
+import React from "react";
 
-import { InputSelect, TextField } from "@components/molecules";
+import { InputSelect } from "@components/molecules";
 
 import {
   EducationOptions,
   IndustryOptions,
+  JobFunctionOptions,
   SeniorityOptions,
 } from "./constants";
 import * as S from "./styles";
@@ -32,10 +33,10 @@ export const SetTargetGroupContent: React.FC<Props> = ({
   checkoutSetTargetGroupFormId,
   checkoutSetTargetGroupFormRef,
 }) => {
-  const basicInputProps = useCallback(
-    () => ({ onBlur: handleBlur, onChange: handleChange }),
-    [handleChange, handleBlur]
-  );
+  // const basicInputProps = useCallback(
+  //   () => ({ onBlur: handleBlur, onChange: handleChange }),
+  //   [handleChange, handleBlur]
+  // );
 
   return (
     <form
@@ -50,13 +51,27 @@ export const SetTargetGroupContent: React.FC<Props> = ({
             <S.Sku>
               Choose from thousands of job functions available in our database.
             </S.Sku>
-            <S.Name>Job function</S.Name>
+            {/* <S.Name>Job function</S.Name>
             <TextField
               name="jobFunction"
               value={values!.jobFunction}
               {...basicInputProps()}
-            />
+            /> */}
             <S.RowWithTwoCells>
+              <div>
+                <S.Name>Job function</S.Name>
+                <InputSelect
+                  options={JobFunctionOptions}
+                  optionLabelKey="name"
+                  optionValueKey="id"
+                  name="jobFunction"
+                  value={values!.jobFunction}
+                  label=""
+                  onChange={(value: any, name: any) => {
+                    setFieldValue(name, value);
+                  }}
+                />
+              </div>
               <div>
                 <S.Name>Industry</S.Name>
                 <InputSelect
