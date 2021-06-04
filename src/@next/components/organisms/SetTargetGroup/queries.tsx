@@ -77,6 +77,7 @@ export const createCheckoutQuery = gql`
           name
         }
         availablePaymentGateways {
+          id
           name
           config {
             field

@@ -91,7 +91,7 @@ export const CreateJobAd: React.FC<ICreateJobAdProps> = forwardRef(
               ) || [];
             Object.assign(newMetadata, ...newData);
             appendMetadata(newMetadata);
-            onSubmitSuccess(CheckoutStep.Address);
+            onSubmitSuccess(CheckoutStep.Shipping);
           }}
           onError={error => {
             console.log(error, "error from on Error");

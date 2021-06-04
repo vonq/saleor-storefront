@@ -3,7 +3,7 @@ export const CheckoutMetadataTypes = {
   JobDescription: "vacancy_description",
   Industry: "vacancy_taxonomy_industry",
   JobFunction: "vacancy_taxonomy_jobCategoryId",
-  Seniority: "vacancy_taxonomy_seniority",
+  Seniority: "vacancy_taxonomy_seniorityId",
   // Seniority: 'vacancy_taxonomy_seniorityId'
   VacancyURL: "vacancy_tracking_vacancy_url",
   ApplicationURL: "vacancy_tracking_applicationUrl",

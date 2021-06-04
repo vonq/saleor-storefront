@@ -6,7 +6,6 @@ import React, {
   useEffect,
   useImperativeHandle,
   useRef,
-  useState,
 } from "react";
 
 import { CheckoutMetadataTypes } from "@app/CheckoutUtils/constants";
@@ -47,7 +46,8 @@ export const SetTargetGroup: React.FC<ISetTargetGroupProps> = forwardRef(
     const { items } = useCart();
     const { checkout } = useCheckout();
     const { metadata, appendMetadata } = useCheckoutMetadata();
-    const [checkoutCreating, setCheckoutCreating] = useState(false);
+
+    const checkoutId = useRef(checkout?.id);
 
     const initialValues: FormValues = {
       jobFunction:
@@ -84,7 +84,6 @@ export const SetTargetGroup: React.FC<ISetTargetGroupProps> = forwardRef(
 
     useEffect(() => {
       const createCheckout = async () => {
-        setCheckoutCreating(true);
         try {
           const response = await apolloClient.mutate({
             mutation: createCheckoutQuery,
@@ -95,17 +94,18 @@ export const SetTargetGroup: React.FC<ISetTargetGroupProps> = forwardRef(
               })),
             },
           });
+          const checkout = response?.data?.checkoutCreate?.checkout;
+          checkoutId.current = checkout?.id;
           localStorage.setItem(
             "data_checkout",
             JSON.stringify({
-              ...response?.data?.checkoutCreate?.checkout,
+              ...checkout,
               lines: items,
+              metadata: {},
             })
           );
         } catch (error) {
           console.log("Error on creating checkout", error);
-        } finally {
-          setCheckoutCreating(false);
         }
       };
       if (!checkout?.id) {
@@ -113,7 +113,7 @@ export const SetTargetGroup: React.FC<ISetTargetGroupProps> = forwardRef(
       }
     }, []);
 
-    if (checkoutCreating) {
+    if (!checkoutId.current) {
       return null;
     }
 
@@ -135,7 +135,7 @@ export const SetTargetGroup: React.FC<ISetTargetGroupProps> = forwardRef(
               ) || [];
             Object.assign(newMetadata, ...newData);
             appendMetadata(newMetadata);
-            onSubmitSuccess(CheckoutStep.SetTargetGroup);
+            onSubmitSuccess(CheckoutStep.Address);
           }}
           onError={error => console.log(error, "error from on Error")}
         >
@@ -147,12 +147,9 @@ export const SetTargetGroup: React.FC<ISetTargetGroupProps> = forwardRef(
                   { jobFunction, seniority, industry, education },
                   actions
                 ) => {
-                  if (!checkout?.id) {
-                    return;
-                  }
                   mutation({
                     variables: {
-                      id: checkout.id,
+                      id: checkoutId.current || "",
                       metadata: [
                         {
                           key: CheckoutMetadataTypes.JobFunction,

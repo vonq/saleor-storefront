@@ -6,9 +6,10 @@ import { PROVIDERS } from "@temp/core/config";
 import {
   AdyenPaymentGateway,
   BraintreePaymentGateway,
-  DummyPaymentGateway,
+  // DummyPaymentGateway,
   StripePaymentGateway,
 } from "..";
+import { VonqPaymentGateway } from "../VonqPaymentGateway";
 import * as S from "./styles";
 import { IProps } from "./types";
 
@@ -68,27 +69,58 @@ const PaymentGatewaysList: React.FC<IProps> = ({
               </div>
             );
 
-          case PROVIDERS.DUMMY.label:
+          // case PROVIDERS.DUMMY.label:
+          //   return (
+          //     <div key={index}>
+          //       <S.Tile checked={checked}>
+          //         <Radio
+          //           data-test="checkoutPaymentGatewayDummyInput"
+          //           name="payment-method"
+          //           value="dummy"
+          //           checked={checked}
+          //           onChange={() =>
+          //             selectPaymentGateway && selectPaymentGateway(id)
+          //           }
+          //           customLabel
+          //         >
+          //           <span data-test="checkoutPaymentGatewayDummyName">
+          //             {name}
+          //           </span>
+          //         </Radio>
+          //       </S.Tile>
+          //       {checked && (
+          //         <DummyPaymentGateway
+          //           formRef={formRef}
+          //           formId={formId}
+          //           processPayment={token => processPayment(id, token)}
+          //           initialStatus={selectedPaymentGatewayToken}
+          //         />
+          //       )}
+          //     </div>
+          //   );
+
+          case PROVIDERS.VONQ.label:
             return (
               <div key={index}>
                 <S.Tile checked={checked}>
                   <Radio
-                    data-test="checkoutPaymentGatewayDummyInput"
+                    data-test="checkoutPaymentGatewayVonqInput"
                     name="payment-method"
-                    value="dummy"
+                    value="vonq"
                     checked={checked}
                     onChange={() =>
                       selectPaymentGateway && selectPaymentGateway(id)
                     }
                     customLabel
                   >
-                    <span data-test="checkoutPaymentGatewayDummyName">
+                    <span data-test="checkoutPaymentGatewayVonqName">
                       {name}
                     </span>
                   </Radio>
                 </S.Tile>
                 {checked && (
-                  <DummyPaymentGateway
+                  <VonqPaymentGateway
+                    config={config}
                     formRef={formRef}
                     formId={formId}
                     processPayment={token => processPayment(id, token)}
