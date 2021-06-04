@@ -161,11 +161,8 @@ export const getCurrentStep = (
   campaignId: string
 ) => {
   const activeStepIndex = (() => {
-    if (!campaignId || !pathname) {
-      return 0;
-    }
     const matchingStepIndex = steps.findIndex(({ link }) => link === pathname);
-    return matchingStepIndex !== -1 ? matchingStepIndex : 0;
+    return matchingStepIndex !== -1 ? matchingStepIndex : steps.length - 1;
   })();
   const activeStep = steps[activeStepIndex];
 

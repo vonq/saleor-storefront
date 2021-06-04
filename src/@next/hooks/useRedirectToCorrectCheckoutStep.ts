@@ -5,17 +5,20 @@ import { useEffect } from "react";
 import { CHECKOUT_STEPS } from "@pages/CheckoutPage/utils";
 import { checkIfShippingRequiredForProducts } from "@utils/core";
 
+import { useCheckoutMetadata } from "./useCheckoutMetadata";
 import { useCheckoutStepState } from "./useCheckoutStepState";
 
 export const useRedirectToCorrectCheckoutStep = (cartLoaded: boolean) => {
   const { pathname, replace } = useRouter();
   const { totalPrice, items } = useCart();
   const { checkout, payment } = useCheckout();
+  const { metadata } = useCheckoutMetadata();
   const { recommendedStep, maxPossibleStep } = useCheckoutStepState(
     items,
     checkout,
     payment,
-    totalPrice
+    totalPrice,
+    metadata
   );
 
   useEffect(() => {

@@ -2,6 +2,7 @@ import { IItems, ITotalPrice } from "@saleor/sdk/lib/api/Cart/types";
 import { ICheckout, IPayment } from "@saleor/sdk/lib/api/Checkout/types";
 import { useEffect, useState } from "react";
 
+import { CheckoutMetadataTypes } from "@app/CheckoutUtils/constants";
 import {
   checkIfShippingRequiredForProducts,
   CheckoutStep,
@@ -17,7 +18,8 @@ export const useCheckoutStepState = (
   items?: IItems,
   checkout?: ICheckout,
   payment?: IPayment,
-  totalPrice?: ITotalPrice
+  totalPrice?: ITotalPrice,
+  metadata?: any
 ): StepState => {
   const isShippingRequiredForProducts = checkIfShippingRequiredForProducts(
     items
@@ -40,7 +42,12 @@ export const useCheckoutStepState = (
       !isShippingRequiredForProducts || !!checkout?.shippingMethod;
     const isPaymentMethodSet =
       !!payment?.id && isCheckoutPriceEqualPaymentPrice;
+    const isJobFunctionSet =
+      metadata && metadata[CheckoutMetadataTypes.JobFunction];
 
+    if (!isJobFunctionSet) {
+      return CheckoutStep.SetTargetGroup;
+    }
     if (!isShippingAddressSet || !isBillingAddressSet) {
       return CheckoutStep.Address;
     }
