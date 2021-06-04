@@ -17,8 +17,6 @@ import {
   translateAdyenConfirmationError,
 } from "@components/organisms";
 import { Checkout } from "@components/templates";
-import { useRedirectToCorrectCheckoutStep } from "@hooks";
-// import { useRedirectToCorrectCheckoutStep } from "@hooks";
 import { paths } from "@paths";
 import { ICardData, IFormError } from "@types";
 
@@ -273,7 +271,7 @@ const CheckoutPage: React.FC<NextPage> = () => {
     }
   };
 
-  useRedirectToCorrectCheckoutStep(cartLoaded);
+  // useRedirectToCorrectCheckoutStep(cartLoaded);
   useEffect(() => setSelectedPaymentGateway(payment?.gateway), [
     payment?.gateway,
   ]);
