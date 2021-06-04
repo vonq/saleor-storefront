@@ -8,6 +8,7 @@ import React, {
   useState,
 } from "react";
 
+import { CheckoutMetadataTypes } from "@app/CheckoutUtils/constants";
 import {
   MetadataInput,
   TypedMetadataUpdateMutation,
@@ -15,6 +16,11 @@ import {
 import { useCheckoutMetadata } from "@hooks/useCheckoutMetadata";
 
 import { CheckoutStep } from "../../../pages/CheckoutPage/utils";
+import {
+  EducationOptions,
+  IndustryOptions,
+  SeniorityOptions,
+} from "./constants";
 import { TypedCheckoutCreateMutation } from "./queries";
 import { SetTargetGroupContent } from "./SetTargetGroupContent";
 import * as S from "./styles";
@@ -37,14 +43,25 @@ export const SetTargetGroup: React.FC<ISetTargetGroupProps> = forwardRef(
     const checkoutSetTargetGroupFormRef = useRef<HTMLFormElement>(null);
     const { items } = useCart();
     const { checkout } = useCheckout();
-    const { appendMetadata } = useCheckoutMetadata();
+    const { metadata, appendMetadata } = useCheckoutMetadata();
     const [checkoutCreated, setCheckoutCreated] = useState(false);
 
     const initialValues: FormValues = {
-      jobFunction: "",
-      seniority: "",
-      industry: "",
-      education: "",
+      jobFunction: metadata[CheckoutMetadataTypes.JobFunction],
+      seniority: SeniorityOptions.find(
+        option =>
+          Number(option.id) ===
+          Number(metadata[CheckoutMetadataTypes.Seniority])
+      ),
+      industry: IndustryOptions.find(
+        option =>
+          Number(option.id) === Number(metadata[CheckoutMetadataTypes.Industry])
+      ),
+      education: EducationOptions.find(
+        option =>
+          Number(option.id) ===
+          Number(metadata[CheckoutMetadataTypes.EducationLevel])
+      ),
     };
 
     useImperativeHandle(ref, () => () => {
@@ -96,14 +113,14 @@ export const SetTargetGroup: React.FC<ISetTargetGroupProps> = forwardRef(
         </S.Desc>
         <TypedMetadataUpdateMutation
           onCompleted={data => {
-            let newMetadata = {};
-            data?.updateMetadata?.item?.metadata.forEach(
-              (item: MetadataInput) => {
-                newMetadata = {
-                  ...newMetadata,
-                  [item.key]: item.value,
-                };
-              }
+            const newMetadata = {};
+            Object.assign(
+              newMetadata,
+              ...data?.updateMetadata?.item?.metadata.map(
+                ({ key, value }: MetadataInput) => ({
+                  [key]: value,
+                })
+              )
             );
             appendMetadata(newMetadata);
           }}
@@ -125,19 +142,19 @@ export const SetTargetGroup: React.FC<ISetTargetGroupProps> = forwardRef(
                       id: checkout.id,
                       metadata: [
                         {
-                          key: "vacancy_taxonomy_jobCategoryId",
+                          key: CheckoutMetadataTypes.JobFunction,
                           value: jobFunction,
                         },
                         {
-                          key: "vacancy_taxonomy_seniority",
+                          key: CheckoutMetadataTypes.Seniority,
                           value: seniority.id,
                         },
                         {
-                          key: "vacancy_taxonomy_industry",
+                          key: CheckoutMetadataTypes.Industry,
                           value: industry.id,
                         },
                         {
-                          key: "vacancy_educationLevelId",
+                          key: CheckoutMetadataTypes.EducationLevel,
                           value: education.id,
                         },
                       ],

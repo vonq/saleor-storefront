@@ -4,8 +4,11 @@ import React, { useCallback } from "react";
 
 import { InputSelect, TextField } from "@components/molecules";
 
-// import { useCheckoutMetadata } from "@hooks/useCheckoutMetadata";
-import { educationLevel, industries, seniorities } from "./constants";
+import {
+  EducationOptions,
+  IndustryOptions,
+  SeniorityOptions,
+} from "./constants";
 import * as S from "./styles";
 
 interface Props {
@@ -57,7 +60,7 @@ export const SetTargetGroupContent: React.FC<Props> = ({
               <div>
                 <S.Name>Industry</S.Name>
                 <InputSelect
-                  options={industries}
+                  options={IndustryOptions}
                   optionLabelKey="name"
                   optionValueKey="id"
                   name="industry"
@@ -71,7 +74,7 @@ export const SetTargetGroupContent: React.FC<Props> = ({
               <div>
                 <S.Name>Seniority</S.Name>
                 <InputSelect
-                  options={seniorities}
+                  options={SeniorityOptions}
                   optionLabelKey="name"
                   optionValueKey="id"
                   name="seniority"
@@ -85,7 +88,7 @@ export const SetTargetGroupContent: React.FC<Props> = ({
               <div>
                 <S.Name>Level of Education</S.Name>
                 <InputSelect
-                  options={educationLevel}
+                  options={EducationOptions}
                   optionLabelKey="name"
                   optionValueKey="id"
                   name="education"
