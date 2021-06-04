@@ -35,65 +35,6 @@ export interface CheckoutCreateVariables {
   lines: CheckoutLineInput[];
 }
 
-const TaxedMoney = `
-  gross {
-    currency
-    amount
-  }
-  net {
-    currency
-    amount
-  }
-`;
-
-const Product = `
-  id
-  name
-  productType {
-    id
-    isShippingRequired
-  }
-  thumbnail {
-    alt
-    url
-  }
-`;
-
-const VariantPricingInfo = `
-  onSale
-  price {
-    ${TaxedMoney}
-  }
-  priceUndiscounted {
-    ${TaxedMoney}
-  }
-`;
-
-const ProductVariant = `
-  id
-  name
-  pricing {
-    ${VariantPricingInfo}
-  }
-  product {
-    ${Product}
-  }
-  quantityAvailable
-  sku
-`;
-
-const CheckoutLine = `
-  id
-  quantity
-  variant {
-    ${ProductVariant}
-  }
-  totalPrice {
-    ${TaxedMoney}
-  }
-  requiresShipping
-`;
-
 export const createCheckout = gql`
   mutation CheckoutCreate($lines: [CheckoutLineInput]!) {
     checkoutCreate(
@@ -123,9 +64,6 @@ export const createCheckout = gql`
     ) {
       checkout {
         id
-        lines {
-          ${CheckoutLine}
-        }
       }
       checkoutErrors {
         field

@@ -3,7 +3,7 @@ import { useCheckout } from "@saleor/sdk";
 import { Formik } from "formik";
 import React, { forwardRef, useImperativeHandle, useRef } from "react";
 
-import { TypedMetadataUpdateMutation } from "@app/queries/updateMetadata";
+import { TypedMetadataUpdateMutation } from "@app/CheckoutUtils/updateMetadata";
 
 import { CheckoutStep } from "./constants";
 import { CreateJobContent } from "./CreateJobContent";

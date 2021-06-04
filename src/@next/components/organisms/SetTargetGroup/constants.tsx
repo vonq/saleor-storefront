@@ -1,100 +1,188 @@
 export const industries = [
-  { industry: "Advertising / Communications / Media", enum: "" },
-  { industry: "Agriculture" },
-  { industry: "Army / Police / Fire brigade" },
-  { industry: "Automotive" },
-  { industry: "Aviation / Space travel" },
-  { industry: "Banking & Financial Services" },
-  { industry: "Biotechnology" },
-  { industry: "Business services" },
-  { industry: "Chemical" },
-  { industry: "Construction" },
-  { industry: "Culture / Art" },
-  { industry: "Education / Training" },
-  { industry: "Electronics" },
-  { industry: "Energy / utilities" },
-  { industry: "Engineering" },
-  { industry: "Entertainment" },
-  { industry: "Fashion" },
-  { industry: "Fast Moving Consumer Goods" },
-  { industry: "Food" },
-  { industry: "Government / Non-profit" },
-  { industry: "Heavy Industry" },
-  { industry: "Hospitality / Recreation /  Travel" },
-  { industry: "Housing associations / developers / property" },
-  { industry: "IT" },
-  { industry: "Legal" },
-  { industry: "Logistics & Supply Chain" },
-  { industry: "Manufacturing" },
-  { industry: "Maritime" },
-  { industry: "Mechanical or Industrial Engineering" },
-  { industry: "Medical / Health" },
-  { industry: "Oil and Gas" },
-  { industry: "Other" },
-  { industry: "Pharmaceutical" },
-  { industry: "Printing / Graphic Arts" },
-  { industry: "Recruitment" },
-  { industry: "Retail / Wholesale" },
-  { industry: "Sport" },
-  { industry: "Telecommunications" },
-];
-
-export const inds = [
-  { industry: "Accounting", enum: "ACCOUNTING" },
-  { industry: "Academic", enum: "ACADEMIC" },
-  { industry: "Advertising", enum: "ADVERTISING" },
-  { industry: "Aerospace", enum: "AEROSPACE" },
-  { industry: "Agriculture", enum: "AGRICULTURE" },
-  { industry: "Arts culture", enum: "ARTS_CULTURE" },
-  { industry: "Automotive", enum: "AUTOMOTIVE" },
-  { industry: "Aviation", enum: "AVIATION" },
-  { industry: "Banking", enum: "BANKING" },
-  { industry: "Building construction", enum: "BUILDING_CONSTRUCTION" },
   {
-    industry: "Charity and not for profit",
-    enum: "CHARITY_AND_NOT_FOR_PROFIT",
+    id: 48,
+    name: "Academic",
   },
-  { industry: "Communications", enum: "COMMUNICATIONS" },
-  { industry: "Education", enum: "EDUCATION" },
-  { industry: "Energy", enum: "ENERGY" },
-  { industry: "Engineering", enum: "ENGINEERING" },
-  { industry: "Entertainment", enum: "ENTERTAINMENT" },
-  { industry: "Facility management", enum: "FACILITY_MANAGEMENT" },
-  { industry: "Fashion", enum: "FASHION" },
   {
-    industry: "Fast moving consumer goods",
-    enum: "FAST_MOVING_CONSUMER_GOODS",
+    id: 20,
+    name: "Accounting",
   },
-  { industry: "Finance", enum: "FINANCE" },
-  { industry: "Food", enum: "FOOD" },
-  { industry: "Generic", enum: "GENERIC" },
   {
-    industry: "Goverment and public sector",
-    enum: "GOVERNMENT_AND_PUBLIC_SECTOR",
+    id: 10,
+    name: "Advertising",
   },
-  { industry: "Health and safety", enum: "HEALTH_AND_SAFETY" },
-  { industry: "Healthcare", enum: "HEALTHCARE" },
-  { industry: "Hospitality", enum: "HOSPITALITY" },
-  { industry: "Information technology", enum: "INFORMATION_TECHNOLOGY" },
-  { industry: "Insurance", enum: "INSURANCE" },
-  // { industry: "Insurance", enum: "INSURANCE" },
-  { industry: "Legal", enum: "LEGAL" },
-  { industry: "Leisure and sport", enum: "LEISURE_AND_SPORT" },
-  { industry: "Logistics supply chain", enum: "LOGISTICS_SUPPLY_CHAIN" },
-  { industry: "Manufactoring", enum: "MANUFACTURING" },
-  { industry: "Maritime", enum: "MARITIME" },
-  { industry: "Media", enum: "MEDIA" },
-  { industry: "Multilingual", enum: "MULTILINGUAL" },
-  { industry: "Pharmaceuticals", enum: "PHARMACEUTICALS" },
-  { industry: "Property and housing", enum: "PROPERTY_AND_HOUSING" },
-  { industry: "Real estate", enum: "REAL_ESTATE" },
-  { industry: "Recrutment", enum: "RECRUITMENT" },
-  { industry: "Retail", enum: "RETAIL" },
-  { industry: "Science reserch", enum: "SCIENCE_RESEARCH" },
-  { industry: "Sustainability", enum: "SUSTAINABILITY" },
-  { industry: "Telecommunications", enum: "TELECOMMUNICATIONS" },
-  { industry: "Transport and rail", enum: "TRANSPORT_AND_RAIL" },
-  { industry: "Travel and tourism", enum: "TRAVEL_AND_TOURISM" },
+  {
+    id: 32,
+    name: "Aerospace",
+  },
+  {
+    id: 17,
+    name: "Agriculture",
+  },
+  {
+    id: 5,
+    name: "Arts & Culture",
+  },
+  {
+    id: 22,
+    name: "Automotive",
+  },
+  {
+    id: 33,
+    name: "Aviation",
+  },
+  {
+    id: 19,
+    name: "Banking",
+  },
+  {
+    id: 16,
+    name: "Building and Construction",
+  },
+  {
+    id: 6,
+    name: "Charity and Not for Profit",
+  },
+  {
+    id: 2,
+    name: "Communications",
+  },
+  {
+    id: 24,
+    name: "Education",
+  },
+  {
+    id: 4,
+    name: "Energy",
+  },
+  {
+    id: 30,
+    name: "Engineering",
+  },
+  {
+    id: 15,
+    name: "Entertainment",
+  },
+  {
+    id: 49,
+    name: "Facility Management",
+  },
+  {
+    id: 9,
+    name: "Fashion",
+  },
+  {
+    id: 43,
+    name: "Fast Moving Consumer Goods",
+  },
+  {
+    id: 21,
+    name: "Finance",
+  },
+  {
+    id: 42,
+    name: "Food",
+  },
+  {
+    id: 29,
+    name: "Generic",
+  },
+  {
+    id: 8,
+    name: "Government and Public Sector",
+  },
+  {
+    id: 37,
+    name: "Health and Safety",
+  },
+  {
+    id: 12,
+    name: "Healthcare",
+  },
+  {
+    id: 40,
+    name: "Hospitality",
+  },
+  {
+    id: 1,
+    name: "Information Technology",
+  },
+  {
+    id: 18,
+    name: "Insurance",
+  },
+  {
+    id: 38,
+    name: "Language",
+  },
+  {
+    id: 14,
+    name: "Legal",
+  },
+  {
+    id: 7,
+    name: "Leisure and Sport",
+  },
+  {
+    id: 44,
+    name: "Logistics & Supply Chain",
+  },
+  {
+    id: 3,
+    name: "Manufacturing",
+  },
+  {
+    id: 39,
+    name: "Maritime",
+  },
+  {
+    id: 26,
+    name: "Media",
+  },
+  {
+    id: 47,
+    name: "Multilingual",
+  },
+  {
+    id: 31,
+    name: "Pharmaceuticals",
+  },
+  {
+    id: 28,
+    name: "Property and Housing",
+  },
+  {
+    id: 11,
+    name: "Real Estate",
+  },
+  {
+    id: 13,
+    name: "Recruitment",
+  },
+  {
+    id: 35,
+    name: "Retail",
+  },
+  {
+    id: 23,
+    name: "Science & Research",
+  },
+  {
+    id: 41,
+    name: "Sustainability",
+  },
+  {
+    id: 36,
+    name: "Telecommunications",
+  },
+  {
+    id: 27,
+    name: "Transport and Rail",
+  },
+  {
+    id: 34,
+    name: "Travel and Tourism",
+  },
 ];
 
 export const employmentTypes = [
@@ -106,12 +194,27 @@ export const employmentTypes = [
   { type: "Traineeship" },
 ];
 
-export const senioritis = [
-  { seniority: "Student/Trainee", enum: "TRAINEE" },
-  { seniority: "Entry level/Graduate", enum: "GRADUATE" },
-  { seniority: "Mid-Senior level", enum: "MID_OR_SENIOR" },
-  { seniority: "Manager", enum: "MANAGER" },
-  { seniority: "Executive/Director", enum: "EXECUTIVE" },
+export const seniorities = [
+  {
+    id: 1,
+    name: "Executive/Director",
+  },
+  {
+    id: 2,
+    name: "Manager",
+  },
+  {
+    id: 3,
+    name: "Mid-Senior level",
+  },
+  {
+    id: 4,
+    name: "Entry level/Graduate",
+  },
+  {
+    id: 5,
+    name: "Student/Trainee",
+  },
 ];
 
 export const currencies = [
@@ -130,9 +233,21 @@ export enum CheckoutStep {
   PaymentConfirm,
 }
 
-export const educationLvl = [
-  { value: "Bachelor / Graduate", enum: "BACHELOR" },
-  { value: "GCSE / A-Level / Highschool / GED", enum: "GCSE" },
-  { value: "Master / Post-Graduate / PhD", enum: "MASTER" },
-  { value: "Vocational / Diploma / Associates degree", enum: "VOCATIONAL" },
+export const educationLevel = [
+  {
+    id: 1,
+    name: "Master / Post-Graduate / PhD",
+  },
+  {
+    id: 2,
+    name: "Bachelor / Graduate",
+  },
+  {
+    id: 3,
+    name: "Vocational / Diploma / Associates degree",
+  },
+  {
+    id: 4,
+    name: "GCSE / A-Level / Highschool / GED",
+  },
 ];

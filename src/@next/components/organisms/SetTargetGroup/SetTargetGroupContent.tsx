@@ -4,8 +4,8 @@ import React, { useCallback } from "react";
 
 import { InputSelect, TextField } from "@components/molecules";
 
-import { educationLvl } from "../CreateJobAd/constants";
-import { /* educationLvl, */ inds, senioritis } from "./constants";
+// import { useCheckoutMetadata } from "@hooks/useCheckoutMetadata";
+import { educationLevel, industries, seniorities } from "./constants";
 import * as S from "./styles";
 
 interface Props {
@@ -57,9 +57,9 @@ export const SetTargetGroupContent: React.FC<Props> = ({
               <div>
                 <S.Name>Industry</S.Name>
                 <InputSelect
-                  options={inds}
-                  optionLabelKey="industry"
-                  optionValueKey="industry"
+                  options={industries}
+                  optionLabelKey="name"
+                  optionValueKey="id"
                   name="industry"
                   value={values!.industry}
                   label=""
@@ -71,10 +71,9 @@ export const SetTargetGroupContent: React.FC<Props> = ({
               <div>
                 <S.Name>Seniority</S.Name>
                 <InputSelect
-                  options={senioritis}
-                  optionLabelKey="seniority"
-                  optionValueKey="seniority"
-                  // placeholder="Select"
+                  options={seniorities}
+                  optionLabelKey="name"
+                  optionValueKey="id"
                   name="seniority"
                   value={values!.seniority}
                   label=""
@@ -86,9 +85,9 @@ export const SetTargetGroupContent: React.FC<Props> = ({
               <div>
                 <S.Name>Level of Education</S.Name>
                 <InputSelect
-                  options={educationLvl}
-                  optionLabelKey="value"
-                  optionValueKey="value"
+                  options={educationLevel}
+                  optionLabelKey="name"
+                  optionValueKey="id"
                   name="education"
                   value={values!.education}
                   label=""

@@ -2,11 +2,6 @@ import gql from "graphql-tag";
 
 import { TypedMutation } from "@temp/core/mutations";
 
-type MetadataInput = {
-  key: String;
-  value: String;
-};
-
 const updateMetadata = gql`
   mutation MetadataUpdate($id: ID!, $metadata: [MetadataInput!]!) {
     updateMetadata(id: $id, input: $metadata) {
@@ -36,6 +31,11 @@ type MetadataError = {
   message: String;
   code: MetadataErrorCode;
 };
+
+export interface MetadataInput {
+  key: string;
+  value: any;
+}
 export interface MetadataUpdate {
   updateMetadata: any;
   data: any;

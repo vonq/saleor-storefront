@@ -8,7 +8,11 @@ import React, {
   useState,
 } from "react";
 
-import { TypedMetadataUpdateMutation } from "@app/queries/updateMetadata";
+import {
+  MetadataInput,
+  TypedMetadataUpdateMutation,
+} from "@app/CheckoutUtils/updateMetadata";
+import { useCheckoutMetadata } from "@hooks/useCheckoutMetadata";
 
 import { CheckoutStep } from "../../../pages/CheckoutPage/utils";
 import { TypedCheckoutCreateMutation } from "./queries";
@@ -33,6 +37,7 @@ export const SetTargetGroup: React.FC<ISetTargetGroupProps> = forwardRef(
     const checkoutSetTargetGroupFormRef = useRef<HTMLFormElement>(null);
     const { items } = useCart();
     const { checkout } = useCheckout();
+    const { appendMetadata } = useCheckoutMetadata();
     const [checkoutCreated, setCheckoutCreated] = useState(false);
 
     const initialValues: FormValues = {
@@ -53,12 +58,11 @@ export const SetTargetGroup: React.FC<ISetTargetGroupProps> = forwardRef(
         <TypedCheckoutCreateMutation
           onCompleted={data => {
             const id = data?.checkoutCreate?.checkout?.id;
-            const lines = data?.checkoutCreate?.checkout?.lines || [];
             localStorage.setItem(
               "data_checkout",
               JSON.stringify({
                 id,
-                lines,
+                lines: items,
               })
             );
           }}
@@ -92,10 +96,16 @@ export const SetTargetGroup: React.FC<ISetTargetGroupProps> = forwardRef(
         </S.Desc>
         <TypedMetadataUpdateMutation
           onCompleted={data => {
-            console.log(
-              data,
-              "SetTargetGroup on metadata update mutation complete"
+            let newMetadata = {};
+            data?.updateMetadata?.item?.metadata.forEach(
+              (item: MetadataInput) => {
+                newMetadata = {
+                  ...newMetadata,
+                  [item.key]: item.value,
+                };
+              }
             );
+            appendMetadata(newMetadata);
           }}
           onError={error => console.log(error, "error from on Error")}
         >
@@ -120,16 +130,16 @@ export const SetTargetGroup: React.FC<ISetTargetGroupProps> = forwardRef(
                         },
                         {
                           key: "vacancy_taxonomy_seniority",
-                          value: seniority.enum,
+                          value: seniority.id,
                         },
                         {
                           key: "vacancy_taxonomy_industry",
-                          value: industry.enum,
+                          value: industry.id,
                         },
-                        // {
-                        //   key: "education",
-                        //   value: education.enum,
-                        // },
+                        {
+                          key: "vacancy_educationLevelId",
+                          value: education.id,
+                        },
                       ],
                     },
                   });
