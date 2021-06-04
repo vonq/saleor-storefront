@@ -21,6 +21,7 @@ import { CheckoutStep } from "../../../pages/CheckoutPage/utils";
 import {
   EducationOptions,
   IndustryOptions,
+  JobFunctionOptions,
   SeniorityOptions,
 } from "./constants";
 import { apolloClient, createCheckoutQuery } from "./queries";
@@ -49,7 +50,12 @@ export const SetTargetGroup: React.FC<ISetTargetGroupProps> = forwardRef(
     const [checkoutCreating, setCheckoutCreating] = useState(false);
 
     const initialValues: FormValues = {
-      jobFunction: metadata && metadata[CheckoutMetadataTypes.JobFunction],
+      jobFunction:
+        metadata &&
+        findOptionById(
+          JobFunctionOptions,
+          metadata[CheckoutMetadataTypes.JobFunction]
+        ),
       seniority:
         metadata &&
         findOptionById(
@@ -152,7 +158,7 @@ export const SetTargetGroup: React.FC<ISetTargetGroupProps> = forwardRef(
                       metadata: [
                         {
                           key: CheckoutMetadataTypes.JobFunction,
-                          value: jobFunction,
+                          value: jobFunction.id,
                         },
                         {
                           key: CheckoutMetadataTypes.Seniority,
