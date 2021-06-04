@@ -168,7 +168,7 @@ export const SetTargetGroup: React.FC<ISetTargetGroupProps> = forwardRef(
                     },
                   });
                   actions.setSubmitting(false);
-                  onSubmitSuccess(CheckoutStep.Address);
+                  onSubmitSuccess(CheckoutStep.SetTargetGroup);
                 }}
               >
                 {({
