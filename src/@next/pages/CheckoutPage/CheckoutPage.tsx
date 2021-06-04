@@ -273,7 +273,7 @@ const CheckoutPage: React.FC<NextPage> = () => {
     }
   };
 
-  useRedirectToCorrectCheckoutStep(cartLoaded);
+  // useRedirectToCorrectCheckoutStep(cartLoaded);
   useEffect(() => setSelectedPaymentGateway(payment?.gateway), [
     payment?.gateway,
   ]);

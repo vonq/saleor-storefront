@@ -4,7 +4,6 @@ export const CheckoutMetadataTypes = {
   Industry: "vacancy_taxonomy_industry",
   JobFunction: "vacancy_taxonomy_jobCategoryId",
   Seniority: "vacancy_taxonomy_seniorityId",
-  // Seniority: 'vacancy_taxonomy_seniorityId'
   VacancyURL: "vacancy_tracking_vacancy_url",
   ApplicationURL: "vacancy_tracking_applicationUrl",
   ContactName: "contactInfo_name",
@@ -19,4 +18,7 @@ export const CheckoutMetadataTypes = {
   SalaryMaxAmount: "vacancy_salary_maximumAmount",
   SalaryPerPeriod: "vacancy_salary_perPeriod",
   SalaryCurrency: "vacancy_salary_currency",
+  OrganizationName: "vacancy_organizationName",
+  CompanyLogo: "vacancy_companyLogo",
+  TrackingUTM: "vacancy_tracking_utm",
 };
