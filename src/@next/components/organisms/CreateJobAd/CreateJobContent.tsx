@@ -6,12 +6,7 @@ import React, { useCallback, useState } from "react";
 
 import { InputSelect, TextField } from "@components/molecules";
 
-import {
-  currencies,
-  educationLvl,
-  employmentTypes,
-  periods,
-} from "./constants";
+import { currencies, employmentTypes, periods } from "./constants";
 import { MoreInfoModal } from "./MoreInfoModal";
 import * as S from "./styles";
 
@@ -48,7 +43,10 @@ export const CreateJobContent: React.FC<Props> = ({
     <form
       id={checkoutCreateJobFormId}
       ref={checkoutCreateJobFormRef}
-      onSubmit={handleSubmit}
+      onSubmit={e => {
+        e.preventDefault();
+        handleSubmit();
+      }}
     >
       <S.JobForm>
         <S.Wrapper>
@@ -168,41 +166,6 @@ export const CreateJobContent: React.FC<Props> = ({
                 {...basicInputProps()}
               />
             </S.Experience>
-            <S.Name>Level of education</S.Name>
-            <S.CheckboxArea>
-              {/* <FieldArray
-                name="educationLevel"
-                render={arrayHelpers => (
-                  <> */}
-              {educationLvl.map(level => (
-                // eslint-disable-next-line jsx-a11y/label-has-associated-control
-                <label key={level.value}>
-                  <input
-                    type="checkbox"
-                    name="educationLevel"
-                    // checked={values.educationLevel.includes(level.value)}
-                    // onChange={e => {
-                    //   if (e.target.checked) {
-                    //     arrayHelpers.push(level.value);
-                    //   } else {
-                    //     const idx = values.educationLevel.indexOf(
-                    //       level.value
-                    //     );
-                    //     arrayHelpers.remove(idx);
-                    //   }
-                    // }}
-                    value={level.enum}
-                    onChange={event => {
-                      setFieldValue(event.target.name, event.target.value);
-                    }}
-                  />
-                  <S.CheckboxSpan>{`${level.value}`}</S.CheckboxSpan>
-                </label>
-              ))}
-              {/* </> */}
-              {/* )}
-              /> */}
-            </S.CheckboxArea>
             <S.Name>Employment Type</S.Name>
             <S.InputSelectWrapper>
               <InputSelect

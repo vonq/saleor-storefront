@@ -7,6 +7,8 @@ const updateMetadata = gql`
     updateMetadata(id: $id, input: $metadata) {
       metadataErrors {
         message
+        field
+        code
       }
       item {
         metadata {
