@@ -1,7 +1,12 @@
 /* eslint-disable no-console */
 import { useCheckout } from "@saleor/sdk";
 import { Formik } from "formik";
-import React, { forwardRef, useImperativeHandle, useRef } from "react";
+import React, {
+  forwardRef,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
 
 import { CheckoutMetadataTypes } from "@app/CheckoutUtils/constants";
 import { findOptionById } from "@app/CheckoutUtils/helpers";
@@ -39,6 +44,7 @@ export const SetTargetGroup: React.FC<ISetTargetGroupProps> = forwardRef(
     const checkoutSetTargetGroupFormRef = useRef<HTMLFormElement>(null);
     const { checkout } = useCheckout();
     const { metadata, appendMetadata } = useCheckoutMetadata();
+    const [errors, setErrors] = useState([]);
 
     const initialValues: FormValues = {
       jobFunction:
@@ -87,8 +93,13 @@ export const SetTargetGroup: React.FC<ISetTargetGroupProps> = forwardRef(
         <TypedMetadataUpdateMutation
           onCompleted={data => {
             const newMetadata = {};
+            const updateMetadata = data?.updateMetadata;
+            if (updateMetadata?.metadataErrors?.length) {
+              setErrors(updateMetadata?.metadataErrors);
+              return;
+            }
             const newData =
-              data?.updateMetadata?.item?.metadata.map(
+              updateMetadata?.item?.metadata.map(
                 ({ key, value }: MetadataInput) => ({
                   [key]: value,
                 })
@@ -97,7 +108,9 @@ export const SetTargetGroup: React.FC<ISetTargetGroupProps> = forwardRef(
             appendMetadata(newMetadata);
             onSubmitSuccess(CheckoutStep.Address);
           }}
-          onError={error => console.log(error, "error from on Error")}
+          onError={error => {
+            console.log(error, "error from on Error");
+          }}
         >
           {(mutation, { loading, data }) => {
             return (
@@ -107,25 +120,26 @@ export const SetTargetGroup: React.FC<ISetTargetGroupProps> = forwardRef(
                   { jobFunction, seniority, industry, education },
                   actions
                 ) => {
+                  actions.setSubmitting(false);
                   mutation({
                     variables: {
                       id: checkout?.id || "",
                       metadata: [
                         {
                           key: CheckoutMetadataTypes.JobFunction,
-                          value: jobFunction.id,
+                          value: jobFunction?.id || "",
                         },
                         {
                           key: CheckoutMetadataTypes.Seniority,
-                          value: seniority.id,
+                          value: seniority?.id || "",
                         },
                         {
                           key: CheckoutMetadataTypes.Industry,
-                          value: industry.id,
+                          value: industry?.id || "",
                         },
                         {
                           key: CheckoutMetadataTypes.EducationLevel,
-                          value: education.id,
+                          value: education?.id || "",
                         },
                       ],
                     },
@@ -142,6 +156,7 @@ export const SetTargetGroup: React.FC<ISetTargetGroupProps> = forwardRef(
                 }) => (
                   <SetTargetGroupContent
                     {...{
+                      errors,
                       handleChange,
                       handleSubmit,
                       handleBlur,

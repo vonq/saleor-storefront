@@ -321,7 +321,7 @@ const CheckoutPage: React.FC<NextPage> = () => {
         );
         history.go(0);
       } catch (error) {
-        console.log("Error on creating checkout", error);
+        console.log("Error on creating checkout", error); // eslint-disable-line no-console
       }
     };
     if (!checkout?.id && !!items) {

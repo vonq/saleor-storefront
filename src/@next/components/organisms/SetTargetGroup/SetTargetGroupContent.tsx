@@ -21,9 +21,11 @@ interface Props {
   setFieldTouched?: any;
   checkoutSetTargetGroupFormId?: any;
   checkoutSetTargetGroupFormRef?: any;
+  errors: any;
 }
 
 export const SetTargetGroupContent: React.FC<Props> = ({
+  errors,
   handleChange,
   handleSubmit,
   handleBlur,
@@ -37,6 +39,15 @@ export const SetTargetGroupContent: React.FC<Props> = ({
   //   () => ({ onBlur: handleBlur, onChange: handleChange }),
   //   [handleChange, handleBlur]
   // );
+  const fieldErrors: any = {};
+
+  if (errors) {
+    errors.map(({ field, message }: { field: string; message: string }) => {
+      fieldErrors[field] = fieldErrors[field]
+        ? [...fieldErrors[field], { message }]
+        : [{ message }];
+    });
+  }
 
   return (
     <form
@@ -66,6 +77,7 @@ export const SetTargetGroupContent: React.FC<Props> = ({
                   optionValueKey="id"
                   name="jobFunction"
                   value={values!.jobFunction}
+                  errors={fieldErrors!.vacancyTaxonomyJobcategoryid}
                   label=""
                   onChange={(value: any, name: any) => {
                     setFieldValue(name, value);
@@ -80,6 +92,7 @@ export const SetTargetGroupContent: React.FC<Props> = ({
                   optionValueKey="id"
                   name="industry"
                   value={values!.industry}
+                  errors={fieldErrors!.vacancyTaxonomyIndustry}
                   label=""
                   onChange={(value: any, name: any) => {
                     setFieldValue(name, value);
@@ -95,6 +108,7 @@ export const SetTargetGroupContent: React.FC<Props> = ({
                   name="seniority"
                   value={values!.seniority}
                   label=""
+                  errors={fieldErrors!.vacancyTaxonomySeniorityid}
                   onChange={(value: any, name: any) => {
                     setFieldValue(name, value);
                   }}
@@ -109,6 +123,7 @@ export const SetTargetGroupContent: React.FC<Props> = ({
                   name="education"
                   value={values!.education}
                   label=""
+                  errors={fieldErrors!.vacancyEducationlevelid}
                   onChange={(value: any, name: any) => {
                     setFieldValue(name, value);
                   }}
