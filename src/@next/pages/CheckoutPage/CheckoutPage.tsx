@@ -16,6 +16,10 @@ import {
   SetTargetGroup,
   translateAdyenConfirmationError,
 } from "@components/organisms";
+import {
+  apolloClient,
+  createCheckoutQuery,
+} from "@components/organisms/SetTargetGroup/queries";
 import { Checkout } from "@components/templates";
 import { paths } from "@paths";
 import { ICardData, IFormError } from "@types";
@@ -294,9 +298,46 @@ const CheckoutPage: React.FC<NextPage> = () => {
   }, [pathname, query, submitInProgress, checkout]);
   // console.log(activeStep.step);
 
-  return isFullyLoaded && !items?.length ? (
-    <Redirect url={paths.cart} />
-  ) : (
+  useEffect(() => {
+    const createCheckout = async () => {
+      try {
+        const response = await apolloClient.mutate({
+          mutation: createCheckoutQuery,
+          variables: {
+            lines: (items || []).map(item => ({
+              quantity: item.quantity,
+              variantId: item.variant.id,
+            })),
+          },
+        });
+        const newCheckout = response?.data?.checkoutCreate?.checkout;
+        localStorage.setItem(
+          "data_checkout",
+          JSON.stringify({
+            ...newCheckout,
+            lines: items,
+            metadata: {},
+          })
+        );
+        history.go(0);
+      } catch (error) {
+        console.log("Error on creating checkout", error);
+      }
+    };
+    if (!checkout?.id && !!items) {
+      createCheckout();
+    }
+  }, [checkout, items]);
+
+  if (cartLoaded && !items?.length) {
+    return <Redirect url={paths.cart} />;
+  }
+
+  if (checkoutLoaded && !checkout?.id) {
+    return <Loader />;
+  }
+
+  return (
     <Checkout
       loading={submitInProgress}
       navigation={
