@@ -94,8 +94,8 @@ export const SetTargetGroup: React.FC<ISetTargetGroupProps> = forwardRef(
           onCompleted={data => {
             const newMetadata = {};
             const updateMetadata = data?.updateMetadata;
+            setErrors(updateMetadata?.metadataErrors || []);
             if (updateMetadata?.metadataErrors?.length) {
-              setErrors(updateMetadata?.metadataErrors);
               return;
             }
             const newData =

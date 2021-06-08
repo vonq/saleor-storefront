@@ -4,6 +4,7 @@ import { Editor } from "@tinymce/tinymce-react";
 // import { FieldArray } from "formik";
 import React, { useCallback, useState } from "react";
 
+import { ErrorMessage } from "@components/atoms";
 import { InputSelect, TextField } from "@components/molecules";
 
 import { currencies, employmentTypes, periods } from "./constants";
@@ -11,6 +12,7 @@ import { MoreInfoModal } from "./MoreInfoModal";
 import * as S from "./styles";
 
 interface Props {
+  errors: any;
   handleChange?: any;
   handleSubmit?: any;
   handleBlur?: any;
@@ -22,6 +24,7 @@ interface Props {
 }
 
 export const CreateJobContent: React.FC<Props> = ({
+  errors,
   handleChange,
   handleSubmit,
   handleBlur,
@@ -38,6 +41,16 @@ export const CreateJobContent: React.FC<Props> = ({
 
   const [isChecked, setIsChecked] = useState(true);
   const [moreInfo, setMoreInfo] = useState(false);
+
+  const fieldErrors: any = {};
+
+  if (errors) {
+    errors.map(({ field, message }: { field: string; message: string }) => {
+      fieldErrors[field] = fieldErrors[field]
+        ? [...fieldErrors[field], { message }]
+        : [{ message }];
+    });
+  }
 
   return (
     <form
@@ -63,6 +76,7 @@ export const CreateJobContent: React.FC<Props> = ({
             <TextField
               name="jobTitle"
               value={values!.jobTitle}
+              errors={fieldErrors!.vacancyJobtitle}
               {...basicInputProps()}
             />
             <S.Name>Job description</S.Name>
@@ -126,6 +140,7 @@ export const CreateJobContent: React.FC<Props> = ({
                     // console.log("editor:", editor);
                   }}
                 />
+                <ErrorMessage errors={fieldErrors!.vacancyDescription} />
               </S.TextArea>
             ) : (
               <div>value2</div>
@@ -139,6 +154,7 @@ export const CreateJobContent: React.FC<Props> = ({
               name="jobDetailLink"
               label="https://careers.company.com/job"
               value={values!.jobDetailLink}
+              errors={fieldErrors!.vacancyTrackingVacancyUrl}
               {...basicInputProps()}
             />
             <S.Name>Link to application page</S.Name>
@@ -151,6 +167,7 @@ export const CreateJobContent: React.FC<Props> = ({
               name="applicationLink"
               label="https://careers.company.com/job/apply"
               value={values!.applicationLink}
+              errors={fieldErrors!.vacancyTrackingApplicationurl}
               {...basicInputProps()}
             />
             <S.SubTitle>2 Job criteria</S.SubTitle>
@@ -163,6 +180,7 @@ export const CreateJobContent: React.FC<Props> = ({
                 name="jobExperience"
                 label="e.g. 5+"
                 value={values!.jobExperience}
+                errors={fieldErrors!.vacancyMinimumyearsofexperience}
                 {...basicInputProps()}
               />
             </S.Experience>
@@ -176,6 +194,7 @@ export const CreateJobContent: React.FC<Props> = ({
                 name="employmentType"
                 label=""
                 value={values!.employmentType}
+                errors={fieldErrors!.vacancyType}
                 onChange={(value: any, name: any) => setFieldValue(name, value)}
               />
             </S.InputSelectWrapper>
@@ -191,6 +210,9 @@ export const CreateJobContent: React.FC<Props> = ({
                     setFieldValue(event.target.name, event.target.value)
                   }
                 />
+                <ErrorMessage
+                  errors={fieldErrors!.vacancyWorkinghoursMinimum}
+                />
               </S.Label>
               <S.LabelRight>
                 Max.
@@ -201,6 +223,9 @@ export const CreateJobContent: React.FC<Props> = ({
                   onChange={event =>
                     setFieldValue(event.target.name, event.target.value)
                   }
+                />
+                <ErrorMessage
+                  errors={fieldErrors!.vacancyWorkinghoursMaximum}
                 />
               </S.LabelRight>
             </S.Hours>
@@ -220,6 +245,7 @@ export const CreateJobContent: React.FC<Props> = ({
                   setFieldValue(event.target.name, event.target.value)
                 }
               />
+              <ErrorMessage errors={fieldErrors!.vacancySalaryMinimumAmount} />
               <S.SalarySpan>To</S.SalarySpan>
               <S.SalaryInput
                 type="number"
@@ -229,6 +255,7 @@ export const CreateJobContent: React.FC<Props> = ({
                   setFieldValue(event.target.name, event.target.value)
                 }
               />
+              <ErrorMessage errors={fieldErrors!.vacancySalaryMaximumAmount} />
               <S.SalarySpan>In the currency</S.SalarySpan>
               <S.SalaryCurrency>
                 <InputSelect
@@ -238,6 +265,7 @@ export const CreateJobContent: React.FC<Props> = ({
                   name="currency"
                   label=""
                   value={values!.currency}
+                  errors={fieldErrors!.vacancySalaryCurrency}
                   onChange={(value: any, name: any) =>
                     setFieldValue(name, value)
                   }
@@ -252,6 +280,7 @@ export const CreateJobContent: React.FC<Props> = ({
                   label=""
                   value={values.period}
                   name="period"
+                  errors={fieldErrors!.vacancySalaryPerperiod}
                   onChange={(value: any, name: any) =>
                     setFieldValue(name, value)
                   }
@@ -271,6 +300,7 @@ export const CreateJobContent: React.FC<Props> = ({
                   name="contactName"
                   // label="https://careers.company.com/job"
                   value={values!.contactName}
+                  errors={fieldErrors!.contactInfoName}
                   {...basicInputProps()}
                 />
               </div>
@@ -285,6 +315,7 @@ export const CreateJobContent: React.FC<Props> = ({
                   // label="https://careers.company.com/job"
                   value={values!.contactPhone}
                   autoComplete="tel"
+                  errors={fieldErrors!.contactInfoPhonenumber}
                   {...basicInputProps()}
                 />
               </div>
