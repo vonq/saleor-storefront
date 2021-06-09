@@ -9,7 +9,6 @@ export const CheckoutMetadataTypes = {
   ApplicationURL: "vacancy_tracking_applicationUrl",
   ContactName: "contactInfo_name",
   ContactNumber: "contactInfo_phoneNumber",
-  // vacancy_organizationName = serializers.CharField(max_length=255, allow_null=False)
   VacancyType: "vacancy_type",
   MinExp: "vacancy_minimumYearsOfExperience",
   EducationLevel: "vacancy_educationLevelId",
@@ -19,4 +18,7 @@ export const CheckoutMetadataTypes = {
   SalaryMaxAmount: "vacancy_salary_maximumAmount",
   SalaryPerPeriod: "vacancy_salary_perPeriod",
   SalaryCurrency: "vacancy_salary_currency",
+  CompanyLogo: "vacancy_companyLogo",
+  TrackingUtm: "vacancy_tracking_utm",
+  OrganizationName: "vacancy_organizationName",
 };

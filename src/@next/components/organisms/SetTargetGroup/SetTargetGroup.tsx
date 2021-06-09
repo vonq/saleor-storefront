@@ -141,6 +141,18 @@ export const SetTargetGroup: React.FC<ISetTargetGroupProps> = forwardRef(
                           key: CheckoutMetadataTypes.EducationLevel,
                           value: education?.id || "",
                         },
+                        {
+                          key: CheckoutMetadataTypes.CompanyLogo,
+                          value: "https://www.realtor.com/realtor-com.png",
+                        },
+                        {
+                          key: CheckoutMetadataTypes.OrganizationName,
+                          value: "organization test",
+                        },
+                        {
+                          key: CheckoutMetadataTypes.TrackingUtm,
+                          value: "tracking utm test",
+                        },
                       ],
                     },
                   });
