@@ -219,6 +219,18 @@ export const CreateJobAd: React.FC<ICreateJobAdProps> = forwardRef(
                           key: CheckoutMetadataTypes.ContactNumber,
                           value: contactPhone || "",
                         },
+                        {
+                          key: CheckoutMetadataTypes.CompanyLogo,
+                          value: "https://www.realtor.com/realtor-com.png",
+                        },
+                        {
+                          key: CheckoutMetadataTypes.OrganizationName,
+                          value: "organization",
+                        },
+                        {
+                          key: CheckoutMetadataTypes.TrackingUTM,
+                          value: "tracking utm",
+                        },
                       ],
                     },
                   });
