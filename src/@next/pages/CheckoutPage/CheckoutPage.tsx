@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
+import { CheckoutMetadataTypes } from "@app/CheckoutUtils/constants";
 import { Button, Loader, Redirect } from "@components/atoms";
 import { CheckoutProgressBar } from "@components/molecules";
 import {
@@ -21,6 +22,7 @@ import {
   createCheckoutQuery,
 } from "@components/organisms/SetTargetGroup/queries";
 import { Checkout } from "@components/templates";
+import { useCheckoutMetadata } from "@hooks/useCheckoutMetadata";
 import { paths } from "@paths";
 import { ICardData, IFormError } from "@types";
 
@@ -45,7 +47,8 @@ import {
 const CHECKOUT_GETEWAY_FORM_ID = "gateway-form";
 
 const CheckoutPage: React.FC<NextPage> = () => {
-  const { push, pathname, query } = useRouter();
+  const { replace, push, pathname, query } = useRouter();
+  const { metadata } = useCheckoutMetadata();
 
   const {
     loaded: cartLoaded,
@@ -274,6 +277,20 @@ const CheckoutPage: React.FC<NextPage> = () => {
       }
     }
   };
+
+  useEffect(() => {
+    if (!metadata) {
+      return;
+    }
+    if (!metadata[CheckoutMetadataTypes.JobFunction]) {
+      const { link } = CHECKOUT_STEPS[0];
+      replace(link);
+    }
+    if (!metadata[CheckoutMetadataTypes.JobTitle]) {
+      const { link } = CHECKOUT_STEPS[1];
+      replace(link);
+    }
+  }, [metadata]);
 
   // useRedirectToCorrectCheckoutStep(cartLoaded);
   useEffect(() => setSelectedPaymentGateway(payment?.gateway), [
