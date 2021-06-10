@@ -237,59 +237,73 @@ export const CreateJobContent: React.FC<Props> = ({
               3.500.
             </S.Sku>
             <S.Salary>
-              <S.SalarySpan>From</S.SalarySpan>
-              <S.SalaryInput
-                type="number"
-                placeholder="2500"
-                min="1"
-                value={values!.minSalary}
-                name="minSalary"
-                onChange={event =>
-                  setFieldValue(event.target.name, event.target.value)
-                }
-              />
-              <ErrorMessage errors={fieldErrors!.vacancySalaryMinimumAmount} />
-              <S.SalarySpan>To</S.SalarySpan>
-              <S.SalaryInput
-                type="number"
-                placeholder="3500"
-                name="maxSalary"
-                value={values!.maxSalary}
-                onChange={event =>
-                  setFieldValue(event.target.name, event.target.value)
-                }
-              />
-              <ErrorMessage errors={fieldErrors!.vacancySalaryMaximumAmount} />
-              <S.SalarySpan>In the currency</S.SalarySpan>
-              <S.SalaryCurrency>
-                <InputSelect
-                  options={currencies}
-                  optionLabelKey="currency"
-                  optionValueKey="enum"
-                  name="currency"
-                  label=""
-                  value={values!.currency}
-                  errors={fieldErrors!.vacancySalaryCurrency}
-                  onChange={(value: any, name: any) =>
-                    setFieldValue(name, value)
+              <S.SalaryInputContainer>
+                From
+                <S.SalaryInput
+                  type="number"
+                  placeholder="2500"
+                  min="1"
+                  value={values!.minSalary}
+                  name="minSalary"
+                  onChange={event =>
+                    setFieldValue(event.target.name, event.target.value)
                   }
                 />
-              </S.SalaryCurrency>
-              <S.SalarySpan>Period</S.SalarySpan>
-              <S.SalaryPeriod>
-                <InputSelect
-                  options={periods}
-                  optionLabelKey="period"
-                  optionValueKey="period"
-                  label=""
-                  value={values.period}
-                  name="period"
-                  errors={fieldErrors!.vacancySalaryPerperiod}
-                  onChange={(value: any, name: any) =>
-                    setFieldValue(name, value)
+                <ErrorMessage
+                  errors={fieldErrors!.vacancySalaryMinimumamount}
+                />
+              </S.SalaryInputContainer>
+              <S.SalaryInputContainer>
+                To
+                <S.SalaryInput
+                  type="number"
+                  placeholder="3500"
+                  name="maxSalary"
+                  value={values!.maxSalary}
+                  onChange={event =>
+                    setFieldValue(event.target.name, event.target.value)
                   }
                 />
-              </S.SalaryPeriod>
+                <ErrorMessage
+                  errors={fieldErrors!.vacancySalaryMaximumamount}
+                />
+              </S.SalaryInputContainer>
+            </S.Salary>
+            <S.Salary>
+              <S.SalarySelectContainer>
+                In the currency
+                <S.SalaryCurrency>
+                  <InputSelect
+                    options={currencies}
+                    optionLabelKey="currency"
+                    optionValueKey="enum"
+                    name="currency"
+                    label=""
+                    value={values!.currency}
+                    errors={fieldErrors!.vacancySalaryCurrency}
+                    onChange={(value: any, name: any) =>
+                      setFieldValue(name, value)
+                    }
+                  />
+                </S.SalaryCurrency>
+              </S.SalarySelectContainer>
+              <S.SalarySelectContainer>
+                Period
+                <S.SalaryPeriod>
+                  <InputSelect
+                    options={periods}
+                    optionLabelKey="period"
+                    optionValueKey="period"
+                    label=""
+                    value={values.period}
+                    name="period"
+                    errors={fieldErrors!.vacancySalaryPerperiod}
+                    onChange={(value: any, name: any) =>
+                      setFieldValue(name, value)
+                    }
+                  />
+                </S.SalaryPeriod>
+              </S.SalarySelectContainer>
             </S.Salary>
             <S.SubTitle>3 Contact information for candidates</S.SubTitle>
             <S.RowWithTwoCells>

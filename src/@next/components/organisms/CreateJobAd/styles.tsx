@@ -168,20 +168,30 @@ export const SalaryInput = styled.input`
   box-shadow: inset 0 1px 1px 0 rgb(51 51 51 / 10%);
   color: #333;
   font-size: ${props => props.theme.typography.baseFontSize};
-  margin-bottom: 1.875rem;
+  margin-left: 8px;
 `;
 
 export const SalaryCurrency = styled.div`
-  width: 69px;
+  width: 160px;
+
+  &:first-child {
+    &:first-child {
+      margin-bottom: 0;
+    }
+  }
 `;
 
 export const SalaryPeriod = styled.div`
   width: 130px;
 `;
 
-// export const Contacts = styled.div`
+export const SalaryInputContainer = styled.div`
+  margin-bottom: 0.875rem;
+`;
 
-// `;
+export const SalarySelectContainer = styled.div`
+  margin-bottom: 1.875rem;
+`;
 
 export const InputSelectWrapper = styled.div`
   margin-top: 10px;
