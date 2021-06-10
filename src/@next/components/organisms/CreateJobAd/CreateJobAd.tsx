@@ -228,7 +228,7 @@ export const CreateJobAd: React.FC<ICreateJobAdProps> = forwardRef(
                           value: "organization",
                         },
                         {
-                          key: CheckoutMetadataTypes.TrackingUTM,
+                          key: CheckoutMetadataTypes.TrackingUtm,
                           value: "tracking utm",
                         },
                       ],
