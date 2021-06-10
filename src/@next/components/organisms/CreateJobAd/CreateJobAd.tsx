@@ -1,16 +1,27 @@
 /* eslint-disable no-console */
 import { useCheckout } from "@saleor/sdk";
 import { Formik } from "formik";
-import React, { forwardRef, useImperativeHandle, useRef } from "react";
+import React, {
+  forwardRef,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
 
 import { CheckoutMetadataTypes } from "@app/CheckoutUtils/constants";
+import { findOptionByField } from "@app/CheckoutUtils/helpers";
 import {
   MetadataInput,
   TypedMetadataUpdateMutation,
 } from "@app/CheckoutUtils/updateMetadata";
 import { useCheckoutMetadata } from "@hooks/useCheckoutMetadata";
 
-import { CheckoutStep } from "./constants";
+import {
+  CheckoutStep,
+  currencies,
+  employmentTypes,
+  periods,
+} from "./constants";
 import { CreateJobContent } from "./CreateJobContent";
 import * as S from "./styles";
 
@@ -49,6 +60,7 @@ export const CreateJobAd: React.FC<ICreateJobAdProps> = forwardRef(
   ) => {
     const { checkout } = useCheckout();
     const { metadata, appendMetadata } = useCheckoutMetadata();
+    const [errors, setErrors] = useState([]);
     const checkoutCreateJobFormId = "create-job-ad";
     const checkoutCreateJobFormRef = useRef<HTMLFormElement>(null);
 
@@ -60,13 +72,31 @@ export const CreateJobAd: React.FC<ICreateJobAdProps> = forwardRef(
       applicationLink:
         metadata && metadata[CheckoutMetadataTypes.ApplicationURL],
       jobExperience: metadata && metadata[CheckoutMetadataTypes.MinExp],
-      employmentType: metadata && metadata[CheckoutMetadataTypes.VacancyType],
+      employmentType:
+        metadata &&
+        findOptionByField(
+          employmentTypes,
+          metadata[CheckoutMetadataTypes.VacancyType],
+          "enum"
+        ),
       minHours: metadata && metadata[CheckoutMetadataTypes.MinWorkingHours],
       maxHours: metadata && metadata[CheckoutMetadataTypes.MaxWorkingHours],
       minSalary: metadata && metadata[CheckoutMetadataTypes.SalaryMinAmount],
       maxSalary: metadata && metadata[CheckoutMetadataTypes.SalaryMaxAmount],
-      currency: metadata && metadata[CheckoutMetadataTypes.SalaryCurrency],
-      period: metadata && metadata[CheckoutMetadataTypes.SalaryPerPeriod],
+      currency:
+        metadata &&
+        findOptionByField(
+          currencies,
+          metadata[CheckoutMetadataTypes.SalaryCurrency],
+          "enum"
+        ),
+      period:
+        metadata &&
+        findOptionByField(
+          periods,
+          metadata[CheckoutMetadataTypes.SalaryPerPeriod],
+          "enum"
+        ),
       contactName: metadata && metadata[CheckoutMetadataTypes.ContactName],
       contactPhone: metadata && metadata[CheckoutMetadataTypes.ContactNumber],
     };
@@ -83,8 +113,13 @@ export const CreateJobAd: React.FC<ICreateJobAdProps> = forwardRef(
         <TypedMetadataUpdateMutation
           onCompleted={data => {
             const newMetadata = {};
+            const updateMetadata = data?.updateMetadata;
+            setErrors(updateMetadata?.metadataErrors || []);
+            if (updateMetadata?.metadataErrors?.length) {
+              return;
+            }
             const newData =
-              data?.updateMetadata?.item?.metadata.map(
+              updateMetadata?.item?.metadata.map(
                 ({ key, value }: MetadataInput) => ({
                   [key]: value,
                 })
@@ -123,68 +158,66 @@ export const CreateJobAd: React.FC<ICreateJobAdProps> = forwardRef(
                   },
                   actions
                 ) => {
-                  if (!checkout?.id) {
-                    return;
-                  }
+                  actions.setSubmitting(false);
                   mutation({
                     variables: {
-                      id: checkout?.id,
+                      id: checkout?.id || "",
                       metadata: [
                         {
                           key: CheckoutMetadataTypes.JobTitle,
-                          value: jobTitle,
+                          value: jobTitle || "",
                         },
                         {
                           key: CheckoutMetadataTypes.JobDescription,
-                          value: jobDescription,
+                          value: jobDescription || "",
                         },
                         {
                           key: CheckoutMetadataTypes.VacancyURL,
-                          value: jobDetailLink,
+                          value: jobDetailLink || "",
                         },
                         {
                           key: CheckoutMetadataTypes.ApplicationURL,
-                          value: applicationLink,
+                          value: applicationLink || "",
                         },
                         {
                           key: CheckoutMetadataTypes.MinExp,
-                          value: jobExperience,
+                          value: jobExperience || "",
                         },
                         {
                           key: CheckoutMetadataTypes.VacancyType,
-                          value: employmentType.enum,
+                          value: employmentType?.enum || "",
                         },
                         {
                           key: CheckoutMetadataTypes.MinWorkingHours,
-                          value: minHours,
+                          value: minHours || "",
                         },
                         {
                           key: CheckoutMetadataTypes.MaxWorkingHours,
-                          value: maxHours,
+                          value: maxHours || "",
                         },
                         {
                           key: CheckoutMetadataTypes.SalaryMinAmount,
-                          value: minSalary,
+                          value: minSalary || "",
                         },
                         {
                           key: CheckoutMetadataTypes.SalaryMaxAmount,
-                          value: maxSalary,
+                          value: maxSalary || "",
                         },
                         {
                           key: CheckoutMetadataTypes.SalaryCurrency,
-                          value: currency.enum,
+                          value: currency?.enum || "",
                         },
                         {
                           key: CheckoutMetadataTypes.SalaryPerPeriod,
-                          value: period.enum,
+                          value: period?.enum || "",
                         },
                         {
                           key: CheckoutMetadataTypes.ContactName,
-                          value: contactName,
+                          value: contactName || "",
                         },
                         {
                           key: CheckoutMetadataTypes.ContactNumber,
-                          value: contactPhone,
+                          value: contactPhone || "",
                         },
                         {
                           key: CheckoutMetadataTypes.CompanyLogo,
@@ -195,7 +228,7 @@ export const CreateJobAd: React.FC<ICreateJobAdProps> = forwardRef(
                           value: "organization",
                         },
                         {
-                          key: CheckoutMetadataTypes.TrackingUTM,
+                          key: CheckoutMetadataTypes.TrackingUtm,
                           value: "tracking utm",
                         },
                       ],
@@ -213,6 +246,7 @@ export const CreateJobAd: React.FC<ICreateJobAdProps> = forwardRef(
                 }) => (
                   <CreateJobContent
                     {...{
+                      errors,
                       handleChange,
                       handleSubmit,
                       handleBlur,

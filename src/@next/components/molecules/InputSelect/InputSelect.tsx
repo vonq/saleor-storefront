@@ -30,7 +30,7 @@ export const InputSelect: React.FC<IProps> = ({
       },
       background: "none",
       border: state.menuIsOpen
-        ? `1px solid ${secondaryColor}`
+        ? `3px solid ${secondaryColor}`
         : `1px solid ${borderColor}`,
       borderRadius: 0,
       boxShadow: 0,

@@ -7,7 +7,6 @@ import { InputSelect } from "@components/molecules";
 import {
   EducationOptions,
   IndustryOptions,
-  JobFunctionOptions,
   SeniorityOptions,
 } from "./constants";
 import * as S from "./styles";
@@ -17,17 +16,21 @@ interface Props {
   handleSubmit?: any;
   handleBlur?: any;
   values?: any;
+  jobFunctionList: Array<any>;
   setFieldValue?: any;
   setFieldTouched?: any;
   checkoutSetTargetGroupFormId?: any;
   checkoutSetTargetGroupFormRef?: any;
+  errors: any;
 }
 
 export const SetTargetGroupContent: React.FC<Props> = ({
+  errors,
   handleChange,
   handleSubmit,
   handleBlur,
   values,
+  jobFunctionList,
   setFieldValue,
   setFieldTouched,
   checkoutSetTargetGroupFormId,
@@ -37,6 +40,15 @@ export const SetTargetGroupContent: React.FC<Props> = ({
   //   () => ({ onBlur: handleBlur, onChange: handleChange }),
   //   [handleChange, handleBlur]
   // );
+  const fieldErrors: any = {};
+
+  if (errors) {
+    errors.map(({ field, message }: { field: string; message: string }) => {
+      fieldErrors[field] = fieldErrors[field]
+        ? [...fieldErrors[field], { message }]
+        : [{ message }];
+    });
+  }
 
   return (
     <form
@@ -51,21 +63,16 @@ export const SetTargetGroupContent: React.FC<Props> = ({
             <S.Sku>
               Choose from thousands of job functions available in our database.
             </S.Sku>
-            {/* <S.Name>Job function</S.Name>
-            <TextField
-              name="jobFunction"
-              value={values!.jobFunction}
-              {...basicInputProps()}
-            /> */}
             <S.RowWithTwoCells>
               <div>
                 <S.Name>Job function</S.Name>
                 <InputSelect
-                  options={JobFunctionOptions}
+                  options={jobFunctionList}
                   optionLabelKey="name"
                   optionValueKey="id"
                   name="jobFunction"
                   value={values!.jobFunction}
+                  errors={fieldErrors!.vacancyTaxonomyJobcategoryid}
                   label=""
                   onChange={(value: any, name: any) => {
                     setFieldValue(name, value);
@@ -80,6 +87,7 @@ export const SetTargetGroupContent: React.FC<Props> = ({
                   optionValueKey="id"
                   name="industry"
                   value={values!.industry}
+                  errors={fieldErrors!.vacancyTaxonomyIndustry}
                   label=""
                   onChange={(value: any, name: any) => {
                     setFieldValue(name, value);
@@ -95,6 +103,7 @@ export const SetTargetGroupContent: React.FC<Props> = ({
                   name="seniority"
                   value={values!.seniority}
                   label=""
+                  errors={fieldErrors!.vacancyTaxonomySeniorityid}
                   onChange={(value: any, name: any) => {
                     setFieldValue(name, value);
                   }}
@@ -109,6 +118,7 @@ export const SetTargetGroupContent: React.FC<Props> = ({
                   name="education"
                   value={values!.education}
                   label=""
+                  errors={fieldErrors!.vacancyEducationlevelid}
                   onChange={(value: any, name: any) => {
                     setFieldValue(name, value);
                   }}

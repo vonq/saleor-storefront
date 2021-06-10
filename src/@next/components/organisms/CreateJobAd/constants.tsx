@@ -105,9 +105,9 @@ export const employmentTypes = [
   },
   { type: "Freelance", enum: "freelance" },
   { type: "Internship", enum: "internship" },
+  { type: "Temporary", enum: "temporary" },
   { type: "Permanent", enum: "permanent" },
   { type: "Traineeship", enum: "traineeship" },
-  { type: "Temporary", enum: "temporary" },
 ];
 
 export const senioritis = [
@@ -125,11 +125,11 @@ export const currencies = [
 ];
 
 export const periods = [
-  { period: "Mothly", enum: "monthly" },
-  { period: "Yearly", enum: "yearly" },
-  { period: "Weekly", enum: "weekly" },
-  { period: "Daily", enum: "daily" },
   { period: "Hourly", enum: "hourly" },
+  { period: "Daily", enum: "daily" },
+  { period: "Weekly", enum: "weekly" },
+  { period: "Monthly", enum: "monthly" },
+  { period: "Yearly", enum: "yearly" },
 ];
 
 export enum CheckoutStep {

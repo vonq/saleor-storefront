@@ -33,8 +33,8 @@ export const Wrapper = styled.div<WrapperProps>`
   border: 1px solid ${props => getEdgeColor(props)};
   color: ${props => getEdgeColor(props)};
   outline: ${props =>
-    props.active ? `1px solid ${getEdgeColor(props)};` : "none"};
-  transition: all 0.3s ease;
+    props.active ? `3px solid ${getEdgeColor(props)};` : "none"};
+  transition: all 0.1s ease;
 
   &:hover {
     color: ${props => getEdgeColor(props, true)};
