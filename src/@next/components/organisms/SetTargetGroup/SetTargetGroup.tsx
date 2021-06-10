@@ -3,6 +3,7 @@ import { useCheckout } from "@saleor/sdk";
 import { Formik } from "formik";
 import React, {
   forwardRef,
+  useEffect,
   useImperativeHandle,
   useRef,
   useState,
@@ -14,13 +15,13 @@ import {
   MetadataInput,
   TypedMetadataUpdateMutation,
 } from "@app/CheckoutUtils/updateMetadata";
+import { Loader } from "@components/atoms";
 import { useCheckoutMetadata } from "@hooks/useCheckoutMetadata";
 
 import { CheckoutStep } from "../../../pages/CheckoutPage/utils";
 import {
   EducationOptions,
   IndustryOptions,
-  JobFunctionOptions,
   SeniorityOptions,
 } from "./constants";
 import { SetTargetGroupContent } from "./SetTargetGroupContent";
@@ -29,6 +30,11 @@ import * as S from "./styles";
 export interface ISetTargetGroupProps {
   changeSubmitProgress: any;
   onSubmitSuccess: any;
+}
+interface JobCategory {
+  id: number;
+  name: string;
+  children?: Array<JobCategory>;
 }
 
 interface FormValues {
@@ -45,12 +51,70 @@ export const SetTargetGroup: React.FC<ISetTargetGroupProps> = forwardRef(
     const { checkout } = useCheckout();
     const { metadata, appendMetadata } = useCheckoutMetadata();
     const [errors, setErrors] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    const JOB_FUNCTION_API_URL =
+      "https://pkb.web-production.vonq-aws.com/job-functions";
+
+    const [jobFunctionList, setJobFunctionList] = useState<JobCategory[]>([]);
+
+    useEffect(() => {
+      const fetchJobList = async () => {
+        setLoading(true);
+        const headers = new Headers();
+        headers.set("Authorization", "Basic dm9ucV9wa2I6UHIwZFBrYlZvbnEyMDIx");
+
+        const response = await fetch(JOB_FUNCTION_API_URL, {
+          method: "GET",
+          headers,
+        });
+        const jobFunctionMap = new Map();
+        const res = await response.json();
+        const collectJobList = (job: JobCategory) => {
+          if (!jobFunctionMap.has(job.id)) {
+            jobFunctionMap.set(job.id, job.name);
+          }
+          if (!job?.children || !job.children.length) {
+            return;
+          }
+          const { children } = job;
+          children.forEach((childJob: JobCategory) => {
+            if (!jobFunctionMap.has(childJob.id)) {
+              jobFunctionMap.set(childJob.id, childJob.name);
+            }
+            collectJobList(childJob);
+          });
+        };
+        res.forEach((job: JobCategory) => {
+          collectJobList(job);
+        });
+        const jobList = Array.from(jobFunctionMap, ([name, value]) => ({
+          id: name,
+          name: value,
+        }));
+        setJobFunctionList(jobList);
+        setLoading(false);
+      };
+      if (!jobFunctionList || !jobFunctionList.length) {
+        fetchJobList();
+      }
+    }, []);
+
+    useImperativeHandle(ref, () => () => {
+      checkoutSetTargetGroupFormRef.current?.dispatchEvent(
+        new Event("submit", { cancelable: true })
+      );
+    });
+
+    if (!checkout?.id || loading) {
+      return <Loader />;
+    }
 
     const initialValues: FormValues = {
       jobFunction:
         metadata &&
         findOptionById(
-          JobFunctionOptions,
+          jobFunctionList,
           metadata[CheckoutMetadataTypes.JobFunction]
         ),
       seniority:
@@ -72,16 +136,6 @@ export const SetTargetGroup: React.FC<ISetTargetGroupProps> = forwardRef(
           metadata[CheckoutMetadataTypes.EducationLevel]
         ),
     };
-
-    useImperativeHandle(ref, () => () => {
-      checkoutSetTargetGroupFormRef.current?.dispatchEvent(
-        new Event("submit", { cancelable: true })
-      );
-    });
-
-    if (!checkout?.id) {
-      return null;
-    }
 
     return (
       <>
@@ -173,6 +227,7 @@ export const SetTargetGroup: React.FC<ISetTargetGroupProps> = forwardRef(
                       handleSubmit,
                       handleBlur,
                       values,
+                      jobFunctionList,
                       setFieldValue,
                       setFieldTouched,
                       checkoutSetTargetGroupFormId,

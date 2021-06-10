@@ -7,7 +7,6 @@ import { InputSelect } from "@components/molecules";
 import {
   EducationOptions,
   IndustryOptions,
-  JobFunctionOptions,
   SeniorityOptions,
 } from "./constants";
 import * as S from "./styles";
@@ -17,6 +16,7 @@ interface Props {
   handleSubmit?: any;
   handleBlur?: any;
   values?: any;
+  jobFunctionList: Array<any>;
   setFieldValue?: any;
   setFieldTouched?: any;
   checkoutSetTargetGroupFormId?: any;
@@ -30,6 +30,7 @@ export const SetTargetGroupContent: React.FC<Props> = ({
   handleSubmit,
   handleBlur,
   values,
+  jobFunctionList,
   setFieldValue,
   setFieldTouched,
   checkoutSetTargetGroupFormId,
@@ -62,17 +63,11 @@ export const SetTargetGroupContent: React.FC<Props> = ({
             <S.Sku>
               Choose from thousands of job functions available in our database.
             </S.Sku>
-            {/* <S.Name>Job function</S.Name>
-            <TextField
-              name="jobFunction"
-              value={values!.jobFunction}
-              {...basicInputProps()}
-            /> */}
             <S.RowWithTwoCells>
               <div>
                 <S.Name>Job function</S.Name>
                 <InputSelect
-                  options={JobFunctionOptions}
+                  options={jobFunctionList}
                   optionLabelKey="name"
                   optionValueKey="id"
                   name="jobFunction"
