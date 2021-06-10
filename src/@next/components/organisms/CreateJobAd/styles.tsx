@@ -155,6 +155,7 @@ export const Salary = styled.div`
 
 export const SalarySpan = styled.span`
   margin-bottom: 1.875rem;
+  white-space: nowrap;
 `;
 
 export const SalaryInput = styled.input`
@@ -175,7 +176,7 @@ export const SalaryCurrency = styled.div`
 `;
 
 export const SalaryPeriod = styled.div`
-  width: 100px;
+  width: 130px;
 `;
 
 // export const Contacts = styled.div`

@@ -1,2 +1,7 @@
-export const findOptionById = (options: any, id: any) =>
-  options.find((option: { id: any }) => Number(option.id) === Number(id));
+export const findOptionByField = (options: any, value: any, field: any) =>
+  options.find((option: { [x: string]: any }) => {
+    if (field === "id") {
+      return Number(option[field]) === Number(value);
+    }
+    return String(option[field]) === String(value);
+  });

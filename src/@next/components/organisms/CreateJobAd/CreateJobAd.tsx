@@ -9,13 +9,19 @@ import React, {
 } from "react";
 
 import { CheckoutMetadataTypes } from "@app/CheckoutUtils/constants";
+import { findOptionByField } from "@app/CheckoutUtils/helpers";
 import {
   MetadataInput,
   TypedMetadataUpdateMutation,
 } from "@app/CheckoutUtils/updateMetadata";
 import { useCheckoutMetadata } from "@hooks/useCheckoutMetadata";
 
-import { CheckoutStep } from "./constants";
+import {
+  CheckoutStep,
+  currencies,
+  employmentTypes,
+  periods,
+} from "./constants";
 import { CreateJobContent } from "./CreateJobContent";
 import * as S from "./styles";
 
@@ -66,13 +72,31 @@ export const CreateJobAd: React.FC<ICreateJobAdProps> = forwardRef(
       applicationLink:
         metadata && metadata[CheckoutMetadataTypes.ApplicationURL],
       jobExperience: metadata && metadata[CheckoutMetadataTypes.MinExp],
-      employmentType: metadata && metadata[CheckoutMetadataTypes.VacancyType],
+      employmentType:
+        metadata &&
+        findOptionByField(
+          employmentTypes,
+          metadata[CheckoutMetadataTypes.VacancyType],
+          "enum"
+        ),
       minHours: metadata && metadata[CheckoutMetadataTypes.MinWorkingHours],
       maxHours: metadata && metadata[CheckoutMetadataTypes.MaxWorkingHours],
       minSalary: metadata && metadata[CheckoutMetadataTypes.SalaryMinAmount],
       maxSalary: metadata && metadata[CheckoutMetadataTypes.SalaryMaxAmount],
-      currency: metadata && metadata[CheckoutMetadataTypes.SalaryCurrency],
-      period: metadata && metadata[CheckoutMetadataTypes.SalaryPerPeriod],
+      currency:
+        metadata &&
+        findOptionByField(
+          currencies,
+          metadata[CheckoutMetadataTypes.SalaryCurrency],
+          "enum"
+        ),
+      period:
+        metadata &&
+        findOptionByField(
+          periods,
+          metadata[CheckoutMetadataTypes.SalaryPerPeriod],
+          "enum"
+        ),
       contactName: metadata && metadata[CheckoutMetadataTypes.ContactName],
       contactPhone: metadata && metadata[CheckoutMetadataTypes.ContactNumber],
     };

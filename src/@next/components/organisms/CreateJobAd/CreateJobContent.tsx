@@ -118,7 +118,7 @@ export const CreateJobContent: React.FC<Props> = ({
               <S.TextArea>
                 <Editor
                   apiKey="dy0aqtllm0lgrod3ysxqvq8wrmv84k07gj0ylhnqbr2w2uu1"
-                  initialValue=""
+                  initialValue={values!.jobDescription}
                   init={{
                     height: 200,
                     menubar: false,
@@ -206,6 +206,7 @@ export const CreateJobContent: React.FC<Props> = ({
                   type="number"
                   min="1"
                   name="minHours"
+                  value={values!.minHours}
                   onChange={event =>
                     setFieldValue(event.target.name, event.target.value)
                   }
@@ -220,6 +221,7 @@ export const CreateJobContent: React.FC<Props> = ({
                   type="number"
                   min="1"
                   name="maxHours"
+                  value={values!.maxHours}
                   onChange={event =>
                     setFieldValue(event.target.name, event.target.value)
                   }
@@ -240,6 +242,7 @@ export const CreateJobContent: React.FC<Props> = ({
                 type="number"
                 placeholder="2500"
                 min="1"
+                value={values!.minSalary}
                 name="minSalary"
                 onChange={event =>
                   setFieldValue(event.target.name, event.target.value)
@@ -251,6 +254,7 @@ export const CreateJobContent: React.FC<Props> = ({
                 type="number"
                 placeholder="3500"
                 name="maxSalary"
+                value={values!.maxSalary}
                 onChange={event =>
                   setFieldValue(event.target.name, event.target.value)
                 }
@@ -261,7 +265,7 @@ export const CreateJobContent: React.FC<Props> = ({
                 <InputSelect
                   options={currencies}
                   optionLabelKey="currency"
-                  optionValueKey="currency"
+                  optionValueKey="enum"
                   name="currency"
                   label=""
                   value={values!.currency}

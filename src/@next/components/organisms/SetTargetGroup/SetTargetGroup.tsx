@@ -10,7 +10,7 @@ import React, {
 } from "react";
 
 import { CheckoutMetadataTypes } from "@app/CheckoutUtils/constants";
-import { findOptionById } from "@app/CheckoutUtils/helpers";
+import { findOptionByField } from "@app/CheckoutUtils/helpers";
 import {
   MetadataInput,
   TypedMetadataUpdateMutation,
@@ -113,27 +113,31 @@ export const SetTargetGroup: React.FC<ISetTargetGroupProps> = forwardRef(
     const initialValues: FormValues = {
       jobFunction:
         metadata &&
-        findOptionById(
+        findOptionByField(
           jobFunctionList,
-          metadata[CheckoutMetadataTypes.JobFunction]
+          metadata[CheckoutMetadataTypes.JobFunction],
+          "id"
         ),
       seniority:
         metadata &&
-        findOptionById(
+        findOptionByField(
           SeniorityOptions,
-          metadata[CheckoutMetadataTypes.Seniority]
+          metadata[CheckoutMetadataTypes.Seniority],
+          "id"
         ),
       industry:
         metadata &&
-        findOptionById(
+        findOptionByField(
           IndustryOptions,
-          metadata[CheckoutMetadataTypes.Industry]
+          metadata[CheckoutMetadataTypes.Industry],
+          "id"
         ),
       education:
         metadata &&
-        findOptionById(
+        findOptionByField(
           EducationOptions,
-          metadata[CheckoutMetadataTypes.EducationLevel]
+          metadata[CheckoutMetadataTypes.EducationLevel],
+          "id"
         ),
     };
 

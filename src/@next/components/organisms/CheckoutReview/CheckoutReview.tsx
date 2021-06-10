@@ -2,7 +2,7 @@ import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { CheckoutMetadataTypes } from "@app/CheckoutUtils/constants";
-import { findOptionById } from "@app/CheckoutUtils/helpers";
+import { findOptionByField } from "@app/CheckoutUtils/helpers";
 import { useCheckoutMetadata } from "@hooks/useCheckoutMetadata";
 // import { ErrorMessage } from "@components/atoms";
 // import { AddressSummary } from "@components/molecules";
@@ -31,19 +31,24 @@ const CheckoutReview: React.FC<IProps> = ({
   const jobData = {
     title:
       metadata &&
-      findOptionById(
+      findOptionByField(
         JobFunctionOptions,
-        metadata[CheckoutMetadataTypes.JobFunction]
+        metadata[CheckoutMetadataTypes.JobFunction],
+        "id"
       )?.name,
     industry:
       metadata &&
-      findOptionById(IndustryOptions, metadata[CheckoutMetadataTypes.Industry])
-        ?.name,
+      findOptionByField(
+        IndustryOptions,
+        metadata[CheckoutMetadataTypes.Industry],
+        "id"
+      )?.name,
     education:
       metadata &&
-      findOptionById(
+      findOptionByField(
         EducationOptions,
-        metadata[CheckoutMetadataTypes.EducationLevel]
+        metadata[CheckoutMetadataTypes.EducationLevel],
+        "id"
       )?.name,
     jobDescription: metadata && metadata[CheckoutMetadataTypes.JobDescription],
     linkToJobDetailPage: metadata && metadata[CheckoutMetadataTypes.VacancyURL],
