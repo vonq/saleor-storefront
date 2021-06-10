@@ -147,17 +147,17 @@ export const checkoutMessages = defineMessages({
     defaultMessage: "Review",
   },
   setTargetGroup: {
-    defaultMessage: "Continue to Create job ad(s)",
+    defaultMessage: "Save and continue",
   },
   addressNextActionName: {
     // defaultMessage: "Continue to Shipping",
-    defaultMessage: "Continue to Address",
+    defaultMessage: "Save and continue",
   },
   shippingNextActionName: {
-    defaultMessage: "Continue to Payment",
+    defaultMessage: "Save and continue",
   },
   paymentNextActionName: {
-    defaultMessage: "Continue to Review",
+    defaultMessage: "Save and continue",
   },
   reviewNextActionName: {
     defaultMessage: "Place order",
