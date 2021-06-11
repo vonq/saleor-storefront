@@ -17,7 +17,10 @@ const {
   SubTitleStatus,
   SubTitleText,
   CheckoutStep,
+  FieldLabel,
+  FieldDescription,
 } = CheckoutStyle;
+
 interface Props {
   errors: any;
   handleChange?: any;
@@ -76,18 +79,18 @@ export const CreateJobContent: React.FC<Props> = ({
                 <SubTitleStatus>1</SubTitleStatus>
                 <SubTitleText>Job posting details</SubTitleText>
               </SubTitleContainer>
-              <S.Name>Job title</S.Name>
-              <S.Sku>
+              <FieldLabel>Job title</FieldLabel>
+              <FieldDescription>
                 This is the job title which will be shown to your candidates:
-              </S.Sku>
+              </FieldDescription>
               <TextField
                 name="jobTitle"
                 value={values!.jobTitle}
                 errors={fieldErrors!.vacancyJobtitle}
                 {...basicInputProps()}
               />
-              <S.Name>Job description</S.Name>
-              <S.Sku>
+              <FieldLabel>Job description</FieldLabel>
+              <FieldDescription>
                 Choose how you want to fill in your job description.
                 <S.MoreInfo
                   type="button"
@@ -97,7 +100,7 @@ export const CreateJobContent: React.FC<Props> = ({
                 >
                   More info
                 </S.MoreInfo>
-              </S.Sku>
+              </FieldDescription>
               {moreInfo && (
                 <MoreInfoModal hideModal={() => setMoreInfo(false)} />
               )}
@@ -151,11 +154,11 @@ export const CreateJobContent: React.FC<Props> = ({
               ) : (
                 <div>value2</div>
               )}
-              <S.Name>Link to job detail page</S.Name>
-              <S.Sku>
+              <FieldLabel>Link to job detail page</FieldLabel>
+              <FieldDescription>
                 Fill in the URL that will be used as the landing page for your
                 job ads.
-              </S.Sku>
+              </FieldDescription>
               <TextField
                 name="jobDetailLink"
                 label="https://careers.company.com/job"
@@ -163,12 +166,12 @@ export const CreateJobContent: React.FC<Props> = ({
                 errors={fieldErrors!.vacancyTrackingVacancyUrl}
                 {...basicInputProps()}
               />
-              <S.Name>Link to application page</S.Name>
-              <S.Sku>
+              <FieldLabel>Link to application page</FieldLabel>
+              <FieldDescription>
                 Fill in the URL of the page where a candidate fills in the
                 application. Depending on your application process, this can
                 also be the job detail page.
-              </S.Sku>
+              </FieldDescription>
               <TextField
                 name="applicationLink"
                 label="https://careers.company.com/job/apply"
@@ -182,10 +185,10 @@ export const CreateJobContent: React.FC<Props> = ({
                 <SubTitleStatus>2</SubTitleStatus>
                 <SubTitleText>Job criteria</SubTitleText>
               </SubTitleContainer>
-              <S.Sku>
+              <FieldDescription>
                 We will use this data to better target your desired audience.
-              </S.Sku>
-              <S.Name>Minimum no. years of experience</S.Name>
+              </FieldDescription>
+              <FieldLabel>Minimum no. years of experience</FieldLabel>
               <S.Experience>
                 <TextField
                   name="jobExperience"
@@ -195,7 +198,7 @@ export const CreateJobContent: React.FC<Props> = ({
                   {...basicInputProps()}
                 />
               </S.Experience>
-              <S.Name>Employment Type</S.Name>
+              <FieldLabel>Employment Type</FieldLabel>
               <S.InputSelectWrapper>
                 <InputSelect
                   options={employmentTypes}
@@ -211,7 +214,7 @@ export const CreateJobContent: React.FC<Props> = ({
                   }
                 />
               </S.InputSelectWrapper>
-              <S.Name>Hours per week</S.Name>
+              <FieldLabel>Hours per week</FieldLabel>
               <S.Hours>
                 <S.Label>
                   Min.
@@ -244,11 +247,11 @@ export const CreateJobContent: React.FC<Props> = ({
                   />
                 </S.LabelRight>
               </S.Hours>
-              <S.Name>Salary</S.Name>
-              <S.Sku>
+              <FieldLabel>Salary</FieldLabel>
+              <FieldDescription>
                 Please note: don't use a decimal separator e.g. 3500 instead of
                 3.500.
-              </S.Sku>
+              </FieldDescription>
               <S.Salary>
                 <S.SalaryInputContainer>
                   From
@@ -326,12 +329,12 @@ export const CreateJobContent: React.FC<Props> = ({
               </SubTitleContainer>
               <S.RowWithTwoCells>
                 <div>
-                  <S.Name>Name</S.Name>
-                  <S.Sku>
+                  <FieldLabel>Name</FieldLabel>
+                  <FieldDescription>
                     Leave a contact name (or general company info), so that your
                     job can be properly placed on job boards that require this
                     information.
-                  </S.Sku>
+                  </FieldDescription>
                   <TextField
                     name="contactName"
                     // label="https://careers.company.com/job"
@@ -341,11 +344,11 @@ export const CreateJobContent: React.FC<Props> = ({
                   />
                 </div>
                 <div>
-                  <S.Name>Phone number</S.Name>
-                  <S.Sku>
+                  <FieldLabel>Phone number</FieldLabel>
+                  <FieldDescription>
                     Some channels require a phone number to post a job. Leave a
                     contact person phone number or a general company number.
-                  </S.Sku>
+                  </FieldDescription>
                   <TextField
                     name="contactPhone"
                     // label="https://careers.company.com/job"

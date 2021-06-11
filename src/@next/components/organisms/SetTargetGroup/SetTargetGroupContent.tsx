@@ -2,6 +2,7 @@
 // import { Editor } from "@tinymce/tinymce-react";
 import React from "react";
 
+import * as CheckoutStyle from "@app/CheckoutUtils/styles";
 import { InputSelect } from "@components/molecules";
 
 import {
@@ -10,6 +11,13 @@ import {
   SeniorityOptions,
 } from "./constants";
 import * as S from "./styles";
+
+const {
+  SubTitleText,
+  CheckoutStep,
+  FieldLabel,
+  FieldDescription,
+} = CheckoutStyle;
 
 interface Props {
   handleChange?: any;
@@ -59,72 +67,72 @@ export const SetTargetGroupContent: React.FC<Props> = ({
       <S.JobForm>
         <S.Wrapper>
           <S.RowWithOneCell>
-            <S.SubTitle>Categorize the job</S.SubTitle>
-            <S.Sku>
-              Choose from thousands of job functions available in our database.
-            </S.Sku>
-            <S.RowWithTwoCells>
-              <div>
-                <S.Name>Job function</S.Name>
-                <InputSelect
-                  options={jobFunctionList}
-                  optionLabelKey="name"
-                  optionValueKey="id"
-                  name="jobFunction"
-                  value={values!.jobFunction}
-                  errors={fieldErrors!.vacancyTaxonomyJobcategoryid}
-                  label=""
-                  onChange={(value: any, name: any) => {
-                    setFieldValue(name, value);
-                  }}
-                />
-              </div>
-              <div>
-                <S.Name>Industry</S.Name>
-                <InputSelect
-                  options={IndustryOptions}
-                  optionLabelKey="name"
-                  optionValueKey="id"
-                  name="industry"
-                  value={values!.industry}
-                  errors={fieldErrors!.vacancyTaxonomyIndustry}
-                  label=""
-                  onChange={(value: any, name: any) => {
-                    setFieldValue(name, value);
-                  }}
-                />
-              </div>
-              <div>
-                <S.Name>Seniority</S.Name>
-                <InputSelect
-                  options={SeniorityOptions}
-                  optionLabelKey="name"
-                  optionValueKey="id"
-                  name="seniority"
-                  value={values!.seniority}
-                  label=""
-                  errors={fieldErrors!.vacancyTaxonomySeniorityid}
-                  onChange={(value: any, name: any) => {
-                    setFieldValue(name, value);
-                  }}
-                />
-              </div>
-              <div>
-                <S.Name>Level of Education</S.Name>
-                <InputSelect
-                  options={EducationOptions}
-                  optionLabelKey="name"
-                  optionValueKey="id"
-                  name="education"
-                  value={values!.education}
-                  label=""
-                  errors={fieldErrors!.vacancyEducationlevelid}
-                  onChange={(value: any, name: any) => {
-                    setFieldValue(name, value);
-                  }}
-                />
-              </div>
-            </S.RowWithTwoCells>
+            <CheckoutStep>
+              <SubTitleText>Categorize the job</SubTitleText>
+              <S.Sku>
+                Choose from thousands of job functions available in our
+                database.
+              </S.Sku>
+              <FieldLabel>Job function</FieldLabel>
+              <FieldDescription>
+                Select a matching job function (used to select the best
+                performing channels).
+              </FieldDescription>
+              <InputSelect
+                options={jobFunctionList}
+                optionLabelKey="name"
+                optionValueKey="id"
+                name="jobFunction"
+                value={values!.jobFunction}
+                errors={fieldErrors!.vacancyTaxonomyJobcategoryid}
+                label=""
+                onChange={(value: any, name: any) => {
+                  setFieldValue(name, value);
+                }}
+              />
+              <FieldLabel>Industry</FieldLabel>
+              <FieldDescription>
+                Please fill in the industry of the job.
+              </FieldDescription>
+              <InputSelect
+                options={IndustryOptions}
+                optionLabelKey="name"
+                optionValueKey="id"
+                name="industry"
+                value={values!.industry}
+                errors={fieldErrors!.vacancyTaxonomyIndustry}
+                label=""
+                onChange={(value: any, name: any) => {
+                  setFieldValue(name, value);
+                }}
+              />
+              <FieldLabel>Seniority</FieldLabel>
+              <InputSelect
+                options={SeniorityOptions}
+                optionLabelKey="name"
+                optionValueKey="id"
+                name="seniority"
+                value={values!.seniority}
+                label=""
+                errors={fieldErrors!.vacancyTaxonomySeniorityid}
+                onChange={(value: any, name: any) => {
+                  setFieldValue(name, value);
+                }}
+              />
+              <FieldLabel>Level of Education</FieldLabel>
+              <InputSelect
+                options={EducationOptions}
+                optionLabelKey="name"
+                optionValueKey="id"
+                name="education"
+                value={values!.education}
+                label=""
+                errors={fieldErrors!.vacancyEducationlevelid}
+                onChange={(value: any, name: any) => {
+                  setFieldValue(name, value);
+                }}
+              />
+            </CheckoutStep>
           </S.RowWithOneCell>
         </S.Wrapper>
       </S.JobForm>

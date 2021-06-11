@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 
+import * as CheckoutStyle from "@app/CheckoutUtils/styles";
 import { Checkbox } from "@components/atoms";
 import { checkoutMessages } from "@temp/intl";
 
@@ -55,26 +56,28 @@ const CheckoutPayment: React.FC<IProps> = ({
         <S.Title data-test="checkoutPageSubtitle">
           <FormattedMessage {...checkoutMessages.paymentMethod} />
         </S.Title>
-        <Checkbox
-          data-test="checkoutPaymentPromoCodeCheckbox"
-          name="payment-promo-code"
-          checked={showPromoCodeForm}
-          onChange={handleChangeShowPromoCodeForm}
-        >
-          <FormattedMessage defaultMessage="Do you have a gift card voucher or discount code?" />
-        </Checkbox>
-        {showPromoCodeForm && (
-          <S.DiscountField>
-            <DiscountForm
-              discount={{ promoCode: promoCodeDiscount?.voucherCode }}
-              formId={promoCodeDiscountFormId}
-              formRef={promoCodeDiscountFormRef}
-              handleSubmit={handleSubmitPromoCode}
-              errors={promoCodeErrors}
-            />
-          </S.DiscountField>
-        )}
-        <S.Divider />
+        <CheckoutStyle.CheckoutStep>
+          <Checkbox
+            data-test="checkoutPaymentPromoCodeCheckbox"
+            name="payment-promo-code"
+            checked={showPromoCodeForm}
+            onChange={handleChangeShowPromoCodeForm}
+          >
+            <FormattedMessage defaultMessage="Do you have a gift card voucher or discount code?" />
+          </Checkbox>
+          {showPromoCodeForm && (
+            <S.DiscountField>
+              <DiscountForm
+                discount={{ promoCode: promoCodeDiscount?.voucherCode }}
+                formId={promoCodeDiscountFormId}
+                formRef={promoCodeDiscountFormRef}
+                handleSubmit={handleSubmitPromoCode}
+                errors={promoCodeErrors}
+              />
+            </S.DiscountField>
+          )}
+          <S.Divider />
+        </CheckoutStyle.CheckoutStep>
       </section>
     </S.Wrapper>
   );
