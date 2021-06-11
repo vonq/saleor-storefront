@@ -27,6 +27,8 @@ export const darkGreen = "#06847B";
 export const secondaryGrey = "#EBF1F6";
 export const secondaryGreyDark = "#9D9FB1";
 export const secondaryBlue = "#036DFF";
+export const redDark = "#D62027";
+export const redLight = "#F2474E";
 
 // theme colors
 export const theme = {
@@ -65,6 +67,8 @@ export const theme = {
   tabsBorder: baseFontColorTransparent,
   thumbnailBorder: darkGreen,
   white,
+  redDark,
+  redLight,
 };
 
 // typography

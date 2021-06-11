@@ -16,7 +16,15 @@ export const Button: React.FC<IProps> = ({
   size = "md",
   ...props
 }: IProps) => {
-  const ButtonWithTheme = color === "primary" ? S.Primary : S.Secondary;
+  let ButtonWithTheme;
+  switch (color) {
+    case "primary":
+    case "danger":
+      ButtonWithTheme = S.Primary;
+      break;
+    default:
+      ButtonWithTheme = S.Secondary;
+  }
 
   return (
     <ButtonWithTheme

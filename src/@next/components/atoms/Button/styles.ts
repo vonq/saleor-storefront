@@ -13,7 +13,7 @@ const fontSize = (fontSize: string, smallFontSize: string) => ({
 });
 
 export const Primary = styled.button<{
-  color: "primary" | "secondary";
+  color: "primary" | "secondary" | "danger";
   fullWidth?: boolean;
   size: Size;
 }>`
