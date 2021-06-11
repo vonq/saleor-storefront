@@ -291,7 +291,7 @@ const CheckoutPage: React.FC<NextPage> = () => {
       const { link } = CHECKOUT_STEPS[1];
       replace(link);
     }
-  }, [metadata, pathname]);
+  }, [metadata]);
 
   // useRedirectToCorrectCheckoutStep(cartLoaded);
   useEffect(() => setSelectedPaymentGateway(payment?.gateway), [
