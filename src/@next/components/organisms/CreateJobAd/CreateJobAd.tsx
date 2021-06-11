@@ -10,6 +10,7 @@ import React, {
 
 import { CheckoutMetadataTypes } from "@app/CheckoutUtils/constants";
 import { findOptionByField } from "@app/CheckoutUtils/helpers";
+import * as CheckoutStyle from "@app/CheckoutUtils/styles";
 import {
   MetadataInput,
   TypedMetadataUpdateMutation,
@@ -23,7 +24,6 @@ import {
   periods,
 } from "./constants";
 import { CreateJobContent } from "./CreateJobContent";
-import * as S from "./styles";
 
 export interface ICreateJobAdProps {
   changeSubmitProgress: any;
@@ -109,7 +109,11 @@ export const CreateJobAd: React.FC<ICreateJobAdProps> = forwardRef(
 
     return (
       <>
-        <S.Title>Create your job ad(s)</S.Title>
+        <CheckoutStyle.Title>Create your job ad(s)</CheckoutStyle.Title>
+        <CheckoutStyle.Desc>
+          Fill in the needed information for your job posting(s). Some fields
+          are required by job boards to be able to post on it.
+        </CheckoutStyle.Desc>
         <TypedMetadataUpdateMutation
           onCompleted={data => {
             const newMetadata = {};

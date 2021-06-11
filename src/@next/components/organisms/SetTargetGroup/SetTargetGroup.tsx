@@ -11,6 +11,7 @@ import React, {
 
 import { CheckoutMetadataTypes } from "@app/CheckoutUtils/constants";
 import { findOptionByField } from "@app/CheckoutUtils/helpers";
+import * as CheckoutStyle from "@app/CheckoutUtils/styles";
 import {
   MetadataInput,
   TypedMetadataUpdateMutation,
@@ -25,7 +26,6 @@ import {
   SeniorityOptions,
 } from "./constants";
 import { SetTargetGroupContent } from "./SetTargetGroupContent";
-import * as S from "./styles";
 
 export interface ISetTargetGroupProps {
   changeSubmitProgress: any;
@@ -143,11 +143,11 @@ export const SetTargetGroup: React.FC<ISetTargetGroupProps> = forwardRef(
 
     return (
       <>
-        <S.Title>Set target group</S.Title>
-        <S.Desc>
+        <CheckoutStyle.Title>Set target group</CheckoutStyle.Title>
+        <CheckoutStyle.Desc>
           Fill in the needed information for your job posting(s). Some fields
           are required by job boards to be able to post on it.
-        </S.Desc>
+        </CheckoutStyle.Desc>
         <TypedMetadataUpdateMutation
           onCompleted={data => {
             const newMetadata = {};

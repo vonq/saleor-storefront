@@ -285,12 +285,13 @@ const CheckoutPage: React.FC<NextPage> = () => {
     if (!metadata[CheckoutMetadataTypes.JobFunction]) {
       const { link } = CHECKOUT_STEPS[0];
       replace(link);
+      return;
     }
     if (!metadata[CheckoutMetadataTypes.JobTitle]) {
       const { link } = CHECKOUT_STEPS[1];
       replace(link);
     }
-  }, [metadata]);
+  }, [metadata, pathname]);
 
   // useRedirectToCorrectCheckoutStep(cartLoaded);
   useEffect(() => setSelectedPaymentGateway(payment?.gateway), [

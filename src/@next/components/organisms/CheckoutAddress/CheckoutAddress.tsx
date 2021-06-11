@@ -1,6 +1,7 @@
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
+import * as CheckoutStyle from "@app/CheckoutUtils/styles";
 import { Checkbox } from "@components/atoms";
 import { checkoutMessages } from "@temp/intl";
 import { filterNotEmptyArrayItems } from "@utils/misc";
@@ -40,9 +41,9 @@ const CheckoutAddress: React.FC<IProps> = ({
       {shippingAddressRequired && (
         <>
           <section>
-            <S.Title data-test="checkoutPageSubtitle">
+            <CheckoutStyle.Title data-test="checkoutPageSubtitle">
               <FormattedMessage {...checkoutMessages.shippingAddress} />
-            </S.Title>
+            </CheckoutStyle.Title>
             {userAddresses ? (
               <AddressGridSelector
                 testingContext="shipping"

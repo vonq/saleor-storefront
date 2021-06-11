@@ -3,6 +3,7 @@ import { FormattedMessage } from "react-intl";
 
 import { CheckoutMetadataTypes } from "@app/CheckoutUtils/constants";
 import { findOptionByField } from "@app/CheckoutUtils/helpers";
+import * as CheckoutStyle from "@app/CheckoutUtils/styles";
 import { useCheckoutMetadata } from "@hooks/useCheckoutMetadata";
 // import { ErrorMessage } from "@components/atoms";
 // import { AddressSummary } from "@components/molecules";
@@ -76,9 +77,9 @@ const CheckoutReview: React.FC<IProps> = ({
   };
   return (
     <S.Wrapper data-test="sectionTitle">
-      <S.Title data-test="checkoutPageSubtitle">
+      <CheckoutStyle.Title data-test="checkoutPageSubtitle">
         <FormattedMessage {...checkoutMessages.reviewOrder} />
-      </S.Title>
+      </CheckoutStyle.Title>
       <S.ReviewCard>
         <p>{`Job title: ${jobData.title}`}</p>
         <p>{`Industry: ${jobData.industry}`}</p>
