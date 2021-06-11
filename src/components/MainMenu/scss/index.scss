@@ -7,8 +7,12 @@
 .main-menu {
   align-items: center;
   align-items: stretch;
-  background-color: $white;
-  border-bottom: 1px solid $gray-light;
+  background: linear-gradient(
+    to right,
+    $red-dark-header 40%,
+    $red-light-header
+  );  
+  box-shadow: 0 2px 4px 0 $box-shadow;
   display: flex;
   flex-direction: row;
   height: 3.55rem;
@@ -61,12 +65,19 @@
 
     a {
       text-decoration: none;
-      color: $base-font-color;
+      font: 700 14px Raleway, sans-serif;
+      color: rgba(255, 255, 255, 0.65);
       position: relative;
       transition: 0.3s;
 
+      &:active,
       &:hover {
-        color: $turquoise;
+        color: white;
+        text-decoration: none;
+      }
+      &:not(.btn):focus {
+        background: transparent;
+        box-shadow: none;
       }
     }
   }
@@ -113,7 +124,7 @@
 
     &:hover {
       svg * {
-        fill: $turquoise;
+        // fill: $turquoise;
       }
     }
 
@@ -183,6 +194,8 @@
     cursor: pointer;
     line-height: 24px;
     transition: 0.3s;
+    font: 700 14px Raleway, sans-serif;
+    color: rgba(255, 255, 255, 0.65);
 
     @media (min-width: $medium-screen) {
       border-left: 1px solid $gray-light;
@@ -193,9 +206,9 @@
     }
 
     &:hover {
-      color: $turquoise;
+      color: #fff;
       svg * {
-        fill: $turquoise;
+        fill: #fff;
       }
     }
 
@@ -218,7 +231,12 @@
     padding: 0 1.5rem;
 
     &--active {
-      background-color: $turquoise-light;
+      border-bottom: 4px solid #0a87f8;
+
+      a {
+        color: #fff;
+      }
+      // background-color: $turquoise-light;
     }
 
     & > li:first-child {
@@ -255,11 +273,16 @@
 
         // 2nd level name
         > a {
+          color: $red-light-header;
           font-size: $base-font-size;
           position: relative;
           text-transform: uppercase;
           padding-bottom: 9px;
           margin-bottom: 3px;
+
+          &:hover {
+            color: $red-dark-header;
+          }
         }
         > ul > li:first-child {
           position: relative;
