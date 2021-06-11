@@ -1,6 +1,7 @@
 import { Formik } from "formik";
 import React from "react";
 
+import * as CheckoutStyle from "@app/CheckoutUtils/styles";
 import { Radio } from "@components/atoms";
 
 import * as S from "./styles";
@@ -37,33 +38,35 @@ const VonqPaymentGateway: React.FC<IProps> = ({
         isSubmitting,
         isValid,
       }) => (
-        <S.Form
-          id={formId}
-          ref={formRef}
-          onSubmit={handleSubmit}
-          data-test="vonqPaymentGatewayForm"
-        >
-          {config.map(({ field: token, value: label }) => {
-            if (!label) {
-              return null;
-            }
-            const { balance } = JSON.parse(label);
-            return (
-              <S.Status key={token}>
-                <Radio
-                  key={token}
-                  type="radio"
-                  name="status"
-                  value={token}
-                  checked={values.status === token}
-                  onChange={handleChange}
-                >
-                  <span>{`${token}: ${balance}`}</span>
-                </Radio>
-              </S.Status>
-            );
-          })}
-        </S.Form>
+        <CheckoutStyle.CheckoutStep>
+          <S.Form
+            id={formId}
+            ref={formRef}
+            onSubmit={handleSubmit}
+            data-test="vonqPaymentGatewayForm"
+          >
+            {config.map(({ field: token, value: label }) => {
+              if (!label) {
+                return null;
+              }
+              const { balance } = JSON.parse(label);
+              return (
+                <S.Status key={token}>
+                  <Radio
+                    key={token}
+                    type="radio"
+                    name="status"
+                    value={token}
+                    checked={values.status === token}
+                    onChange={handleChange}
+                  >
+                    <span>{`${token}: ${balance}`}</span>
+                  </Radio>
+                </S.Status>
+              );
+            })}
+          </S.Form>
+        </CheckoutStyle.CheckoutStep>
       )}
     </Formik>
   );

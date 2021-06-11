@@ -45,3 +45,16 @@ export const CheckoutStep = styled.div`
     margin-bottom: 16px;
   }
 `;
+
+export const FieldLabel = styled.label`
+  display: block;
+  margin-bottom: 8px;
+  font: 700 14px/20px Raleway, sans-serif;
+`;
+
+export const FieldDescription = styled.p`
+  margin-top: -4px;
+  margin-bottom: 8px;
+  color: #888;
+  font: normal 14px/22px Roboto, sans-serif;
+`;

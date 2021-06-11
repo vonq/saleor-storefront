@@ -5,6 +5,7 @@ import Link from "next/link";
 import * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import * as CheckoutStyle from "@app/CheckoutUtils/styles";
 import { DropdownMenu, IconButton } from "@components/atoms";
 import { TaxedMoney } from "@components/containers";
 import { paths } from "@paths";
@@ -57,51 +58,57 @@ const Page: React.FC<{
           </p>
         </div>
         {"invoices" in order && order.invoices?.length > 0 && (
-          <div className="order-details__header-menu">
-            <DropdownMenu
-              type="clickable"
-              header={
-                <IconButton
-                  testingContext="expandButton"
-                  name="expand"
-                  size={28}
-                />
-              }
-              items={[
-                {
-                  onClick: downloadInvoice,
-                  content: (
-                    <span>
-                      <FormattedMessage
-                        defaultMessage="Download invoice"
-                        description="action in popup menu in order view"
-                      />
-                    </span>
-                  ),
-                },
-              ]}
-            />
-          </div>
+          <CheckoutStyle.CheckoutStep>
+            <div className="order-details__header-menu">
+              <DropdownMenu
+                type="clickable"
+                header={
+                  <IconButton
+                    testingContext="expandButton"
+                    name="expand"
+                    size={28}
+                  />
+                }
+                items={[
+                  {
+                    onClick: downloadInvoice,
+                    content: (
+                      <span>
+                        <FormattedMessage
+                          defaultMessage="Download invoice"
+                          description="action in popup menu in order view"
+                        />
+                      </span>
+                    ),
+                  },
+                ]}
+              />
+            </div>
+          </CheckoutStyle.CheckoutStep>
         )}
       </div>
-      <CartTable
-        lines={extractOrderLines(order.lines)}
-        totalCost={<TaxedMoney taxedMoney={order.total} />}
-        deliveryCost={<TaxedMoney taxedMoney={order.shippingPrice} />}
-        subtotal={<TaxedMoney taxedMoney={order.subtotal} />}
-      />
-      <div className="order-details__summary">
-        <div>
-          <h4>
-            <FormattedMessage {...checkoutMessages.shippingAddress} />
-          </h4>
-          <AddressSummary
-            address={order.shippingAddress}
-            email={order.userEmail}
-            paragraphRef={this.shippingAddressRef}
-          />
+      <CheckoutStyle.CheckoutStep>
+        <CartTable
+          lines={extractOrderLines(order.lines)}
+          totalCost={<TaxedMoney taxedMoney={order.total} />}
+          deliveryCost={<TaxedMoney taxedMoney={order.shippingPrice} />}
+          subtotal={<TaxedMoney taxedMoney={order.subtotal} />}
+        />
+      </CheckoutStyle.CheckoutStep>
+      <CheckoutStyle.CheckoutStep>
+        <div className="order-details__summary">
+          <div>
+            <h4>
+              <FormattedMessage {...checkoutMessages.shippingAddress} />
+            </h4>
+            <AddressSummary
+              address={order.shippingAddress}
+              email={order.userEmail}
+              paragraphRef={this.shippingAddressRef}
+            />
+          </div>
         </div>
-      </div>
+      </CheckoutStyle.CheckoutStep>
     </>
   ) : (
     <NotFound />

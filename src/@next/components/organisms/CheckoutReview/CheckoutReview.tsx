@@ -80,7 +80,7 @@ const CheckoutReview: React.FC<IProps> = ({
       <CheckoutStyle.Title data-test="checkoutPageSubtitle">
         <FormattedMessage {...checkoutMessages.reviewOrder} />
       </CheckoutStyle.Title>
-      <S.ReviewCard>
+      <CheckoutStyle.CheckoutStep>
         <p>{`Job title: ${jobData.title}`}</p>
         <p>{`Industry: ${jobData.industry}`}</p>
         <p>{`Education: ${jobData.education}`}</p>
@@ -103,7 +103,7 @@ const CheckoutReview: React.FC<IProps> = ({
             href={jobData.linkToJobAppPage}
           >{`${jobData.linkToJobAppPage}`}</S.ReviewLink>
         </p>
-      </S.ReviewCard>
+      </CheckoutStyle.CheckoutStep>
       {/* <S.Grid>
         <section data-test="shippingAddressSection">
           <S.SubTitle>
