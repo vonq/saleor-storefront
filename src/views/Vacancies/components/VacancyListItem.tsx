@@ -1,9 +1,8 @@
 import React from "react";
-import ReactSVG from "react-svg";
+import Button from '@material-ui/core/Button';
+import EventOutlinedIcon from '@material-ui/icons/EventOutlined';
+import BackupIcon from '@material-ui/icons/Backup';
 
-import { Button } from "@components/atoms";
-import copyIcon from "@temp/images/copy.svg";
-import quoteIcon from "@temp/images/quote-icon.svg";
 import "../scss/vacancy_list_item.scss";
 
 interface CompProps {
@@ -26,17 +25,17 @@ export const VacancyListItem: React.FC<CompProps> = ({
           <h2>{title}</h2>
           <ul>
             <li>
-              <ReactSVG path={copyIcon} />
+              <BackupIcon />
               <span>{source_name}</span>
             </li>
             <li>
-              <ReactSVG path={quoteIcon} />
+              <EventOutlinedIcon /> 
               <span>{new Date(created_at).toLocaleDateString()}</span>
             </li>
           </ul>
         </div>
         <div className="card-body-actions">
-          <Button size="sm">Start campaign</Button>
+          <Button variant="contained" color="primary">Start campaign</Button>
         </div>
       </div>
     </div>
