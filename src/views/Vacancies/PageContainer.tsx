@@ -23,12 +23,7 @@ export const VacanciesPageContainer: NextPage = () => {
     fetchData();
   }, []);
 
-  return (
-    <VacanciesPageView
-      loading={loading}
-      vacancyItems={vacancyItems}
-    />
-  );
+  return <VacanciesPageView loading={loading} vacancyItems={vacancyItems} />;
 };
 
 export default VacanciesPageContainer;

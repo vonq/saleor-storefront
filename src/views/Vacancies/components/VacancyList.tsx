@@ -1,5 +1,3 @@
-import "../scss/vacancy_list.scss";
-
 import React from "react";
 import VacancyListItem from "./VacancyListItem";
 
