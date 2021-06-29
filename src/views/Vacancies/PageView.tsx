@@ -1,16 +1,15 @@
+import "./scss/index.scss";
+
 import * as React from "react";
 
 import { FilterSidebar, FilterTagsHeader, VacancyList } from "./components";
 
-import "./scss/index.scss";
-
 interface PageProps {
   loading: boolean;
-  vacancyList: Array<any>;
-  onChange: (name, value) => void;
+  vacancyItems: Array<any>;
 }
 
-const Page: React.FC<PageProps> = ({ vacancyList }) => {
+const VacanciesPageView: React.FC<PageProps> = ({ loading, vacancyItems }) => {
   return (
     <div className="vacancies-page">
       <div className="vacancies-page__sidebar">
@@ -18,10 +17,10 @@ const Page: React.FC<PageProps> = ({ vacancyList }) => {
       </div>
       <div className="vacancies-page__content">
         <FilterTagsHeader />
-        <VacancyList list={vacancyList} />
+        <VacancyList items={vacancyItems} />
       </div>
     </div>
   );
 };
 
-export default Page;
+export default VacanciesPageView;

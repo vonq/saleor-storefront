@@ -1,16 +1,16 @@
-import React from "react";
-
-import VacancyListItem from "./VacancyListItem";
 import "../scss/vacancy_list.scss";
 
+import React from "react";
+import VacancyListItem from "./VacancyListItem";
+
 interface CompProps {
-  list: Array<any>;
+  items: Array<any>;
 }
 
-export const VacanciesList: React.FC<CompProps> = ({ list = [] }) => {
+export const VacanciesList: React.FC<CompProps> = ({ items = [] }) => {
   return (
     <div className="vacancy-list">
-      {list.map(item => (
+      {items.map(item => (
         <VacancyListItem key={item["vacancy_id"]} {...item} />
       ))}
     </div>

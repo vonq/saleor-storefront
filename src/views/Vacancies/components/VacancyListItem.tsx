@@ -1,9 +1,9 @@
-import React from "react";
-import Button from '@material-ui/core/Button';
-import EventOutlinedIcon from '@material-ui/icons/EventOutlined';
-import BackupIcon from '@material-ui/icons/Backup';
-
 import "../scss/vacancy_list_item.scss";
+
+import BackupIcon from "@material-ui/icons/Backup";
+import Button from "@material-ui/core/Button";
+import EventOutlinedIcon from "@material-ui/icons/EventOutlined";
+import React from "react";
 
 interface CompProps {
   vacancy_id: string;
@@ -29,13 +29,15 @@ export const VacancyListItem: React.FC<CompProps> = ({
               <span>{source_name}</span>
             </li>
             <li>
-              <EventOutlinedIcon /> 
+              <EventOutlinedIcon />
               <span>{new Date(created_at).toLocaleDateString()}</span>
             </li>
           </ul>
         </div>
         <div className="card-body-actions">
-          <Button variant="contained" color="primary">Start campaign</Button>
+          <Button variant="contained" color="primary">
+            Start campaign
+          </Button>
         </div>
       </div>
     </div>

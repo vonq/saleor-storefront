@@ -1,9 +1,9 @@
-import React from "react";
+import "../scss/filter_sidebar.scss";
+
 import Input from "@material-ui/core/Input";
 import InputAdornment from "@material-ui/core/InputAdornment";
+import React from "react";
 import SearchIcon from "@material-ui/icons/Search";
-
-import "../scss/filter_sidebar.scss";
 
 export const FilterSidebar: React.FC = ({}) => {
   return (
@@ -17,7 +17,7 @@ export const FilterSidebar: React.FC = ({}) => {
             <SearchIcon />
           </InputAdornment>
         }
-      ></Input>
+      />
     </div>
   );
 };

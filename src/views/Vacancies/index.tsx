@@ -1,1 +1,1 @@
-export { default as Vacancies } from "./View";
+export { default as Vacancies } from "./PageContainer";
