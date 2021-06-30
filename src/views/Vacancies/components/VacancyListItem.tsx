@@ -42,18 +42,16 @@ const useStyles = makeStyles(theme => ({
   cardActions: {},
 }));
 interface CompProps {
-  vacancy_id: string;
-  source_name: string;
-  created_at: string;
-  title: string;
+  itemDetails: {
+    vacancy_id: string;
+    source_name: string;
+    created_at: string;
+    title: string;
+  };
 }
 
-export const VacancyListItem: React.FC<CompProps> = ({
-  vacancy_id,
-  source_name,
-  created_at,
-  title,
-}) => {
+export const VacancyListItem: React.FC<CompProps> = ({ itemDetails }) => {
+  const { vacancy_id, source_name, created_at, title } = itemDetails;
   const classes = useStyles();
 
   return (
