@@ -1,9 +1,10 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-
 import BackupIcon from "@material-ui/icons/Backup";
 import Button from "@material-ui/core/Button";
 import EventOutlinedIcon from "@material-ui/icons/EventOutlined";
+import PersonOutlinedIcon from "@material-ui/icons/PersonOutlined";
+import _get from 'lodash/get';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -52,6 +53,7 @@ interface CompProps {
 
 export const VacancyListItem: React.FC<CompProps> = ({ itemDetails }) => {
   const { vacancy_id, source_name, created_at, title } = itemDetails;
+  const recruiterName = _get(itemDetails, "contact_details.name", "");
   const classes = useStyles();
 
   return (
@@ -64,6 +66,12 @@ export const VacancyListItem: React.FC<CompProps> = ({ itemDetails }) => {
               <BackupIcon />
               <span>{source_name}</span>
             </li>
+            {recruiterName && (
+              <li>
+                <PersonOutlinedIcon />
+                <span>{recruiterName}</span>
+              </li>
+            )}
             <li>
               <EventOutlinedIcon />
               <span>{new Date(created_at).toLocaleDateString()}</span>
