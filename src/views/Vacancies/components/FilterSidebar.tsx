@@ -13,7 +13,14 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export const FilterSidebar: React.FC = ({}) => {
+interface CompProps {
+  itemsTotal: number;
+  facetOptions: any;
+  searchFilters: any;
+  onChangeFilters: () => void;
+}
+
+export const FilterSidebar: React.FC<CompProps> = ({}) => {
   const classes = useStyles();
 
   return (

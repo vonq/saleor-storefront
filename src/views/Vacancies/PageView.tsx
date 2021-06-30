@@ -21,15 +21,31 @@ const useStyles = makeStyles(theme => ({
 interface PageProps {
   loading: boolean;
   vacancyItems: Array<any>;
+  itemsTotal: number;
+  facetOptions: any;
+  searchFilters: any;
+  onChangeFilters: Function;
 }
 
-const VacanciesPageView: React.FC<PageProps> = ({ loading, vacancyItems }) => {
+const VacanciesPageView: React.FC<PageProps> = ({
+  loading,
+  vacancyItems,
+  itemsTotal,
+  facetOptions,
+  searchFilters,
+  onChangeFilters,
+}) => {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
       <div className={classes.sidebar}>
-        <FilterSidebar />
+        <FilterSidebar
+          itemsTotal={itemsTotal}
+          facetOptions={facetOptions}
+          searchFilters={searchFilters}
+          onChangeFilters={onChangeFilters}
+        />
       </div>
       <div className={classes.content}>
         <FilterTagsHeader />
