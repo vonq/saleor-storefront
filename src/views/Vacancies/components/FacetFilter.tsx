@@ -15,6 +15,15 @@ const useStyles = makeStyles(theme => ({
     marginBottom: "1rem",
   },
   checkboxes: {},
+  checkboxWrapper: {
+    width: "100%",
+  },
+  checkboxLabel: {
+    fontSize: "14px",
+    overflow: "hidden",
+    whiteSpace: "nowrap",
+    textOverflow: "ellipsis",
+  },
 }));
 
 interface CompProps {
@@ -81,6 +90,10 @@ export const FacetFilter: React.FC<CompProps> = ({
         {optionsFiltered.map(option => (
           <FormControlLabel
             key={option.key}
+            classes={{
+              root: classes.checkboxWrapper,
+              label: classes.checkboxLabel,
+            }}
             control={
               <Checkbox
                 checked={isChecked(option)}
