@@ -85,7 +85,7 @@ export const FilterSidebar: React.FC<CompProps> = ({
         {facetGroups.map(group => (
           <FacetFilter
             key={group.key}
-            searchFilters={searchFilters}
+            facetFilters={searchFilters['facets']}
             facetDetails={group}
             onChangeFilters={onChangeFilters}
           />

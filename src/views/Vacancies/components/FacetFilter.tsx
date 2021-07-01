@@ -19,13 +19,14 @@ const useStyles = makeStyles(theme => ({
 
 interface CompProps {
   facetDetails: number;
-  searchFilters: any;
+  facetFilters: any;
   onChangeFilters: Function;
 }
 
 export const FacetFilter: React.FC<CompProps> = ({
   facetDetails,
-  searchFilters,
+  facetFilters,
+  onChangeFilters,
 }) => {
   const classes = useStyles();
   const [query, setQuery] = useState("");
@@ -38,12 +39,18 @@ export const FacetFilter: React.FC<CompProps> = ({
   );
 
   const isChecked = option => {
-    const facetKey = facetDetails["key"];
-    const activeFilter = searchFilters[facetKey] || [];
-    return activeFilter.includes(option.key);
+    const values = facetFilters[facetDetails["key"]] || [];
+    return values.includes(option.key);
   };
 
-  const handleCheckOption = option => {};
+  const handleCheckOption = option => {
+    const facetKey = facetDetails["key"];
+    const values = facetFilters[facetKey] || [];
+    const newValues = values.includes(option.key)
+      ? values.filter(e => e !== option.key)
+      : values.concat(option.key);
+    onChangeFilters(facetKey, newValues);
+  };
 
   const handleQueryChange = e => {
     setQuery(e.target.value || "");
