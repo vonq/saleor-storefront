@@ -22,7 +22,7 @@ interface PageProps {
   loading: boolean;
   vacancyItems: Array<any>;
   itemsTotal: number;
-  facetOptions: any;
+  facetGroups: any;
   searchFilters: any;
   onChangeFilters: Function;
 }
@@ -31,7 +31,7 @@ const VacanciesPageView: React.FC<PageProps> = ({
   loading,
   vacancyItems,
   itemsTotal,
-  facetOptions,
+  facetGroups,
   searchFilters,
   onChangeFilters,
 }) => {
@@ -42,13 +42,17 @@ const VacanciesPageView: React.FC<PageProps> = ({
       <div className={classes.sidebar}>
         <FilterSidebar
           itemsTotal={itemsTotal}
-          facetOptions={facetOptions}
+          facetGroups={facetGroups}
           searchFilters={searchFilters}
           onChangeFilters={onChangeFilters}
         />
       </div>
       <div className={classes.content}>
-        <FilterTagsHeader />
+        <FilterTagsHeader
+          facetGroups={facetGroups}
+          facetFilters={searchFilters["facets"]}
+          onChangeFilters={onChangeFilters}
+        />
         <VacancyList items={vacancyItems} />
       </div>
     </div>
