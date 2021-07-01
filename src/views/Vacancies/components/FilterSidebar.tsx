@@ -1,8 +1,9 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Input from "@material-ui/core/Input";
-import InputAdornment from "@material-ui/core/InputAdornment";
+import { TextField, Typography, InputAdornment } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
+
+import FacetFilter from "./FacetFilter";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -11,30 +12,85 @@ const useStyles = makeStyles(theme => ({
     padding: "1.5rem",
     height: "100%",
   },
+  group: {
+    marginBottom: "2rem",
+  },
+  groupLabel: {
+    textTransform: "uppercase",
+  },
 }));
 
 interface CompProps {
   itemsTotal: number;
-  facetOptions: any;
+  facetGroups: any;
   searchFilters: any;
-  onChangeFilters: () => void;
+  onChangeFilters: Function;
 }
 
-export const FilterSidebar: React.FC<CompProps> = ({}) => {
+export const FilterSidebar: React.FC<CompProps> = ({
+  itemsTotal,
+  facetGroups,
+  searchFilters,
+  onChangeFilters,
+}) => {
   const classes = useStyles();
+  const { query, facets } = searchFilters;
+
+  const handleQueryChange = e => {
+    onChangeFilters("query", e.target.value || "");
+  };
 
   return (
     <div className={classes.root}>
-      <Input
-        id="search-text"
-        placeholder="Search on vacancies"
-        fullWidth
-        startAdornment={
-          <InputAdornment position="start">
-            <SearchIcon />
-          </InputAdornment>
-        }
-      />
+      <div className={classes.group}>
+        <TextField
+          id="search-query"
+          placeholder="Search on vacancies"
+          fullWidth
+          value={query}
+          onChange={handleQueryChange}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon />
+              </InputAdornment>
+            ),
+          }}
+        />
+      </div>
+
+      <div className={classes.group}>
+        <Typography
+          color="textSecondary"
+          variant="subtitle2"
+          className={classes.groupLabel}
+        >
+          Search Results
+        </Typography>
+        <Typography color="textPrimary" variant="subtitle1">
+          {`${itemsTotal || 0} vacancies`}
+        </Typography>
+      </div>
+
+      <div className={classes.group}>
+        <Typography
+          color="textSecondary"
+          variant="subtitle2"
+          className={classes.groupLabel}
+          gutterBottom
+        >
+          Filter By
+        </Typography>
+
+        {facetGroups.map(group => (
+          <FacetFilter
+            key={group.key}
+            searchFilters={searchFilters}
+            facetDetails={group}
+            onChangeFilters={onChangeFilters}
+          />
+        ))}
+      </div>
     </div>
   );
 };
