@@ -79,7 +79,7 @@ export const VacancyListItem: React.FC<CompProps> = ({ itemDetails }) => {
           </ul>
         </div>
         <div className={classes.cardActions}>
-          <Button variant="contained" color="primary">
+          <Button variant="contained" color="primary" size="small">
             Start campaign
           </Button>
         </div>

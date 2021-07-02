@@ -14,6 +14,9 @@ const useStyles = makeStyles(theme => ({
   root: {
     marginBottom: "1rem",
   },
+  title: {
+    fontWeight: theme.typography.fontWeightBold,
+  },
   checkboxes: {},
   checkboxWrapper: {
     width: "100%",
@@ -67,13 +70,14 @@ export const FacetFilter: React.FC<CompProps> = ({
 
   return (
     <div className={classes.root}>
-      <Typography color="textPrimary" variant="subtitle2">
+      <Typography color="textPrimary" variant="subtitle2" classes={{ root: classes.title }}>
         {facetDetails["label"]}
       </Typography>
 
       <TextField
         id="search-query"
-        placeholder={`Search on ${facetDetails["label"]}`}
+        // placeholder={`Search on ${facetDetails["label"]}`}
+        placeholder="Search"
         fullWidth
         value={query}
         onChange={handleQueryChange}

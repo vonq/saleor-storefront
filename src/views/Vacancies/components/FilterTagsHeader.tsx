@@ -5,10 +5,11 @@ import _get from "lodash/get";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    marginBottom: "1.5rem",
+    marginBottom: theme.spacing(1),
   },
   title: {
     textTransform: "uppercase",
+    fontWeight: theme.typography.fontWeightBold,
   },
   tag: {
     marginRight: theme.spacing(0.5),
@@ -39,6 +40,10 @@ export const FilterTagsHeader: React.FC<CompProps> = ({
       : values.concat(value);
     onChangeFilters(facetKey, newValues);
   };
+
+  if (!tags.length) {
+    return null;
+  }
 
   return (
     <div className={classes.root}>

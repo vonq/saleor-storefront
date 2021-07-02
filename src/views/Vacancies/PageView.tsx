@@ -10,11 +10,13 @@ const useStyles = makeStyles(theme => ({
   sidebar: {
     flex: "none",
     width: "18rem",
+    minHeight: "100%",
   },
   content: {
     flex: 1,
     maxWidth: "48rem",
     margin: "1.5rem auto",
+    minHeight: "100%",
   },
 }));
 

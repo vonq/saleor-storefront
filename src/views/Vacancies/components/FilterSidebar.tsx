@@ -9,11 +9,11 @@ const useStyles = makeStyles(theme => ({
   root: {
     borderRight: "1px solid #e0e0e0",
     background: "#f1f5f5",
-    padding: "1.5rem",
+    padding: theme.spacing(3),
     height: "100%",
   },
   group: {
-    marginBottom: "2rem",
+    marginBottom: theme.spacing(3),
   },
   groupLabel: {
     textTransform: "uppercase",
