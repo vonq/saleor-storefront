@@ -2,26 +2,29 @@ import * as React from "react";
 
 import { NextPage } from "next";
 import VacanciesPageView from "./PageView";
-import { fetchVacancies } from "@temp/core/apiLayer/vacancyService";
+import {
+  fetchVacancyList,
+  fetchVacancyFacets,
+} from "@temp/core/apiLayer/vacancyService";
 
 export const VacanciesPageContainer: NextPage = () => {
   const [loading, setLoading] = React.useState(false);
   const [vacancyItems, setVacancyItems] = React.useState([]);
   const [itemsTotal, setItemsTotal] = React.useState(0);
-  const [facetOptions, setFacetOptions] = React.useState([]);
+  const [facetGroups, setFacetGroups] = React.useState([]);
   const [searchFilters, setSearchFilters] = React.useState({
-    query: "text",
+    query: "",
     facets: {},
   });
 
   const fetchData = async () => {
     setLoading(true);
     try {
-      const response = await fetchVacancies();
-      setItemsTotal(response["total"]);
-      setVacancyItems(response["list"]);
-      setFacetOptions(response["facets"]);
-      // const { total, facets, list } = fetchVacancies();
+      const listResponse = await fetchVacancyList(searchFilters);
+      const facetResponse = await fetchVacancyFacets(searchFilters);
+      setItemsTotal(listResponse["total"]);
+      setVacancyItems(listResponse["list"]);
+      setFacetGroups(facetResponse["facets"]);
     } finally {
       setLoading(false);
     }
@@ -29,13 +32,20 @@ export const VacanciesPageContainer: NextPage = () => {
 
   React.useEffect(() => {
     fetchData();
-  }, []);
+  }, [searchFilters]);
 
   const handleFiltersChange = (key, value) => {
-    setSearchFilters({
-      ...searchFilters,
-      [key]: value,
-    });
+    if (key === "query") {
+      setSearchFilters({ ...searchFilters, query: value });
+    } else {
+      setSearchFilters({
+        ...searchFilters,
+        facets: {
+          ...searchFilters.facets,
+          [key]: value,
+        },
+      });
+    }
   };
 
   return (
@@ -43,7 +53,7 @@ export const VacanciesPageContainer: NextPage = () => {
       loading={loading}
       vacancyItems={vacancyItems}
       searchFilters={searchFilters}
-      facetOptions={facetOptions}
+      facetGroups={facetGroups}
       itemsTotal={itemsTotal}
       onChangeFilters={handleFiltersChange}
     />

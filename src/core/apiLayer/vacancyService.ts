@@ -1,27 +1,56 @@
-// const BASE_URL = "https://example.com/";
+import qs from "query-string";
 
-// export const fetchVacancies = async ({ offset, limit, ...filters }) => {
-export const fetchVacancies = async () => {
+const ServiceBaseUrl = "http://localhost:8082";
+const CompanyId = "comp2";
+
+export const fetchVacancyList = async filters => {
   try {
-    // const URL = `${BASE_URL}/vacancies?`;
+    const query = stringifyPayload(filters);
+    const fullUrl = `${ServiceBaseUrl}/search/vacancies/${CompanyId}?${query}`;
+    console.log('[API]', fullUrl);
+
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         resolve({
-          totalHits: 7,
+          total: 7,
           list: MockedVacancies,
+        });
+      }, 300);
+    });
+  } catch (err) {
+    throw err;
+  }
+};
+
+export const fetchVacancyFacets = async filters => {
+  try {
+    const query = stringifyPayload(filters);
+    const fullUrl = `${ServiceBaseUrl}/search/facets/${CompanyId}?${query}`;
+
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve({
           facets: MockedFacets,
         });
       }, 300);
     });
   } catch (err) {
-    // console.error("[Vacancies API]", err);
-    // throw err;
+    throw err;
   }
+};
+
+const stringifyPayload = filters => {
+  const { query, facets } = filters;
+  const payload = {
+    ...(query ? { text: query } : {}),
+    ...facets,
+  };
+  return qs.stringify(payload, { arrayFormat: "comma" });
 };
 
 const MockedFacets = [
   {
-    key: "contactNames",
+    key: "recruiterName",
     label: "Recruiters",
     options: [
       {
@@ -39,9 +68,9 @@ const MockedFacets = [
     ],
   },
   {
-    key: "regions",
+    key: "regionId",
     label: "Regions",
-    list: [
+    options: [
       {
         key: "341",
         recordCount: 2,
@@ -63,14 +92,14 @@ const MockedFacets = [
         label: "United Kingdom",
       },
       {
-        key: "612",
-        recordCount: 1,
-        label: "Germany / Bavaria",
-      },
-      {
         key: "620",
         recordCount: 1,
         label: "Germany / North Rhine-Westphalia",
+      },
+      {
+        key: "612",
+        recordCount: 1,
+        label: "Germany / Bavaria",
       },
     ],
   },
