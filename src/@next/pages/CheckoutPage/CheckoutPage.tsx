@@ -1,4 +1,4 @@
-import { useCart, useCheckout } from "@saleor/sdk";
+import { useAuth, useCart, useCheckout } from "@saleor/sdk";
 import { CompleteCheckout_checkoutComplete_order } from "@saleor/sdk/lib/mutations/gqlTypes/CompleteCheckout";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
@@ -66,6 +66,7 @@ const CheckoutPage: React.FC<NextPage> = () => {
     createPayment,
     completeCheckout,
   } = useCheckout();
+  const { user } = useAuth();
   const intl = useIntl();
   const isFullyLoaded = cartLoaded && checkoutLoaded;
 
@@ -319,6 +320,7 @@ const CheckoutPage: React.FC<NextPage> = () => {
   useEffect(() => {
     const createCheckout = async () => {
       try {
+        const email = user?.email || "customer@example.com";
         const response = await apolloClient.mutate({
           mutation: createCheckoutQuery,
           variables: {
@@ -326,6 +328,7 @@ const CheckoutPage: React.FC<NextPage> = () => {
               quantity: item.quantity,
               variantId: item.variant.id,
             })),
+            email,
           },
         });
         const newCheckout = response?.data?.checkoutCreate?.checkout;
