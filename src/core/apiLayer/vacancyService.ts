@@ -1,13 +1,14 @@
 import qs from "query-string";
 
 const ServiceBaseUrl = "http://localhost:8082";
-const CompanyId = "comp2";
+// @FIXME: should be pulled from account level
+const CompanyId = "comp4";
 
 export const fetchVacancyList = async filters => {
   try {
-    const query = stringifyPayload(filters);
-    const fullUrl = `${ServiceBaseUrl}/search/vacancies/${CompanyId}?${query}`;
-    console.log('[API]', fullUrl);
+    const queryParams = stringifyPayload(filters);
+    const fullUrl = `${ServiceBaseUrl}/search/vacancies/${CompanyId}${queryParams}`;
+    console.log("[API]", fullUrl);
 
     return new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -24,8 +25,8 @@ export const fetchVacancyList = async filters => {
 
 export const fetchVacancyFacets = async filters => {
   try {
-    const query = stringifyPayload(filters);
-    const fullUrl = `${ServiceBaseUrl}/search/facets/${CompanyId}?${query}`;
+    const queryParams = stringifyPayload(filters);
+    const fullUrl = `${ServiceBaseUrl}/search/facets/${CompanyId}${queryParams}`;
 
     return new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -39,13 +40,21 @@ export const fetchVacancyFacets = async filters => {
   }
 };
 
-const stringifyPayload = filters => {
-  const { query, facets } = filters;
+const stringifyPayload = (filters, withPrefix = true) => {
+  const { offset, limit, query, facets } = filters;
   const payload = {
-    ...(query ? { text: query } : {}),
+    offset,
+    limit,
+    text: query,
     ...facets,
   };
-  return qs.stringify(payload, { arrayFormat: "comma" });
+  const stringified = qs.stringify(payload, {
+    arrayFormat: "comma",
+    skipEmptyString: true,
+    skipNull: true,
+  });
+
+  return (withPrefix ? "?" : "") + stringified;
 };
 
 const MockedFacets = [
