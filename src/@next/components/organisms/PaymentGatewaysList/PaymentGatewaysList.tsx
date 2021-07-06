@@ -1,3 +1,4 @@
+import { useAuth } from "@saleor/sdk";
 import React from "react";
 
 import { ErrorMessage, Radio } from "@components/atoms";
@@ -29,9 +30,13 @@ const PaymentGatewaysList: React.FC<IProps> = ({
   errors,
   onError,
 }: IProps) => {
+  const { authenticated } = useAuth();
+  const gateways = paymentGateways.filter(
+    ({ id }) => authenticated || id !== "vonq.payments.sf_contracts"
+  );
   return (
     <S.Wrapper>
-      {paymentGateways.map(({ id, name, config }, index) => {
+      {gateways.map(({ id, name, config }, index) => {
         const checked = selectedPaymentGateway === id;
 
         switch (name) {

@@ -37,11 +37,11 @@ export interface CheckoutCreateVariables {
 }
 
 export const createCheckoutQuery = gql`
-  mutation CheckoutCreate($lines: [CheckoutLineInput]!) {
+  mutation CheckoutCreate($lines: [CheckoutLineInput]!, $email: String!) {
     checkoutCreate(
       input: {
         channel: "default-channel"
-        email: "customer@example.com"
+        email: $email
         lines: $lines
         shippingAddress: {
           firstName: "John"
