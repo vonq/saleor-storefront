@@ -12,16 +12,10 @@ export const fetchVacancyList = async filters => {
 
     let response = await fetch(fullUrl);
     response = await response.json();
-    return response;
-
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve({
-          total: 7,
-          list: MockedVacancies,
-        });
-      }, 300);
-    });
+    return {
+      total: response["totalHits"],
+      list: response["vacancies"],
+    };
   } catch (err) {
     throw err;
   }
@@ -34,15 +28,17 @@ export const fetchVacancyFacets = async filters => {
 
     let response = await fetch(fullUrl);
     response = await response.json();
-    return response;
-
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve({
-          facets: MockedFacets,
-        });
-      }, 300);
-    });
+    const parsedFacetGroups = Object.entries(response).map(
+      ([facetKey, groupOptions]) => ({
+        key: facetKey,
+        label: facetKey,
+        options: groupOptions.map(option => ({
+          count: option["count"],
+          key: option[facetKey],
+        })),
+      })
+    );
+    return { list: parsedFacetGroups };
   } catch (err) {
     throw err;
   }
