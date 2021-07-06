@@ -5,6 +5,7 @@ import Button from "@material-ui/core/Button";
 import EventOutlinedIcon from "@material-ui/icons/EventOutlined";
 import PersonOutlinedIcon from "@material-ui/icons/PersonOutlined";
 import _get from 'lodash/get';
+import _values from 'lodash/values';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -52,9 +53,13 @@ interface CompProps {
 }
 
 export const VacancyListItem: React.FC<CompProps> = ({ itemDetails }) => {
-  const { vacancy_id, source_name, created_at, title } = itemDetails;
-  const recruiterName = _get(itemDetails, "contact_details.name", "");
   const classes = useStyles();
+
+  const sourceName = _get(itemDetails, "sourceName");
+  const createdAt = _get(itemDetails, "vacancyDetails.createdAt");
+  const createdAtParsed = new Date(createdAt).toLocaleDateString();
+  const title = _values(_get(itemDetails, "vacancyDetails.title"));
+  const recruiterName = _get(itemDetails, "contactDetails.name", "");
 
   return (
     <div className={classes.root}>
@@ -64,7 +69,7 @@ export const VacancyListItem: React.FC<CompProps> = ({ itemDetails }) => {
           <ul>
             <li>
               <BackupIcon />
-              <span>{source_name}</span>
+              <span>{sourceName}</span>
             </li>
             {recruiterName && (
               <li>
@@ -74,7 +79,7 @@ export const VacancyListItem: React.FC<CompProps> = ({ itemDetails }) => {
             )}
             <li>
               <EventOutlinedIcon />
-              <span>{new Date(created_at).toLocaleDateString()}</span>
+              <span>{createdAtParsed}</span>
             </li>
           </ul>
         </div>

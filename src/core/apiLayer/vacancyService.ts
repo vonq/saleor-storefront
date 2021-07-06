@@ -10,6 +10,10 @@ export const fetchVacancyList = async filters => {
     const fullUrl = `${ServiceBaseUrl}/search/vacancies/${CompanyId}${queryParams}`;
     console.log("[API]", fullUrl);
 
+    let response = await fetch(fullUrl);
+    response = await response.json();
+    return response;
+
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         resolve({
@@ -27,6 +31,10 @@ export const fetchVacancyFacets = async filters => {
   try {
     const queryParams = stringifyPayload(filters);
     const fullUrl = `${ServiceBaseUrl}/search/facets/${CompanyId}${queryParams}`;
+
+    let response = await fetch(fullUrl);
+    response = await response.json();
+    return response;
 
     return new Promise((resolve, reject) => {
       setTimeout(() => {

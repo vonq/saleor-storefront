@@ -22,8 +22,8 @@ export const VacanciesPageContainer: NextPage = () => {
     try {
       const listResponse = await fetchVacancyList(searchFilters);
       const facetResponse = await fetchVacancyFacets(searchFilters);
-      setItemsTotal(listResponse["total"]);
-      setVacancyItems(listResponse["list"]);
+      setItemsTotal(listResponse["totalHits"]);
+      setVacancyItems(listResponse["vacancies"]);
       setFacetGroups(facetResponse["facets"]);
     } finally {
       setLoading(false);

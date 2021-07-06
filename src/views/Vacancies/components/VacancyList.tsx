@@ -9,7 +9,7 @@ export const VacanciesList: React.FC<CompProps> = ({ items = [] }) => {
   return (
     <div className="vacancy-list">
       {items.map(item => (
-        <VacancyListItem key={item["vacancy_id"]} itemDetails={item} />
+        <VacancyListItem key={item["vacancyId"]} itemDetails={item} />
       ))}
     </div>
   );
