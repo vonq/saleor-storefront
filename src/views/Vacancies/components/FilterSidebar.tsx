@@ -2,6 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { TextField, Typography, InputAdornment } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
+import CloseIcon from "@material-ui/icons/Close";
 
 import FacetFilter from "./FacetFilter";
 
@@ -17,6 +18,9 @@ const useStyles = makeStyles(theme => ({
   },
   groupLabel: {
     textTransform: "uppercase",
+  },
+  closeIcon: {
+    cursor: "pointer",
   },
 }));
 
@@ -37,6 +41,10 @@ export const FilterSidebar: React.FC<CompProps> = ({
   const handleQueryChange = e => {
     onChangeFilters("query", e.target.value || "");
   };
+  const handleQueryClear = () => {
+    onChangeFilters("query", "");
+  };
+  const hasQuery = !!searchFilters["query"];
 
   return (
     <div className={classes.root}>
@@ -45,7 +53,7 @@ export const FilterSidebar: React.FC<CompProps> = ({
           id="search-query"
           placeholder="Search on vacancies"
           fullWidth
-          value={searchFilters['query']}
+          value={searchFilters["query"]}
           onChange={handleQueryChange}
           InputProps={{
             startAdornment: (
@@ -53,6 +61,17 @@ export const FilterSidebar: React.FC<CompProps> = ({
                 <SearchIcon />
               </InputAdornment>
             ),
+            ...(hasQuery && {
+              endAdornment: (
+                <InputAdornment
+                  position="end"
+                  onClick={handleQueryClear}
+                  className={classes.closeIcon}
+                >
+                  <CloseIcon />
+                </InputAdornment>
+              ),
+            }),
           }}
         />
       </div>
@@ -83,7 +102,7 @@ export const FilterSidebar: React.FC<CompProps> = ({
         {facetGroups.map(group => (
           <FacetFilter
             key={group.key}
-            facetFilters={searchFilters['facets']}
+            facetFilters={searchFilters["facets"]}
             facetDetails={group}
             onChangeFilters={onChangeFilters}
           />
