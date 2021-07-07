@@ -110,7 +110,7 @@ export const FacetFilter: React.FC<CompProps> = ({
                 size="small"
               />
             }
-            label={`${option["label"] || option["key"]} (${option["count"]})`}
+            label={`${option["label"] || option["key"]} (${option["recordCount"]})`}
           />
         ))}
       </div>

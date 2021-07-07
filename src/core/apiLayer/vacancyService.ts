@@ -28,23 +28,13 @@ export const fetchVacancyFacets = async filters => {
 
     let response = await fetch(fullUrl);
     response = await response.json();
-    const parsedFacetGroups = Object.entries(response).map(
-      ([facetKey, groupOptions]) => ({
-        key: facetKey,
-        label: facetKey,
-        options: groupOptions.map(option => ({
-          count: option["count"],
-          key: option[facetKey],
-        })),
-      })
-    );
-    return { list: parsedFacetGroups };
+    return { list: response };
   } catch (err) {
     throw err;
   }
 };
 
-const stringifyPayload = (filters, withPrefix = true) => {
+const stringifyPayload = (filters) => {
   const { offset, limit, query, facets } = filters;
   const payload = {
     offset,
@@ -58,7 +48,7 @@ const stringifyPayload = (filters, withPrefix = true) => {
     skipNull: true,
   });
 
-  return (withPrefix ? "?" : "") + stringified;
+  return (stringified ? "?" : "") + stringified;
 };
 
 const MockedFacets = [
