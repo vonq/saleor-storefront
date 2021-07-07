@@ -22,9 +22,9 @@ export const VacanciesPageContainer: NextPage = () => {
     try {
       const listResponse = await fetchVacancyList(searchFilters);
       const facetResponse = await fetchVacancyFacets(searchFilters);
-      setItemsTotal(listResponse["totalHits"]);
-      setVacancyItems(listResponse["vacancies"]);
-      setFacetGroups(facetResponse["facets"]);
+      setItemsTotal(listResponse["total"]);
+      setVacancyItems(listResponse["list"]);
+      setFacetGroups(facetResponse["list"]);
     } finally {
       setLoading(false);
     }

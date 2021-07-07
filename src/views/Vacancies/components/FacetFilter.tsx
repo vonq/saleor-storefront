@@ -70,7 +70,11 @@ export const FacetFilter: React.FC<CompProps> = ({
 
   return (
     <div className={classes.root}>
-      <Typography color="textPrimary" variant="subtitle2" classes={{ root: classes.title }}>
+      <Typography
+        color="textPrimary"
+        variant="subtitle2"
+        classes={{ root: classes.title }}
+      >
         {facetDetails["label"]}
       </Typography>
 
@@ -93,7 +97,7 @@ export const FacetFilter: React.FC<CompProps> = ({
       <div className={classes.checkboxes}>
         {optionsFiltered.map(option => (
           <FormControlLabel
-            key={option.key}
+            key={option["key"]}
             classes={{
               root: classes.checkboxWrapper,
               label: classes.checkboxLabel,
@@ -102,11 +106,11 @@ export const FacetFilter: React.FC<CompProps> = ({
               <Checkbox
                 checked={isChecked(option)}
                 onChange={() => handleCheckOption(option)}
-                name={option.key}
+                name={option["key"]}
                 size="small"
               />
             }
-            label={`${option.label || option.key} (${option.recordCount})`}
+            label={`${option["label"] || option["key"]} (${option["count"]})`}
           />
         ))}
       </div>

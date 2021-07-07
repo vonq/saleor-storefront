@@ -34,8 +34,6 @@ export const FilterSidebar: React.FC<CompProps> = ({
   onChangeFilters,
 }) => {
   const classes = useStyles();
-  const { query, facets } = searchFilters;
-
   const handleQueryChange = e => {
     onChangeFilters("query", e.target.value || "");
   };
@@ -47,7 +45,7 @@ export const FilterSidebar: React.FC<CompProps> = ({
           id="search-query"
           placeholder="Search on vacancies"
           fullWidth
-          value={query}
+          value={searchFilters['query']}
           onChange={handleQueryChange}
           InputProps={{
             startAdornment: (
