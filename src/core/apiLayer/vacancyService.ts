@@ -6,21 +6,14 @@ const CompanyId = "comp4";
 
 export const fetchVacancyListAndFacets = async filters => {
   try {
-    const queryParams = stringifyPayload(filters);
-    const listUrl = `${ServiceBaseUrl}/search/vacancies/${CompanyId}${queryParams}`;
-    const facetUrl = `${ServiceBaseUrl}/search/facets/${CompanyId}${queryParams}`;
     let [listResponse, facetResponse] = await Promise.all([
-      fetch(listUrl),
-      fetch(facetUrl),
-    ]);
-    [listResponse, facetResponse] = await Promise.all([
-      listResponse.json(),
-      facetResponse.json(),
+      fetchVacancyList(filters),
+      fetchVacancyFacets(filters),
     ]);
 
     return {
-      total: listResponse["totalHits"],
-      list: listResponse["vacancies"],
+      total: listResponse['total'],
+      list: listResponse['list'],
       facets: facetResponse,
     };
   } catch (err) {
