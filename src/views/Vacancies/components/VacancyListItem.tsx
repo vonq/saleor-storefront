@@ -4,8 +4,8 @@ import BackupIcon from "@material-ui/icons/Backup";
 import Button from "@material-ui/core/Button";
 import EventOutlinedIcon from "@material-ui/icons/EventOutlined";
 import PersonOutlinedIcon from "@material-ui/icons/PersonOutlined";
-import _get from 'lodash/get';
-import _values from 'lodash/values';
+import _get from "lodash/get";
+import _values from "lodash/values";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -44,39 +44,35 @@ const useStyles = makeStyles(theme => ({
   cardActions: {},
 }));
 interface CompProps {
-  itemDetails: {
-    vacancy_id: string;
-    source_name: string;
-    created_at: string;
+  data: {
+    vacancyId: string;
+    sourceName: string;
+    createdAt: string;
     title: string;
   };
 }
 
-export const VacancyListItem: React.FC<CompProps> = ({ itemDetails }) => {
+export const VacancyListItem: React.FC<CompProps> = ({ data }) => {
   const classes = useStyles();
 
-  const sourceName = _get(itemDetails, "sourceName");
-  const createdAt = _get(itemDetails, "vacancyDetails.createdAt");
-  const createdAtParsed = new Date(createdAt).toLocaleDateString();
-  const title = _values(_get(itemDetails, "vacancyDetails.title"));
-  const recruiterName = _get(itemDetails, "contactDetails.name", "");
+  const createdAtParsed = new Date(
+    data["createdAt"]
+  ).toLocaleDateString();
 
   return (
     <div className={classes.root}>
       <div className={classes.card}>
         <div className={classes.cardInfo}>
-          <h2>{title}</h2>
+          <h2>{data['title']}</h2>
           <ul>
             <li>
               <BackupIcon />
-              <span>{sourceName}</span>
+              <span>{data["sourceName"]}</span>
             </li>
-            {recruiterName && (
-              <li>
-                <PersonOutlinedIcon />
-                <span>{recruiterName}</span>
-              </li>
-            )}
+            <li>
+              <PersonOutlinedIcon />
+              <span>{data["recruiterName"]}</span>
+            </li>
             <li>
               <EventOutlinedIcon />
               <span>{createdAtParsed}</span>
