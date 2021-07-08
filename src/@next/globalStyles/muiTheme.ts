@@ -1,5 +1,11 @@
+import { grey, red } from "@material-ui/core/colors";
 import { createMuiTheme } from "@material-ui/core/styles";
-import { red } from "@material-ui/core/colors";
+
+declare module "@material-ui/core/styles/createPalette" {
+  interface TypeBackground {
+    sidebar: string;
+  }
+}
 
 // Create a theme instance.
 export const muiTheme = createMuiTheme({
@@ -16,6 +22,7 @@ export const muiTheme = createMuiTheme({
     },
     background: {
       default: "#fff",
+      sidebar: grey[100],
     },
   },
 });
