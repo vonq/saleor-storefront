@@ -55,7 +55,7 @@ const VacanciesPageView: React.FC<PageProps> = ({
           facetFilters={searchFilters["facets"]}
           onChangeFilters={onChangeFilters}
         />
-        <VacancyList items={vacancyItems} />
+        <VacancyList loading={loading} items={vacancyItems} />
       </div>
     </div>
   );
