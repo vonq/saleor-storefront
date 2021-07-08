@@ -106,7 +106,6 @@ export const FacetFilter: React.FC<CompProps> = ({
               <Checkbox
                 checked={isChecked(option)}
                 onChange={() => handleCheckOption(option)}
-                name={option["key"]}
                 size="small"
               />
             }
