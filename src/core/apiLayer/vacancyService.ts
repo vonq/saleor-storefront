@@ -4,11 +4,35 @@ const ServiceBaseUrl = "http://localhost:8082";
 // @FIXME: should be pulled from account level
 const CompanyId = "comp4";
 
+export const fetchVacancyListAndFacets = async filters => {
+  try {
+    const queryParams = stringifyPayload(filters);
+    const listUrl = `${ServiceBaseUrl}/search/vacancies/${CompanyId}${queryParams}`;
+    const facetUrl = `${ServiceBaseUrl}/search/facets/${CompanyId}${queryParams}`;
+    let [listResponse, facetResponse] = await Promise.all([
+      fetch(listUrl),
+      fetch(facetUrl),
+    ]);
+    [listResponse, facetResponse] = await Promise.all([
+      listResponse.json(),
+      facetResponse.json(),
+    ]);
+
+    return {
+      total: listResponse["totalHits"],
+      list: listResponse["vacancies"],
+      facets: facetResponse,
+    };
+  } catch (err) {
+    console.error("[API Vacancies]", err);
+    throw err;
+  }
+};
+
 export const fetchVacancyList = async filters => {
   try {
     const queryParams = stringifyPayload(filters);
     const fullUrl = `${ServiceBaseUrl}/search/vacancies/${CompanyId}${queryParams}`;
-    console.log("[API]", fullUrl);
 
     let response = await fetch(fullUrl);
     response = await response.json();
@@ -28,13 +52,13 @@ export const fetchVacancyFacets = async filters => {
 
     let response = await fetch(fullUrl);
     response = await response.json();
-    return { list: response };
+    return response;
   } catch (err) {
     throw err;
   }
 };
 
-const stringifyPayload = (filters) => {
+const stringifyPayload = filters => {
   const { offset, limit, query, facets } = filters;
   const payload = {
     offset,

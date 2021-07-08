@@ -3,7 +3,7 @@ import * as React from "react";
 import { NextPage } from "next";
 import VacanciesPageView from "./PageView";
 import {
-  fetchVacancyList,
+  fetchVacancyListAndFacets,
   fetchVacancyFacets,
 } from "@temp/core/apiLayer/vacancyService";
 
@@ -20,11 +20,10 @@ export const VacanciesPageContainer: NextPage = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const listResponse = await fetchVacancyList(searchFilters);
-      const facetResponse = await fetchVacancyFacets(searchFilters);
-      setItemsTotal(listResponse["total"]);
-      setVacancyItems(listResponse["list"]);
-      setFacetGroups(facetResponse["list"]);
+      const { total, list, facets } = await fetchVacancyListAndFacets(searchFilters);
+      setItemsTotal(total);
+      setVacancyItems(list);
+      setFacetGroups(facets);
     } finally {
       setLoading(false);
     }
