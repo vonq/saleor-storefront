@@ -1,5 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import InfiniteScroll from "react-infinite-scroller";
 
 import { Loader } from "@components/atoms";
 import VacancyListItem from "./VacancyListItem";
@@ -14,21 +15,40 @@ const useStyles = makeStyles(theme => ({
 }));
 interface CompProps {
   loading: Boolean;
-  items: Array<any>;
+  hasMoreItems: Boolean;
+  loadMoreItems: Function;
+  itemsList: Array<any>;
 }
 
-export const VacanciesList: React.FC<CompProps> = ({ loading, items = [] }) => {
+export const VacanciesList: React.FC<CompProps> = ({
+  loading,
+  itemsList = [],
+  hasMoreItems,
+  loadMoreItems,
+}) => {
   const classes = useStyles();
   return (
     <div>
-      {loading && (
-        <div className={classes.loaderRow}>
-          <Loader />
-        </div>
-      )}
-      {items.map(item => (
-        <VacancyListItem key={item["vacancyId"]} data={item} />
-      ))}
+      <InfiniteScroll
+        threshold={0}
+        pageStart={0}
+        hasMore={!loading && hasMoreItems}
+        loadMore={loadMoreItems}
+        loader={
+          <div className={classes.loaderRow}>
+            <Loader />
+          </div>
+        }
+      >
+        {/* {loading && (
+          <div className={classes.loaderRow}>
+            <Loader />
+          </div>
+        )} */}
+        {itemsList.map(item => (
+          <VacancyListItem key={item["vacancyId"]} data={item} />
+        ))}
+      </InfiniteScroll>
     </div>
   );
 };

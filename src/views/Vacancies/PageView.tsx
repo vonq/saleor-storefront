@@ -22,7 +22,9 @@ const useStyles = makeStyles(theme => ({
 
 interface PageProps {
   loading: boolean;
-  vacancyItems: Array<any>;
+  hasMoreItems: Boolean;
+  loadMoreItems: Function;
+  itemsList: Array<any>;
   itemsTotal: number;
   facetGroups: any;
   searchFilters: any;
@@ -31,7 +33,9 @@ interface PageProps {
 
 const VacanciesPageView: React.FC<PageProps> = ({
   loading,
-  vacancyItems,
+  hasMoreItems,
+  loadMoreItems,
+  itemsList,
   itemsTotal,
   facetGroups,
   searchFilters,
@@ -55,7 +59,12 @@ const VacanciesPageView: React.FC<PageProps> = ({
           facetFilters={searchFilters["facets"]}
           onChangeFilters={onChangeFilters}
         />
-        <VacancyList loading={loading} items={vacancyItems} />
+        <VacancyList
+          loading={loading}
+          itemsList={itemsList}
+          loadMoreItems={loadMoreItems}
+          hasMoreItems={hasMoreItems}
+        />
       </div>
     </div>
   );
