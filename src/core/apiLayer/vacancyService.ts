@@ -4,24 +4,6 @@ const ServiceBaseUrl = "http://localhost:8082";
 // @FIXME: should be pulled from account level
 const CompanyId = "comp4";
 
-export const fetchVacancyListAndFacets = async filters => {
-  try {
-    let [listResponse, facetResponse] = await Promise.all([
-      fetchVacancyList(filters),
-      fetchVacancyFacets(filters),
-    ]);
-
-    return {
-      total: listResponse['total'],
-      list: listResponse['list'],
-      facets: facetResponse,
-    };
-  } catch (err) {
-    console.error("[API Vacancies]", err);
-    throw err;
-  }
-};
-
 export const fetchVacancyList = async filters => {
   try {
     const queryParams = stringifyPayload(filters);

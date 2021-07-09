@@ -5,7 +5,6 @@ import VacanciesPageView from "./PageView";
 import {
   fetchVacancyFacets,
   fetchVacancyList,
-  fetchVacancyListAndFacets,
 } from "@temp/core/apiLayer/vacancyService";
 
 const PAGE_SIZE = 25;
@@ -89,10 +88,11 @@ export const VacanciesPageContainer: NextPage = () => {
 
   return (
     <VacanciesPageView
-      itemsLoading={itemsLoading}
       searchFilters={searchFilters}
       facetGroups={facetGroups}
       onChangeFilters={handleFiltersChange}
+      pageNumber={pageNumber}
+      itemsLoading={itemsLoading}
       itemsList={itemsList}
       itemsTotal={itemsTotal}
       hasMoreItems={pageHasMore}

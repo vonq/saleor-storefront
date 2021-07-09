@@ -15,15 +15,17 @@ const useStyles = makeStyles(theme => ({
 }));
 interface CompProps {
   itemsLoading: Boolean;
-  hasMoreItems: Boolean;
-  loadMoreItems: Function;
   itemsList: Array<any>;
+  hasMoreItems: Boolean;
+  pageNumber: number;
+  loadMoreItems: Function;
 }
 
 export const VacanciesList: React.FC<CompProps> = ({
   itemsLoading,
   itemsList = [],
   hasMoreItems,
+  pageNumber,
   loadMoreItems,
 }) => {
   const classes = useStyles();
@@ -36,16 +38,16 @@ export const VacanciesList: React.FC<CompProps> = ({
         hasMore={!itemsLoading && hasMoreItems}
         loadMore={loadMoreItems}
         loader={
-          <div className={classes.loaderRow}>
+          <div className={classes.loaderRow} key="spinner-bottom">
             <Loader />
           </div>
         }
       >
-        {/* {loading && (
-          <div className={classes.loaderRow}>
+        {pageNumber === 0 && itemsLoading && (
+          <div className={classes.loaderRow} key="spinner-top">
             <Loader />
           </div>
-        )} */}
+        )}
         {itemsList.map(item => (
           <VacancyListItem key={item["vacancyId"]} data={item} />
         ))}
