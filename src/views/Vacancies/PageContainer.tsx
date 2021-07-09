@@ -9,10 +9,8 @@ import {
 } from "@temp/core/apiLayer/vacancyService";
 
 const PAGE_SIZE = 25;
-const PAGE_NUMBER_START = 1;
 
 export const VacanciesPageContainer: NextPage = () => {
-  const [loading, setLoading] = React.useState(false);
   const [itemsLoading, setItemsLoading] = React.useState(false);
   const [itemsList, setItemsList] = React.useState([]);
   const [itemsTotal, setItemsTotal] = React.useState(0);
@@ -22,10 +20,10 @@ export const VacanciesPageContainer: NextPage = () => {
     query: "",
     facets: {},
   });
-  const [pageNumber, setPageNumber] = React.useState(PAGE_NUMBER_START);
+  const [pageNumber, setPageNumber] = React.useState(0);
   const [pageHasMore, setPageHasMore] = React.useState(true);
 
-  const fetchItemsList = async (pageNumber = PAGE_NUMBER_START) => {
+  const fetchItemsList = async (pageNumber = 0) => {
     if (itemsLoading) {
       return false;
     }
@@ -34,10 +32,16 @@ export const VacanciesPageContainer: NextPage = () => {
       setItemsLoading(true);
       const { total, list } = await fetchVacancyList({
         ...searchFilters,
-        offset: (pageNumber - 1) * PAGE_SIZE,
+        offset: pageNumber * PAGE_SIZE,
       });
-      const newList = itemsList.concat(list);
-      total > 0 && setItemsTotal(total);
+
+      let newList = [];
+      if (pageNumber === 0) {
+        newList = list;
+        setItemsTotal(total);
+      } else {
+        newList = itemsList.concat(list);
+      }
       setItemsList(newList);
       setPageNumber(pageNumber);
       setPageHasMore(newList.length < total ? true : false);
@@ -56,9 +60,13 @@ export const VacanciesPageContainer: NextPage = () => {
     }
   };
 
+  const loadMoreItems = newPageNumber => {
+    fetchItemsList(newPageNumber);
+  };
+
   React.useEffect(() => {
     const resetAndFetch = async () => {
-      setPageNumber(PAGE_NUMBER_START);
+      setPageNumber(0);
       setPageHasMore(true);
       await Promise.all([fetchItemsList(), fetchFacets()]);
     };
@@ -79,13 +87,9 @@ export const VacanciesPageContainer: NextPage = () => {
     }
   };
 
-  const loadMoreItems = newPageNumber => {
-    fetchItemsList(newPageNumber);
-  };
-
   return (
     <VacanciesPageView
-      loading={itemsLoading}
+      itemsLoading={itemsLoading}
       searchFilters={searchFilters}
       facetGroups={facetGroups}
       onChangeFilters={handleFiltersChange}

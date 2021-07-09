@@ -14,14 +14,14 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 interface CompProps {
-  loading: Boolean;
+  itemsLoading: Boolean;
   hasMoreItems: Boolean;
   loadMoreItems: Function;
   itemsList: Array<any>;
 }
 
 export const VacanciesList: React.FC<CompProps> = ({
-  loading,
+  itemsLoading,
   itemsList = [],
   hasMoreItems,
   loadMoreItems,
@@ -32,7 +32,8 @@ export const VacanciesList: React.FC<CompProps> = ({
       <InfiniteScroll
         threshold={0}
         pageStart={0}
-        hasMore={!loading && hasMoreItems}
+        initialLoad={false}
+        hasMore={!itemsLoading && hasMoreItems}
         loadMore={loadMoreItems}
         loader={
           <div className={classes.loaderRow}>

@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 interface PageProps {
-  loading: boolean;
+  itemsLoading: boolean;
   hasMoreItems: Boolean;
   loadMoreItems: Function;
   itemsList: Array<any>;
@@ -32,7 +32,7 @@ interface PageProps {
 }
 
 const VacanciesPageView: React.FC<PageProps> = ({
-  loading,
+  itemsLoading,
   hasMoreItems,
   loadMoreItems,
   itemsList,
@@ -60,7 +60,7 @@ const VacanciesPageView: React.FC<PageProps> = ({
           onChangeFilters={onChangeFilters}
         />
         <VacancyList
-          loading={loading}
+          itemsLoading={itemsLoading}
           itemsList={itemsList}
           loadMoreItems={loadMoreItems}
           hasMoreItems={hasMoreItems}
