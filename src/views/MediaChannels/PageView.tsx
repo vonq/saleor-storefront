@@ -10,10 +10,12 @@ import {
 } from "@material-ui/core";
 import * as React from "react";
 import { useState } from "react";
+import { FormattedMessage } from "react-intl";
 
 import useInfiniteScroll from "@temp/core/useInfiniteScroll";
 
 import { MoreInfoDrawer, ProductCard, Sidebar } from "./components";
+import { messages } from "./messages";
 
 const useStyles = makeStyles<Theme>(theme => ({
   root: {
@@ -71,16 +73,12 @@ export const PageView: React.FC<PageProps> = ({
         >
           <Grid item xs={12}>
             <Typography align="center" variant="h5" component="h1">
-              EXPLORE OTHER RELEVANT CHANNELS
+              <FormattedMessage {...messages.exploreChannels} />
             </Typography>
           </Grid>
           {productList.map(product => (
-            <Grid item xs={12} md={6} lg={4} xl={3}>
-              <ProductCard
-                key={product.product_id}
-                product={product}
-                onClick={showProductInfo(product)}
-              >
+            <Grid item xs={12} md={6} lg={4} xl={3} key={product.product_id}>
+              <ProductCard product={product} onClick={showProductInfo(product)}>
                 <CardActions>
                   <Button
                     size="small"
@@ -88,7 +86,7 @@ export const PageView: React.FC<PageProps> = ({
                     color="primary"
                     onClick={showProductInfo(product)}
                   >
-                    More information
+                    <FormattedMessage {...messages.moreInformation} />
                   </Button>
                 </CardActions>
               </ProductCard>

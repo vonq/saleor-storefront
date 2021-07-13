@@ -3,6 +3,8 @@ import Input from "@material-ui/core/Input";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import SearchIcon from "@material-ui/icons/Search";
 import * as React from "react";
+import { useIntl } from "react-intl";
+import { messages } from "../messages";
 
 const useStyles = makeStyles<Theme>(theme => ({
   root: {
@@ -23,12 +25,13 @@ export const Sitebar: React.FC<SitebarProps> = ({
   onChangeCriteria,
 }) => {
   const classes = useStyles();
+  const intl = useIntl();
 
   return (
     <Box className={classes.root}>
       <Input
         id="search-channles-text"
-        placeholder="Search on channels"
+        placeholder={intl.formatMessage(messages.searchChannels)}
         fullWidth
         value={criteria.name}
         onChange={e => onChangeCriteria({ ...criteria, name: e.target.value })}
