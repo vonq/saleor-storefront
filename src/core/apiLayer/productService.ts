@@ -3,7 +3,15 @@ import { useEffect, useReducer } from "react";
 
 import { pkbAuth, pkbUrl } from "@temp/constants";
 
-const fetchProducts = (criteria: any, limit: number, offset: number) => {
+export interface SearchProductCriteria {
+  name?: string;
+}
+
+const fetchProducts = (
+  criteria: SearchProductCriteria,
+  limit: number,
+  offset: number
+) => {
   const query = stringify({
     ...criteria,
     currency: "EUR",
@@ -91,7 +99,10 @@ function reducer(state, action) {
   }
 }
 
-export const useSearchProducts = (criteria: any, pageSize: number) => {
+export const useSearchProducts = (
+  criteria: SearchProductCriteria,
+  pageSize: number
+) => {
   const [state, dispatch] = useReducer(reducer, {
     ...initialState,
     criteria,

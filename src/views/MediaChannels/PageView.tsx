@@ -12,6 +12,7 @@ import * as React from "react";
 import { useState } from "react";
 import { FormattedMessage } from "react-intl";
 
+import { SearchProductCriteria } from "@temp/core/apiLayer/productService";
 import useInfiniteScroll from "@temp/core/useInfiniteScroll";
 
 import { MoreInfoDrawer, ProductCard, Sidebar } from "./components";
@@ -33,7 +34,7 @@ const useStyles = makeStyles<Theme>(theme => ({
 interface PageProps {
   loading: boolean;
   hasMore: boolean;
-  criteria: { name?: string };
+  criteria: SearchProductCriteria;
   productList: Array<any>;
   totalCount: number;
   onChangeCriteria: (criteria: any) => void;

@@ -2,12 +2,15 @@ import { NextPage } from "next";
 import * as React from "react";
 import { useState } from "react";
 
-import { useSearchProducts } from "@temp/core/apiLayer/productService";
+import {
+  SearchProductCriteria,
+  useSearchProducts,
+} from "@temp/core/apiLayer/productService";
 
 import PageView from "./PageView";
 
 export const PageContainer: NextPage = () => {
-  const [criteria, setCriteria] = useState({});
+  const [criteria, setCriteria] = useState<SearchProductCriteria>({});
   const {
     productList,
     totalCount,
