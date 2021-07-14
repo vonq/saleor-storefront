@@ -18,6 +18,7 @@ import * as React from "react";
 const useStyles = makeStyles<Theme>(theme => ({
   media: {
     paddingBottom: "33.333%",
+    margin: theme.spacing(2, 0),
   },
   title: {
     margin: theme.spacing(1, 0),
@@ -31,12 +32,18 @@ const useStyles = makeStyles<Theme>(theme => ({
     display: "flex",
     alignContent: "center",
     fontSize: "1.25rem",
+    "& > svg": {
+      marginRight: "0.25rem",
+    },
   },
   price: {
     display: "flex",
     alignContent: "center",
     fontSize: "1.25rem",
     justifyContent: "flex-end",
+    "& > svg": {
+      marginRight: "0.25rem",
+    },
   },
 }));
 
@@ -78,14 +85,13 @@ export const ProductCard: React.FC<ProductCardProps> = ({
               </Box>
             </Grid>
           </Grid>
+
           <CardMedia
             className={classes.media}
             image={logo_rectangle_url?.[0]?.url}
             title={title}
           />
-        </CardContent>
 
-        <CardContent>
           <Chip size="small" label={audience_group} />
           <Typography
             gutterBottom

@@ -4,6 +4,7 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import SearchIcon from "@material-ui/icons/Search";
 import * as React from "react";
 import { useIntl } from "react-intl";
+
 import { messages } from "../messages";
 
 const useStyles = makeStyles<Theme>(theme => ({

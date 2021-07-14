@@ -20,6 +20,7 @@ const fetchProducts = (criteria: any, limit: number, offset: number) => {
 
 const initialState = {
   productList: [],
+  totalCount: 0,
   offset: 0,
   todoOffsets: [],
   criteria: {},
@@ -62,6 +63,7 @@ function reducer(state, action) {
         todoOffsets,
         loading: todoOffsets.length > 0,
         productList,
+        totalCount: action.totalCount,
         offset,
         hasMore: productList.length < action.totalCount,
       };
@@ -120,6 +122,7 @@ export const useSearchProducts = (criteria: any, pageSize: number) => {
     loading: state.loading,
     hasMore: state.hasMore,
     productList: state.productList,
+    totalCount: state.totalCount,
     loadMore,
   };
 };

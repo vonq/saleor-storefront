@@ -35,12 +35,14 @@ interface PageProps {
   hasMore: boolean;
   criteria: { name?: string };
   productList: Array<any>;
+  totalCount: number;
   onChangeCriteria: (criteria: any) => void;
   onLoadMore: () => void;
 }
 
 export const PageView: React.FC<PageProps> = ({
   productList,
+  totalCount,
   onChangeCriteria,
   criteria,
   onLoadMore,
@@ -72,10 +74,19 @@ export const PageView: React.FC<PageProps> = ({
           className={classes.products}
         >
           <Grid item xs={12}>
-            <Typography align="center" variant="h5" component="h1">
+            <Typography align="center" variant="h4" component="h1">
               <FormattedMessage {...messages.exploreChannels} />
             </Typography>
+            {(!loading || productList.length > 0) && (
+              <Typography align="center" variant="h5" component="h1">
+                <FormattedMessage
+                  {...messages.numberChannelsFound}
+                  values={{ totalCount }}
+                />
+              </Typography>
+            )}
           </Grid>
+
           {productList.map(product => (
             <Grid item xs={12} md={6} lg={4} xl={3} key={product.product_id}>
               <ProductCard product={product} onClick={showProductInfo(product)}>
