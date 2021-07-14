@@ -1,7 +1,7 @@
 import { stringify } from "query-string";
 import { useEffect, useReducer } from "react";
 
-import { apiUrl } from "@temp/constants";
+import { pkbUrl, pkbAuth } from "@temp/constants";
 
 const fetchProducts = (criteria: any, limit: number, offset: number) => {
   const query = stringify({
@@ -11,9 +11,9 @@ const fetchProducts = (criteria: any, limit: number, offset: number) => {
     offset,
   });
 
-  return fetch(`${apiUrl}../pkb/products/?${query}`, {
+  return fetch(`${pkbUrl}products/?${query}`, {
     headers: {
-      Authorization: "Basic YWRtaW5AYWRtaW4uY29tOm9NWFVvR1p0UDV6Mw==",
+      Authorization: pkbAuth,
     },
   }).then(response => response.json());
 };
@@ -22,7 +22,7 @@ const initialState = {
   productList: [],
   totalCount: 0,
   offset: 0,
-  todoOffsets: [],
+  todoOffsetsQueue: [],
   criteria: {},
   loading: true,
   hasMore: false,
@@ -40,7 +40,7 @@ function reducer(state, action) {
         ...state,
         criteria: action.criteria,
         offset: 0,
-        todoOffsets: [],
+        todoOffsetsQueue: [],
         productList: [],
         hasMore: false,
         loading: true,
@@ -51,17 +51,17 @@ function reducer(state, action) {
         return state;
       }
 
-      const todoOffsets = state.todoOffsets.filter(
+      const todoOffsetsQueue = state.todoOffsetsQueue.filter(
         offset => offset !== action.offset && offset < action.totalCount
       );
 
-      const offset = todoOffsets[0] || state.offset;
+      const offset = todoOffsetsQueue[0] || state.offset;
       const productList = [...state.productList, ...action.products];
 
       return {
         ...state,
-        todoOffsets,
-        loading: todoOffsets.length > 0,
+        todoOffsetsQueue,
+        loading: todoOffsetsQueue.length > 0,
         productList,
         totalCount: action.totalCount,
         offset,
@@ -70,12 +70,12 @@ function reducer(state, action) {
     }
 
     case "loadMore":
-      if (state.todoOffsets.length > 0) {
+      if (state.todoOffsetsQueue.length > 0) {
         return {
           ...state,
-          todoOffsets: [
-            ...state.todoOffsets,
-            Math.max(state.todoOffsets) + state.pageSize,
+          todoOffsetsQueue: [
+            ...state.todoOffsetsQueue,
+            Math.max(state.todoOffsetsQueue) + state.pageSize,
           ],
         };
       }
