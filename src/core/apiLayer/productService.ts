@@ -1,7 +1,7 @@
 import { stringify } from "query-string";
 import { useEffect, useReducer } from "react";
 
-import { pkbUrl, pkbAuth } from "@temp/constants";
+import { pkbAuth, pkbUrl } from "@temp/constants";
 
 const fetchProducts = (criteria: any, limit: number, offset: number) => {
   const query = stringify({
