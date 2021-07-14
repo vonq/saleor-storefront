@@ -1,3 +1,4 @@
+import { ThemeProvider as MuiThemeProvider } from "@material-ui/core/styles";
 import { SaleorProvider } from "@saleor/sdk";
 import { ConfigInput } from "@saleor/sdk/lib/types";
 import { Integrations as ApmIntegrations } from "@sentry/apm";
@@ -8,7 +9,6 @@ import * as React from "react";
 import { positions, Provider as AlertProvider } from "react-alert";
 import TagManager from "react-gtm-module";
 import { ThemeProvider } from "styled-components";
-import { ThemeProvider as MuiThemeProvider } from "@material-ui/core/styles";
 
 import { NotificationTemplate } from "@components/atoms";
 import { ServiceWorkerProvider } from "@components/containers";
