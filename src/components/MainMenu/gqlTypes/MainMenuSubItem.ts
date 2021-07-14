@@ -28,6 +28,7 @@ export interface MainMenuSubItem_collection {
 export interface MainMenuSubItem_page {
   __typename: "Page";
   slug: string;
+  pageType: { name: string };
 }
 
 export interface MainMenuSubItem_parent {

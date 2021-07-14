@@ -65,7 +65,14 @@ export const generateCategoryUrl = (id: string, name: string) =>
 export const generateCollectionUrl = (id: string, name: string) =>
   `/collection/${slugify(name)}/${getDBIdFromGraphqlId(id, "Collection")}/`;
 
-export const generatePageUrl = (slug: string) => `/page/${slug}/`;
+export const generatePageUrl = (slug: string, type: string = "") => {
+  switch (type) {
+    case "customPage":
+      return `/${slug}/`;
+    default:
+      return `/page/${slug}/`;
+  }
+};
 
 interface AttributeDict {
   [attributeSlug: string]: string[];

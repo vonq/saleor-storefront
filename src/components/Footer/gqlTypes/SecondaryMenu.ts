@@ -28,6 +28,7 @@ export interface SecondaryMenu_menu_items_collection {
 export interface SecondaryMenu_menu_items_page {
   __typename: "Page";
   slug: string;
+  pageType: { name: string };
 }
 
 export interface SecondaryMenu_menu_items_children_category {
@@ -51,6 +52,7 @@ export interface SecondaryMenu_menu_items_children_collection {
 export interface SecondaryMenu_menu_items_children_page {
   __typename: "Page";
   slug: string;
+  pageType: { name: string };
 }
 
 export interface SecondaryMenu_menu_items_children {

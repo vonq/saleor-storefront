@@ -42,7 +42,7 @@ export const NavLink: React.FC<NavLinkProps> = ({ item, ...props }) => {
     return link(generateCollectionUrl(collection.id, collection.name));
   }
   if (page) {
-    return link(generatePageUrl(page.slug));
+    return link(generatePageUrl(page.slug, page.pageType.name));
   }
 
   return <span {...props}>{name}</span>;
