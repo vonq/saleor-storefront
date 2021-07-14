@@ -28,6 +28,7 @@ export interface MainMenu_menu_items_collection {
 export interface MainMenu_menu_items_page {
   __typename: "Page";
   slug: string;
+  pageType: { name: string };
 }
 
 export interface MainMenu_menu_items_parent {
@@ -59,6 +60,7 @@ export interface MainMenu_menu_items_children_collection {
 export interface MainMenu_menu_items_children_page {
   __typename: "Page";
   slug: string;
+  pageType: { name: string };
 }
 
 export interface MainMenu_menu_items_children_parent {
@@ -90,6 +92,7 @@ export interface MainMenu_menu_items_children_children_collection {
 export interface MainMenu_menu_items_children_children_page {
   __typename: "Page";
   slug: string;
+  pageType: { name: string };
 }
 
 export interface MainMenu_menu_items_children_children_parent {
