@@ -26,7 +26,6 @@ interface PageProps {
   loadMoreItems: Function;
   itemsList: Array<any>;
   itemsTotal: number;
-  pageNumber: number;
   facetGroups: any;
   searchFilters: any;
   onChangeFilters: Function;
@@ -38,7 +37,6 @@ const VacanciesPageView: React.FC<PageProps> = ({
   loadMoreItems,
   itemsList,
   itemsTotal,
-  pageNumber,
   facetGroups,
   searchFilters,
   onChangeFilters,
@@ -66,7 +64,6 @@ const VacanciesPageView: React.FC<PageProps> = ({
           itemsList={itemsList}
           loadMoreItems={loadMoreItems}
           hasMoreItems={hasMoreItems}
-          pageNumber={pageNumber}
         />
       </div>
     </div>

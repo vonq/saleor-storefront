@@ -19,11 +19,11 @@ export const VacanciesPageContainer: NextPage = () => {
     query: "",
     facets: {},
   });
-  const [pageNumber, setPageNumber] = React.useState(0);
-  const [pageHasMore, setPageHasMore] = React.useState(true);
+  const { current: paging } = React.useRef({ number: 0, hasMore: true });
 
-  const fetchItemsList = async (pageNumber = 0) => {
-    if (itemsLoading) {
+  // API call to get list of vacancies
+  const fetchItemsList = async () => {
+    if (itemsLoading || !paging.hasMore) {
       return false;
     }
 
@@ -31,24 +31,27 @@ export const VacanciesPageContainer: NextPage = () => {
       setItemsLoading(true);
       const { total, list } = await fetchVacancyList({
         ...searchFilters,
-        offset: pageNumber * PAGE_SIZE,
+        offset: paging.number * PAGE_SIZE,
+        limit: PAGE_SIZE,
       });
 
-      let newList = [];
-      if (pageNumber === 0) {
+      let newList;
+      if (paging.number === 0) {
         newList = list;
         setItemsTotal(total);
       } else {
         newList = itemsList.concat(list);
       }
       setItemsList(newList);
-      setPageNumber(pageNumber);
-      setPageHasMore(newList.length < total ? true : false);
+
+      paging.number++;
+      paging.hasMore = newList.length < total;
     } finally {
       setItemsLoading(false);
     }
   };
 
+  // API call to get facets data
   const fetchFacets = async () => {
     try {
       setFacetsLoading(true);
@@ -59,19 +62,18 @@ export const VacanciesPageContainer: NextPage = () => {
     }
   };
 
-  const loadMoreItems = newPageNumber => {
-    fetchItemsList(newPageNumber);
-  };
-
+  // State changed: "searchFilters"
   React.useEffect(() => {
     const resetAndFetch = async () => {
-      setPageNumber(0);
-      setPageHasMore(true);
+      paging.number = 0;
+      paging.hasMore = true;
+      setItemsList([]);
       await Promise.all([fetchItemsList(), fetchFacets()]);
     };
     resetAndFetch();
   }, [searchFilters]);
 
+  // Listener for search query, facets change
   const handleFiltersChange = (key, value) => {
     if (key === "query") {
       setSearchFilters({ ...searchFilters, query: value });
@@ -86,16 +88,20 @@ export const VacanciesPageContainer: NextPage = () => {
     }
   };
 
+  // Listener for infinite scrolling
+  const loadMoreItems = () => {
+    fetchItemsList();
+  };
+
   return (
     <VacanciesPageView
       searchFilters={searchFilters}
       facetGroups={facetGroups}
       onChangeFilters={handleFiltersChange}
-      pageNumber={pageNumber}
       itemsLoading={itemsLoading}
       itemsList={itemsList}
       itemsTotal={itemsTotal}
-      hasMoreItems={pageHasMore}
+      hasMoreItems={paging.hasMore}
       loadMoreItems={loadMoreItems}
     />
   );
