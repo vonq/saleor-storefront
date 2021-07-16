@@ -2,6 +2,32 @@ import qs from "query-string";
 
 import { vacancyBaseUrl, companyId } from "@temp/constants";
 
+export interface VacancyItem {
+  vacancyId: string;
+  title: string;
+  sourceName: string;
+  recruiterName: string;
+  regionId: string;
+  createdAt: string;
+}
+
+export interface VacancyFilterCriteria {
+  query: string;
+  facets: {
+    [key: string]: Array<string | number>
+  }
+}
+
+export interface VacancyFacetItem {
+  key: string;
+  label: string;
+  options: Array<{
+    key: number;
+    label: string;
+    recordCount: number;
+  }>;
+}
+
 export const fetchVacancyList = async filters => {
   try {
     const queryParams = stringifyPayload(filters);
