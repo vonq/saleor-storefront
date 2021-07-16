@@ -1,13 +1,11 @@
 import qs from "query-string";
 
-const ServiceBaseUrl = "http://localhost:8082";
-// @FIXME: should be pulled from account level
-const CompanyId = "comp4";
+import { vacancyBaseUrl, companyId } from "@temp/constants";
 
 export const fetchVacancyList = async filters => {
   try {
     const queryParams = stringifyPayload(filters);
-    const fullUrl = `${ServiceBaseUrl}/search/vacancies/${CompanyId}${queryParams}`;
+    const fullUrl = `${vacancyBaseUrl}/search/vacancies/${companyId}${queryParams}`;
 
     let response = await fetch(fullUrl);
     response = await response.json();
@@ -23,7 +21,7 @@ export const fetchVacancyList = async filters => {
 export const fetchVacancyFacets = async filters => {
   try {
     const queryParams = stringifyPayload(filters);
-    const fullUrl = `${ServiceBaseUrl}/search/facets/${CompanyId}${queryParams}`;
+    const fullUrl = `${vacancyBaseUrl}/search/facets/${companyId}${queryParams}`;
 
     let response = await fetch(fullUrl);
     response = await response.json();
