@@ -18,6 +18,9 @@ const secondaryMenu = gql`
     }
     page {
       slug
+      pageType {
+        name
+      }
     }
   }
 
