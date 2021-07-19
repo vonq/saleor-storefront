@@ -3,6 +3,11 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Chip, Typography } from "@material-ui/core";
 import _get from "lodash/get";
 
+import {
+  VacancySearchCriteria,
+  VacancyFacetMap,
+} from "@temp/core/apiLayer/vacancyService";
+
 const useStyles = makeStyles(theme => ({
   root: {
     marginBottom: theme.spacing(1),
@@ -17,28 +22,25 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 interface CompProps {
-  facetGroups: any;
-  facetFilters: any;
-  onChangeFilters: Function;
+  facetGroups: VacancyFacetMap;
+  criteria: VacancySearchCriteria;
+  onChangeCriteria: Function;
 }
 
 export const FilterTagsHeader: React.FC<CompProps> = ({
   facetGroups,
-  facetFilters,
-  onChangeFilters,
+  criteria,
+  onChangeCriteria,
 }) => {
   const classes = useStyles();
-  const tags = useMemo(() => flattenFacets({ facetFilters, facetGroups }), [
-    facetFilters,
-    facetGroups,
-  ]);
+  const tags = flattenFacets(criteria, facetGroups);
 
   const handleTagDelete = (facetKey, value) => {
-    const values = facetFilters[facetKey] || [];
+    const values = criteria.facets[facetKey] || [];
     const newValues = values.includes(value)
       ? values.filter(e => e !== value)
       : values.concat(value);
-    onChangeFilters(facetKey, newValues);
+    onChangeCriteria(facetKey, newValues);
   };
 
   if (!tags.length) {
@@ -85,15 +87,22 @@ const FilterTag = ({ facetKey, value, label, onDelete, className }) => {
   );
 };
 
-const flattenFacets = ({ facetFilters, facetGroups }) => {
-  let tags = [];
+const flattenFacets = (
+  criteria: VacancySearchCriteria,
+  facetGroups: VacancyFacetMap
+) => {
   const findLabel = (facetKey, value) => {
-    const group = facetGroups.find(e => e.key === facetKey);
-    const option = _get(group, "options", []).find(e => e.key === value);
+    const option = _get(facetGroups, [facetKey, "options"], []).find(
+      e => e.key === value
+    );
     return option ? option.label || option.key : "";
   };
-  for (let key in facetFilters) {
-    for (let value of facetFilters[key]) {
+
+  const { facets } = criteria;
+  let tags = [];
+
+  for (let key in facets) {
+    for (let value of facets[key]) {
       tags.push({
         facetKey: key,
         value: value,

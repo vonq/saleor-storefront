@@ -32,13 +32,13 @@ const useStyles = makeStyles(theme => ({
 }));
 
 interface CompProps {
-  facetGroup: VacancyFacetSingle;
+  facetInfo: VacancyFacetSingle;
   criteriaFacets: any;
   onChangeCriteria: Function;
 }
 
 export const FacetFilter: React.FC<CompProps> = ({
-  facetGroup,
+  facetInfo,
   criteriaFacets,
   onChangeCriteria,
 }) => {
@@ -46,19 +46,19 @@ export const FacetFilter: React.FC<CompProps> = ({
   const [query, setQuery] = useState("");
   const optionsFiltered = useMemo(
     () =>
-      _get(facetGroup, "options", []).filter(option =>
+      _get(facetInfo, "options", []).filter(option =>
         isOptionMatching(option, query)
       ),
-    [query, facetGroup]
+    [query, facetInfo]
   );
 
   const isChecked = option => {
-    const values = criteriaFacets[facetGroup["key"]] || [];
+    const values = criteriaFacets[facetInfo["key"]] || [];
     return values.includes(option.key);
   };
 
   const handleCheckOption = option => {
-    const facetKey = facetGroup["key"];
+    const facetKey = facetInfo["key"];
     const values = criteriaFacets[facetKey] || [];
     const newValues = values.includes(option.key)
       ? values.filter(e => e !== option.key)
@@ -77,7 +77,7 @@ export const FacetFilter: React.FC<CompProps> = ({
         variant="subtitle2"
         classes={{ root: classes.title }}
       >
-        {facetGroup["label"]}
+        {facetInfo["label"]}
       </Typography>
 
       <TextField

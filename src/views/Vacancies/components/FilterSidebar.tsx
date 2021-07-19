@@ -107,7 +107,7 @@ export const FilterSidebar: React.FC<CompProps> = ({
           <FacetFilter
             key={key}
             criteriaFacets={criteria.facets}
-            facetGroup={group}
+            facetInfo={group}
             onChangeCriteria={onChangeCriteria}
           />
         ))}
