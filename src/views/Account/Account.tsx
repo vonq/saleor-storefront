@@ -1,4 +1,6 @@
 import { useAuth } from "@saleor/sdk";
+import { useUser } from '@auth0/nextjs-auth0';
+
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import React from "react";
@@ -41,7 +43,7 @@ const returnTab: any = (path: string, userDetails) => {
 
 const Account: NextPage = () => {
   const intl = useIntl();
-  const { user, loaded } = useAuth();
+  const { user, isLoading } = useUser();
   const { asPath, pathname } = useRouter();
   const links = [
     paths.account,
@@ -49,10 +51,10 @@ const Account: NextPage = () => {
     paths.accountAddressBook,
   ];
 
-  if (!user) {
+  if (!isLoading && !user) {
     return <Redirect url={paths.home} />;
   }
-  return loaded ? (
+  return !isLoading ? (
     <div className="container">
       <Breadcrumbs
         breadcrumbs={[

@@ -1,3 +1,4 @@
+import { UserProvider } from "@auth0/nextjs-auth0";
 import { ThemeProvider as MuiThemeProvider } from "@material-ui/core/styles";
 import { SaleorProvider } from "@saleor/sdk";
 import { ConfigInput } from "@saleor/sdk/lib/types";
@@ -66,27 +67,29 @@ const App = ({ Component, pageProps }: AppProps) => {
         <link rel="icon" type="image/png" href="/favicon-36.png" />
         <link rel="manifest" href="/manifest.json" />
       </Head>
-      <ThemeProvider theme={defaultTheme}>
-        <MuiThemeProvider theme={muiTheme}>
-          <AlertProvider
-            template={NotificationTemplate as any}
-            {...notificationConfig}
-          >
-            <ServiceWorkerProvider timeout={serviceWorkerTimeout}>
-              <LocaleProvider>
-                <GlobalStyle />
-                <NextQueryParamProvider>
-                  <SaleorProvider config={saleorConfig}>
-                    <StorefrontApp>
-                      <Component {...pageProps} />
-                    </StorefrontApp>
-                  </SaleorProvider>
-                </NextQueryParamProvider>
-              </LocaleProvider>
-            </ServiceWorkerProvider>
-          </AlertProvider>
-        </MuiThemeProvider>
-      </ThemeProvider>
+      <UserProvider>
+        <ThemeProvider theme={defaultTheme}>
+          <MuiThemeProvider theme={muiTheme}>
+            <AlertProvider
+              template={NotificationTemplate as any}
+              {...notificationConfig}
+            >
+              <ServiceWorkerProvider timeout={serviceWorkerTimeout}>
+                <LocaleProvider>
+                  <GlobalStyle />
+                  <NextQueryParamProvider>
+                    <SaleorProvider config={saleorConfig}>
+                      <StorefrontApp>
+                        <Component {...pageProps} />
+                      </StorefrontApp>
+                    </SaleorProvider>
+                  </NextQueryParamProvider>
+                </LocaleProvider>
+              </ServiceWorkerProvider>
+            </AlertProvider>
+          </MuiThemeProvider>
+        </ThemeProvider>
+      </UserProvider>
     </>
   );
 };

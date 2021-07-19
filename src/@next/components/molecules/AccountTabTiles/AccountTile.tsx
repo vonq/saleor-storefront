@@ -1,4 +1,5 @@
 import { useAccountUpdate, useAuth } from "@saleor/sdk";
+import { useUser } from "@auth0/nextjs-auth0";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -12,7 +13,7 @@ export const AccountTile: React.FC = () => {
   const [isEditing, setIsEditing] = React.useState(false);
   const [setAccountUpdate, { data, error }] = useAccountUpdate();
   const intl = useIntl();
-  const { user } = useAuth();
+  const { user } = useUser();
 
   React.useEffect(() => {
     if (data && !error) {
@@ -41,8 +42,8 @@ export const AccountTile: React.FC = () => {
             {isEditing ? (
               <AccountUpdateForm
                 initialValues={{
-                  firstName: (user && user.firstName) || "",
-                  lastName: (user && user.lastName) || "",
+                  firstName: (user && user.given_name as string) || "",
+                  lastName: (user && user.family_name as string) || "",
                 }}
                 handleSubmit={data => {
                   setAccountUpdate({ input: data });
@@ -55,12 +56,12 @@ export const AccountTile: React.FC = () => {
               <S.ContentOneLine data-test="personalDetailsSection">
                 <Attribute
                   description={intl.formatMessage(commonMessages.firstName)}
-                  attributeValue={(user && user.firstName) || "-"}
+                  attributeValue={(user && user.given_name as string) || "-"}
                   testingContext="firstNameText"
                 />
                 <Attribute
                   description={intl.formatMessage(commonMessages.lastName)}
-                  attributeValue={(user && user.lastName) || "-"}
+                  attributeValue={(user && user.family_name as string) || "-"}
                   testingContext="lastNameText"
                 />
               </S.ContentOneLine>

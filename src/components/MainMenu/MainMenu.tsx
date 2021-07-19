@@ -1,4 +1,5 @@
 import { useAuth, useCart } from "@saleor/sdk";
+import { useUser } from '@auth0/nextjs-auth0';
 import classNames from "classnames";
 import Link from "next/link";
 import React, { useContext, useEffect, useState } from "react";
@@ -42,7 +43,9 @@ interface MainMenuProps {
 const MainMenu: React.FC<MainMenuProps> = ({ demoMode }) => {
   const overlayContext = useContext(OverlayContext);
 
-  const { user, signOut } = useAuth();
+  // const { user, signOut } = useAuth();
+  const { signOut } = useAuth();
+  const { user } = useUser();
   const { items } = useCart();
 
   const handleSignOut = () => {

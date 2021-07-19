@@ -6,6 +6,7 @@ import { OfflinePlaceholder } from "@components/atoms";
 
 import closeImg from "../../../images/x.svg";
 import {
+  Button,
   LoginForm,
   Offline,
   Online,
@@ -38,6 +39,10 @@ class Login extends React.Component<
     this.setState({ active });
   };
 
+  redirectToAuth0 = () => {
+    window.location.href = "/api/auth/login";
+  };
+
   render() {
     const { overlay } = this.props;
     const { show, hide } = overlay;
@@ -56,7 +61,13 @@ class Login extends React.Component<
                 className="overlay__header__close-icon"
               />
             </div>
-            <div className="login__tabs">
+
+            <div className="login-form__button">
+              <Button testingContext="auth0SignIn" onClick={this.redirectToAuth0}>
+                <FormattedMessage defaultMessage="Sign in" />
+              </Button>
+            </div>
+            {/* <div className="login__tabs">
               <span
                 data-test="loginTab"
                 onClick={() => this.changeActiveTab("login")}
@@ -85,7 +96,7 @@ class Login extends React.Component<
               ) : (
                 <RegisterForm hide={hide} />
               )}
-            </div>
+            </div> */}
           </Online>
           <Offline>
             <OfflinePlaceholder />
