@@ -53,7 +53,7 @@ function reducerForList(state, action) {
         todoOffsetsQueue,
         loading: todoOffsetsQueue.length > 0,
         itemList,
-        totalCount: action.totalCount,
+        totalCount: offset === 0 ? action.totalCount : state.totalCount, // API returns totalCount of 0 when out of offset
         offset,
         hasMore: itemList.length < action.totalCount,
       };
