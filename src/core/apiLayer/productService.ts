@@ -1,7 +1,7 @@
 import { stringify } from "query-string";
 import { useEffect, useReducer } from "react";
 
-import { pkbAuth, pkbUrl } from "@temp/constants";
+import { pkbUrl } from "@temp/constants";
 
 export interface SearchProductCriteria {
   name?: string;
@@ -19,11 +19,7 @@ const fetchProducts = (
     offset,
   });
 
-  return fetch(`${pkbUrl}products/?${query}`, {
-    headers: {
-      Authorization: pkbAuth,
-    },
-  }).then(response => response.json());
+  return fetch(`${pkbUrl}products/?${query}`).then(response => response.json());
 };
 
 const initialState = {
