@@ -10,6 +10,8 @@ import {
 import SearchIcon from "@material-ui/icons/Search";
 import _get from "lodash/get";
 
+import { VacancyFacetSingle } from "@temp/core/apiLayer/vacancyService";
+
 const useStyles = makeStyles(theme => ({
   root: {
     marginBottom: "1rem",
@@ -30,38 +32,38 @@ const useStyles = makeStyles(theme => ({
 }));
 
 interface CompProps {
-  facetDetails: number;
-  facetFilters: any;
-  onChangeFilters: Function;
+  facetGroup: VacancyFacetSingle;
+  criteriaFacets: any;
+  onChangeCriteria: Function;
 }
 
 export const FacetFilter: React.FC<CompProps> = ({
-  facetDetails,
-  facetFilters,
-  onChangeFilters,
+  facetGroup,
+  criteriaFacets,
+  onChangeCriteria,
 }) => {
   const classes = useStyles();
   const [query, setQuery] = useState("");
   const optionsFiltered = useMemo(
     () =>
-      _get(facetDetails, "options", []).filter(option =>
+      _get(facetGroup, "options", []).filter(option =>
         isOptionMatching(option, query)
       ),
-    [query, facetDetails]
+    [query, facetGroup]
   );
 
   const isChecked = option => {
-    const values = facetFilters[facetDetails["key"]] || [];
+    const values = criteriaFacets[facetGroup["key"]] || [];
     return values.includes(option.key);
   };
 
   const handleCheckOption = option => {
-    const facetKey = facetDetails["key"];
-    const values = facetFilters[facetKey] || [];
+    const facetKey = facetGroup["key"];
+    const values = criteriaFacets[facetKey] || [];
     const newValues = values.includes(option.key)
       ? values.filter(e => e !== option.key)
       : values.concat(option.key);
-    onChangeFilters(facetKey, newValues);
+    onChangeCriteria(facetKey, newValues);
   };
 
   const handleQueryChange = e => {
@@ -75,7 +77,7 @@ export const FacetFilter: React.FC<CompProps> = ({
         variant="subtitle2"
         classes={{ root: classes.title }}
       >
-        {facetDetails["label"]}
+        {facetGroup["label"]}
       </Typography>
 
       <TextField
@@ -109,7 +111,9 @@ export const FacetFilter: React.FC<CompProps> = ({
                 size="small"
               />
             }
-            label={`${option["label"] || option["key"]} (${option["recordCount"]})`}
+            label={`${option["label"] || option["key"]} (${
+              option["recordCount"]
+            })`}
           />
         ))}
       </div>

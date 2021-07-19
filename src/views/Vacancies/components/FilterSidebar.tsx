@@ -4,6 +4,10 @@ import { TextField, Typography, InputAdornment } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import CloseIcon from "@material-ui/icons/Close";
 
+import {
+  VacancySearchCriteria,
+  VacancyFacetMap,
+} from "@temp/core/apiLayer/vacancyService";
 import FacetFilter from "./FacetFilter";
 
 const useStyles = makeStyles(theme => ({
@@ -25,26 +29,26 @@ const useStyles = makeStyles(theme => ({
 }));
 
 interface CompProps {
-  itemsTotal: number;
-  facetGroups: any;
-  searchFilters: any;
-  onChangeFilters: Function;
+  totalCount: number;
+  facetGroups: VacancyFacetMap;
+  criteria: VacancySearchCriteria;
+  onChangeCriteria: Function;
 }
 
 export const FilterSidebar: React.FC<CompProps> = ({
-  itemsTotal,
+  totalCount,
   facetGroups,
-  searchFilters,
-  onChangeFilters,
+  criteria,
+  onChangeCriteria,
 }) => {
   const classes = useStyles();
   const handleQueryChange = e => {
-    onChangeFilters("query", e.target.value || "");
+    onChangeCriteria("query", [e.target.value || ""]);
   };
   const handleQueryClear = () => {
-    onChangeFilters("query", "");
+    onChangeCriteria("query", "");
   };
-  const hasQuery = !!searchFilters["query"];
+  const hasQuery = !!criteria["query"];
 
   return (
     <div className={classes.root}>
@@ -53,7 +57,7 @@ export const FilterSidebar: React.FC<CompProps> = ({
           id="search-query"
           placeholder="Search on vacancies"
           fullWidth
-          value={searchFilters["query"]}
+          value={criteria["query"]}
           onChange={handleQueryChange}
           InputProps={{
             startAdornment: (
@@ -85,7 +89,7 @@ export const FilterSidebar: React.FC<CompProps> = ({
           Search Results
         </Typography>
         <Typography color="textPrimary" variant="subtitle1">
-          {`${itemsTotal || 0} vacancies`}
+          {`${totalCount || 0} vacancies`}
         </Typography>
       </div>
 
@@ -99,12 +103,12 @@ export const FilterSidebar: React.FC<CompProps> = ({
           Filter By
         </Typography>
 
-        {facetGroups.map(group => (
+        {Object.entries(facetGroups).map(([key, group]) => (
           <FacetFilter
-            key={group.key}
-            facetFilters={searchFilters["facets"]}
-            facetDetails={group}
-            onChangeFilters={onChangeFilters}
+            key={key}
+            criteriaFacets={criteria.facets}
+            facetGroup={group}
+            onChangeCriteria={onChangeCriteria}
           />
         ))}
       </div>

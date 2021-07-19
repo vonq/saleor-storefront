@@ -4,6 +4,7 @@ import InfiniteScroll from "react-infinite-scroller";
 
 import { Loader } from "@components/atoms";
 import VacancyListItem from "./VacancyListItem";
+import { VacancyItem } from "@temp/core/apiLayer/vacancyService";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -14,17 +15,15 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 interface CompProps {
-  itemsLoading: Boolean;
-  itemsList: Array<any>;
-  hasMoreItems: Boolean;
-  loadMoreItems: Function;
+  itemList: Array<VacancyItem>;
+  hasMore: Boolean;
+  onLoadMore: Function;
 }
 
-export const VacanciesList: React.FC<CompProps> = ({
-  itemsLoading,
-  itemsList = [],
-  hasMoreItems,
-  loadMoreItems,
+export const VacancyList: React.FC<CompProps> = ({
+  itemList = [],
+  hasMore,
+  onLoadMore,
 }) => {
   const classes = useStyles();
   return (
@@ -33,15 +32,15 @@ export const VacanciesList: React.FC<CompProps> = ({
         threshold={0}
         pageStart={0}
         initialLoad={false}
-        hasMore={hasMoreItems}
-        loadMore={loadMoreItems}
+        hasMore={hasMore}
+        loadMore={onLoadMore}
         loader={
           <div className={classes.loaderRow} key="spinner-bottom">
             <Loader />
           </div>
         }
       >
-        {itemsList.map(item => (
+        {itemList.map(item => (
           <VacancyListItem key={item["vacancyId"]} data={item} />
         ))}
       </InfiniteScroll>
@@ -49,4 +48,4 @@ export const VacanciesList: React.FC<CompProps> = ({
   );
 };
 
-export default VacanciesList;
+export default VacancyList;

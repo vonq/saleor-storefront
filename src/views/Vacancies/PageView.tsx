@@ -1,6 +1,11 @@
 import * as React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 
+import {
+  VacancyItem,
+  VacancySearchCriteria,
+  VacancyFacetMap,
+} from "@temp/core/apiLayer/vacancyService";
 import { FilterSidebar, FilterTagsHeader, VacancyList } from "./components";
 
 const useStyles = makeStyles(theme => ({
@@ -21,25 +26,25 @@ const useStyles = makeStyles(theme => ({
 }));
 
 interface PageProps {
-  itemsLoading: boolean;
-  hasMoreItems: Boolean;
-  loadMoreItems: Function;
-  itemsList: Array<any>;
-  itemsTotal: number;
-  facetGroups: any;
-  searchFilters: any;
-  onChangeFilters: Function;
+  itemList: Array<VacancyItem>;
+  totalCount: number;
+  loading: boolean;
+  facetGroups: VacancyFacetMap;
+  criteria: VacancySearchCriteria;
+  hasMore: boolean;
+  onChangeCriteria: Function;
+  onLoadMore: Function;
 }
 
 const VacanciesPageView: React.FC<PageProps> = ({
-  itemsLoading,
-  hasMoreItems,
-  loadMoreItems,
-  itemsList,
-  itemsTotal,
+  itemList,
+  totalCount,
+  loading,
   facetGroups,
-  searchFilters,
-  onChangeFilters,
+  criteria,
+  hasMore,
+  onChangeCriteria,
+  onLoadMore
 }) => {
   const classes = useStyles();
 
@@ -47,23 +52,22 @@ const VacanciesPageView: React.FC<PageProps> = ({
     <div className={classes.root}>
       <div className={classes.sidebar}>
         <FilterSidebar
-          itemsTotal={itemsTotal}
+          totalCount={totalCount}
           facetGroups={facetGroups}
-          searchFilters={searchFilters}
-          onChangeFilters={onChangeFilters}
+          criteria={criteria}
+          onChangeCriteria={onChangeCriteria}
         />
       </div>
       <div className={classes.content}>
         <FilterTagsHeader
           facetGroups={facetGroups}
-          facetFilters={searchFilters["facets"]}
-          onChangeFilters={onChangeFilters}
+          criteria={criteria}
+          onChangeCriteria={onChangeCriteria}
         />
         <VacancyList
-          itemsLoading={itemsLoading}
-          itemsList={itemsList}
-          loadMoreItems={loadMoreItems}
-          hasMoreItems={hasMoreItems}
+          itemList={itemList}
+          hasMore={hasMore}
+          onLoadMore={onLoadMore}
         />
       </div>
     </div>

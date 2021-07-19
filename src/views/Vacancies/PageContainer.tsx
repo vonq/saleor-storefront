@@ -1,110 +1,57 @@
-import * as React from "react";
+import React, { useState } from "react";
 
 import { NextPage } from "next";
-import VacanciesPageView from "./PageView";
+import PageView from "./PageView";
 import {
-  fetchVacancyFacets,
-  fetchVacancyList,
+  PAGE_SIZE,
+  VacancySearchCriteria,
+  useApiForVacancyFacets,
+  useApiForVacancyList,
 } from "@temp/core/apiLayer/vacancyService";
 
-const PAGE_SIZE = 25;
+const initCriteria: VacancySearchCriteria = {
+  query: "",
+  facets: {},
+};
 
-export const VacanciesPageContainer: NextPage = () => {
-  const [itemsLoading, setItemsLoading] = React.useState(false);
-  const [itemsList, setItemsList] = React.useState([]);
-  const [itemsTotal, setItemsTotal] = React.useState(0);
-  const [facetsLoading, setFacetsLoading] = React.useState(false);
-  const [facetGroups, setFacetGroups] = React.useState([]);
-  const [searchFilters, setSearchFilters] = React.useState({
-    query: "",
-    facets: {},
-  });
-  const { current: paging } = React.useRef({ number: 0, hasMore: true });
-
-  // API call to get list of vacancies
-  const fetchItemsList = async () => {
-    if (itemsLoading || !paging.hasMore) {
-      return false;
-    }
-
-    try {
-      setItemsLoading(true);
-      const { total, list } = await fetchVacancyList({
-        ...searchFilters,
-        offset: paging.number * PAGE_SIZE,
-        limit: PAGE_SIZE,
-      });
-
-      let newList;
-      if (paging.number === 0) {
-        newList = list;
-        setItemsTotal(total);
-      } else {
-        newList = itemsList.concat(list);
-      }
-      setItemsList(newList);
-
-      paging.number++;
-      paging.hasMore = newList.length < total;
-    } finally {
-      setItemsLoading(false);
-    }
-  };
-
-  // API call to get facets data
-  const fetchFacets = async () => {
-    try {
-      setFacetsLoading(true);
-      const facets = await fetchVacancyFacets(searchFilters);
-      setFacetGroups(facets);
-    } finally {
-      setFacetsLoading(false);
-    }
-  };
-
-  // State changed: "searchFilters"
-  React.useEffect(() => {
-    const resetAndFetch = async () => {
-      paging.number = 0;
-      paging.hasMore = true;
-      setItemsList([]);
-      await Promise.all([fetchItemsList(), fetchFacets()]);
-    };
-    resetAndFetch();
-  }, [searchFilters]);
+export const PageContainer: NextPage = () => {
+  const [criteria, setCriteria] = useState<VacancySearchCriteria>(initCriteria);
+  const {
+    itemList,
+    totalCount,
+    loading: listLoading,
+    hasMore,
+    loadMore,
+  } = useApiForVacancyList(criteria, PAGE_SIZE);
+  const { facetGroups } = useApiForVacancyFacets(criteria);
 
   // Listener for search query, facets change
-  const handleFiltersChange = (key, value) => {
+  const handleCriteriaChange = (key: string, value: Array<string | number>) => {
     if (key === "query") {
-      setSearchFilters({ ...searchFilters, query: value });
+      setCriteria({ ...criteria, query: value[0] as string });
     } else {
-      setSearchFilters({
-        ...searchFilters,
+      setCriteria({
+        ...criteria,
         facets: {
-          ...searchFilters.facets,
+          ...criteria.facets,
           [key]: value,
         },
       });
     }
   };
 
-  // Listener for infinite scrolling
-  const loadMoreItems = () => {
-    fetchItemsList();
-  };
-
   return (
-    <VacanciesPageView
-      searchFilters={searchFilters}
+    <PageView
+      itemList={itemList}
+      totalCount={totalCount}
+      loading={listLoading}
       facetGroups={facetGroups}
-      onChangeFilters={handleFiltersChange}
-      itemsLoading={itemsLoading}
-      itemsList={itemsList}
-      itemsTotal={itemsTotal}
-      hasMoreItems={paging.hasMore}
-      loadMoreItems={loadMoreItems}
+      criteria={criteria}
+      hasMore={hasMore}
+      onChangeCriteria={handleCriteriaChange}
+      onLoadMore={loadMore}
     />
   );
 };
 
-export default VacanciesPageContainer;
+export default PageContainer;
