@@ -5,6 +5,9 @@ import { pkbUrl } from "@temp/constants";
 
 export interface SearchProductCriteria {
   name?: string;
+  jobFunctionId?: number;
+  jobTitleId?: number;
+  includeLocationId?: number;
 }
 
 const fetchProducts = (

@@ -8,4 +8,8 @@ export const messages = defineMessages({
   },
   searchChannels: { defaultMessage: "Search on channels" },
   moreInformation: { defaultMessage: "More information" },
+  searchOptionType: {
+    defaultMessage:
+      "{type, select, channelTitle {Channel title} jobTitle {Job title} jobFunction {Job function} location {Location}}",
+  },
 });

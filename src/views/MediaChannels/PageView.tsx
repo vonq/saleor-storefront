@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   CardActions,
   CircularProgress,
@@ -14,6 +15,7 @@ import { FormattedMessage } from "react-intl";
 
 import { SearchProductCriteria } from "@temp/core/apiLayer/productService";
 import useInfiniteScroll from "@temp/core/useInfiniteScroll";
+import GlobalSearch from "@temp/views/MediaChannels/components/GlobalSearch";
 
 import { MoreInfoDrawer, ProductCard, Sidebar } from "./components";
 import { messages } from "./messages";
@@ -78,8 +80,18 @@ export const PageView: React.FC<PageProps> = ({
             <Typography align="center" variant="h4" component="h1">
               <FormattedMessage {...messages.exploreChannels} />
             </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Box mx={4}>
+              <GlobalSearch
+                onChangeCriteria={onChangeCriteria}
+                criteria={criteria}
+              />
+            </Box>
+          </Grid>
+          <Grid item xs={12}>
             {(!loading || productList.length > 0) && (
-              <Typography align="center" variant="h5" component="h1">
+              <Typography variant="h5" component="h1">
                 <FormattedMessage
                   {...messages.numberChannelsFound}
                   values={{ totalCount }}
