@@ -21,13 +21,15 @@ export const paths = {
    * Checkout
    */
   checkout: checkoutBaseUrl,
-  checkoutAddress: `${checkoutBaseUrl}address`,
-  checkoutPayment: `${checkoutBaseUrl}payment`,
-  checkoutPaymentConfirm: `${checkoutBaseUrl}payment-confirm`,
-  checkoutReview: `${checkoutBaseUrl}review`,
-  checkoutShipping: `${checkoutBaseUrl}shipping`,
-  checkoutCreateJobAd: `${checkoutBaseUrl}create-job-ad`,
-  checkoutSetTargetGroup: `${checkoutBaseUrl}set-target-group`,
+  checkoutJobAd: `${checkoutBaseUrl}create-job-ad/`,
+  checkoutOrder: `${checkoutBaseUrl}checkout/`,
+  // checkoutAddress: `${checkoutBaseUrl}address`,
+  // checkoutPayment: `${checkoutBaseUrl}payment`,
+  // checkoutPaymentConfirm: `${checkoutBaseUrl}payment-confirm`,
+  // checkoutReview: `${checkoutBaseUrl}review`,
+  // checkoutShipping: `${checkoutBaseUrl}shipping`,
+  // checkoutCreateJobAd: `${checkoutBaseUrl}create-job-ad`,
+  // checkoutSetTargetGroup: `${checkoutBaseUrl}set-target-group`,
   /**
    * Account section
    */
