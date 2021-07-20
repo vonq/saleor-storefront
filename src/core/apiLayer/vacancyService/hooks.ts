@@ -1,18 +1,17 @@
 import { useEffect, useReducer } from "react";
 import { fetchVacancyFacets, fetchVacancyList } from "./api";
 
-import {
-  VacancyFacetSingle,
-  VacancySearchCriteria,
-} from "./types";
+import { VacancyFacetSingle, VacancySearchCriteria } from "./types";
 
 export const PAGE_SIZE = 24;
 
+/**
+ * Hooks for list of vacancies
+ */
 const initStateForList = {
   itemList: [], // Array<VacancyItem>
   totalCount: 0,
   offset: 0,
-  todoOffsetsQueue: [],
   criteria: {},
   loading: true,
   hasMore: false,
@@ -30,7 +29,6 @@ function reducerForList(state, action) {
         ...state,
         criteria: action.criteria,
         offset: 0,
-        todoOffsetsQueue: [],
         itemList: [],
         hasMore: false,
         loading: true,
@@ -41,33 +39,23 @@ function reducerForList(state, action) {
         return state;
       }
 
-      const todoOffsetsQueue = state.todoOffsetsQueue.filter(
-        offset => offset !== action.offset && offset < action.totalCount
-      );
-
-      const offset = todoOffsetsQueue[0] || state.offset;
       const itemList = [...state.itemList, ...action.itemList];
+      // API returns totalCount of 0 when out of offset
+      const totalCount =
+        state.offset === 0 ? action.totalCount : state.totalCount;
 
       return {
         ...state,
-        todoOffsetsQueue,
-        loading: todoOffsetsQueue.length > 0,
+        loading: false,
         itemList,
-        totalCount: offset === 0 ? action.totalCount : state.totalCount, // API returns totalCount of 0 when out of offset
-        offset,
-        hasMore: itemList.length < action.totalCount,
+        totalCount: totalCount,
+        hasMore: itemList.length < totalCount,
       };
     }
 
     case "loadMore":
-      if (state.todoOffsetsQueue.length > 0) {
-        return {
-          ...state,
-          todoOffsetsQueue: [
-            ...state.todoOffsetsQueue,
-            Math.max(state.todoOffsetsQueue) + state.pageSize,
-          ],
-        };
+      if (state.loading) {
+        return state;
       }
 
       return {
