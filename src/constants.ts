@@ -1,6 +1,8 @@
 export const apiUrl = process.env.NEXT_PUBLIC_API_URI;
 export const pkbUrl = process.env.NEXT_PUBLIC_PKB_URI;
 export const pkbAuth = process.env.NEXT_PUBLIC_PKB_AUTH;
+export const auth0Domain = process.env.NEXT_PUBLIC_AUTH0_DOMAIN;
+export const auth0ClientId = process.env.NEXT_PUBLIC_AUTH0_CLIENT_ID;
 export const sentryDsn = process.env.NEXT_PUBLIC_SENTRY_DSN;
 const sampleRate = parseFloat(process.env.NEXT_PUBLIC_SENTRY_APM || "");
 export const sentrySampleRate = isNaN(sampleRate) ? 0 : sampleRate;

@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useAuth0, Auth0Context } from '@auth0/auth0-react';
 import { FormattedMessage } from "react-intl";
 import ReactSVG from "react-svg";
 
@@ -24,6 +25,9 @@ class Login extends React.Component<
   { overlay: OverlayContextInterface; active?: "login" | "register" },
   { active: "login" | "register" }
 > {
+
+  static contextType = Auth0Context;
+
   static defaultProps = {
     active: "login",
   };
@@ -40,7 +44,7 @@ class Login extends React.Component<
   };
 
   redirectToAuth0 = () => {
-    window.location.href = "/api/auth/login";
+    this.context.loginWithRedirect();
   };
 
   render() {

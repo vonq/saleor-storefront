@@ -1,4 +1,4 @@
-import { UserProvider } from "@auth0/nextjs-auth0";
+import { Auth0Provider } from "@auth0/auth0-react";
 import { ThemeProvider as MuiThemeProvider } from "@material-ui/core/styles";
 import { SaleorProvider } from "@saleor/sdk";
 import { ConfigInput } from "@saleor/sdk/lib/types";
@@ -21,6 +21,8 @@ import { App as StorefrontApp } from "../app";
 import { LocaleProvider } from "../components/Locale";
 import {
   apiUrl,
+  auth0Domain,
+  auth0ClientId,
   channelSlug,
   sentryDsn,
   sentrySampleRate,
@@ -67,7 +69,12 @@ const App = ({ Component, pageProps }: AppProps) => {
         <link rel="icon" type="image/png" href="/favicon-36.png" />
         <link rel="manifest" href="/manifest.json" />
       </Head>
-      <UserProvider>
+      <Auth0Provider
+        domain={auth0Domain}
+        clientId={auth0ClientId}
+        cacheLocation={"localstorage"}
+        redirectUri={typeof window !== "undefined" && window.location.origin}
+      >
         <ThemeProvider theme={defaultTheme}>
           <MuiThemeProvider theme={muiTheme}>
             <AlertProvider
@@ -89,7 +96,7 @@ const App = ({ Component, pageProps }: AppProps) => {
             </AlertProvider>
           </MuiThemeProvider>
         </ThemeProvider>
-      </UserProvider>
+      </Auth0Provider>
     </>
   );
 };

@@ -7,7 +7,7 @@
   "main": "dist/index.js",
   "browserslist": "last 2 versions",
   "dependencies": {
-    "@auth0/nextjs-auth0": "^1.5.0",
+    "@auth0/auth0-react": "^1.6.0",
     "@babel/plugin-transform-typescript": "^7.12.1",
     "@babel/runtime": "^7.5.5",
     "@editorjs/editorjs": "^2.19.0",

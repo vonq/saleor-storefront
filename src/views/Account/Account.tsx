@@ -1,5 +1,5 @@
 import { useAuth } from "@saleor/sdk";
-import { useUser } from '@auth0/nextjs-auth0';
+import { useAuth0 } from "@auth0/auth0-react";
 
 import { NextPage } from "next";
 import { useRouter } from "next/router";
@@ -43,7 +43,7 @@ const returnTab: any = (path: string, userDetails) => {
 
 const Account: NextPage = () => {
   const intl = useIntl();
-  const { user, isLoading } = useUser();
+  const { user, isAuthenticated, isLoading } = useAuth0();
   const { asPath, pathname } = useRouter();
   const links = [
     paths.account,
@@ -51,7 +51,7 @@ const Account: NextPage = () => {
     paths.accountAddressBook,
   ];
 
-  if (!isLoading && !user) {
+  if (!isLoading && !isAuthenticated) {
     return <Redirect url={paths.home} />;
   }
   return !isLoading ? (
