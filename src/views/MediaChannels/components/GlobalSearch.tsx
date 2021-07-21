@@ -1,94 +1,17 @@
-import { Chip, TextField } from "@material-ui/core";
+import { Chip, Grid, TextField, Typography } from "@material-ui/core";
 import { Autocomplete } from "@material-ui/lab";
-import { stringify } from "query-string";
+import throttle from "lodash/throttle";
 import * as React from "react";
-import { FC } from "react";
+import { FC, useMemo } from "react";
 import { useIntl } from "react-intl";
 
-import { pkbUrl } from "@temp/constants";
+import {
+  fetchOptions,
+  Option,
+} from "@temp/core/apiLayer/productSearchOptionsService";
 import { SearchProductCriteria } from "@temp/core/apiLayer/productService";
-import { messages } from "@temp/views/MediaChannels/messages";
 
-export interface Option {
-  type: "channelTitle" | "jobTitle" | "jobFunction" | "location";
-  label: string;
-  extraLabel?: string;
-  value: string | number;
-}
-
-const fetchJobTitle = async (text: string): Promise<Option[]> => {
-  const query = stringify({ text, limit: 5 });
-  const response = await fetch(`${pkbUrl}job-titles/?${query}`)
-    .then(response => response.json())
-    .catch(() => []);
-
-  if (!Array.isArray(response?.results)) {
-    return [];
-  }
-
-  return response.results.map(i => {
-    return {
-      type: "jobTitle",
-      label: i.name,
-      value: i.id,
-    };
-  });
-};
-
-const fetchJobFunctions = async (text: string): Promise<Option[]> => {
-  const query = stringify({ text });
-  const response = await fetch(`${pkbUrl}job-functions/?${query}`)
-    .then(response => response.json())
-    .catch(() => []);
-
-  if (!Array.isArray(response)) {
-    return [];
-  }
-
-  return response.slice(0, 4).map(i => {
-    return {
-      type: "jobFunction",
-      label: i.name,
-      value: i.id,
-    };
-  });
-};
-
-const fetchLocations = async (text: string): Promise<Option[]> => {
-  const query = stringify({ text });
-  const response = await fetch(`${pkbUrl}locations/?${query}`)
-    .then(response => response.json())
-    .catch(() => []);
-
-  if (!Array.isArray(response)) {
-    return [];
-  }
-
-  return response.slice(0, 4).map(i => {
-    return {
-      type: "location",
-      label: i.canonical_name,
-      value: i.id,
-    };
-  });
-};
-
-const fetchOptions = (searchText: string) => {
-  const waitFor: Promise<Option[]>[] = [
-    Promise.resolve([
-      {
-        type: "channelTitle",
-        label: searchText,
-        value: searchText,
-      },
-    ]),
-    fetchJobTitle(searchText),
-    fetchJobFunctions(searchText),
-    fetchLocations(searchText),
-  ];
-
-  return Promise.all(waitFor).then(result => result.flat());
-};
+import { messages } from "../messages";
 
 const normalizeOptions = (options: Option[]) =>
   options.reverse().reduce(
@@ -143,6 +66,14 @@ export const GlobalSearch: FC<GlobalSearchProps> = ({ onChangeCriteria }) => {
   const [inputValue, setInputValue] = React.useState("");
   const [options, setOptions] = React.useState<Option[]>([]);
 
+  const fetch = useMemo(
+    () =>
+      throttle((searchText, callback: (results: Option[]) => void) => {
+        fetchOptions(searchText).then(results => callback(results));
+      }, 200),
+    []
+  );
+
   React.useEffect(() => {
     let active = true;
 
@@ -151,7 +82,7 @@ export const GlobalSearch: FC<GlobalSearchProps> = ({ onChangeCriteria }) => {
       return undefined;
     }
 
-    fetchOptions(inputValue).then(results => {
+    fetch(inputValue, results => {
       if (active) {
         setOptions(results.length > 0 ? [...value, ...results] : value);
       }
@@ -171,6 +102,7 @@ export const GlobalSearch: FC<GlobalSearchProps> = ({ onChangeCriteria }) => {
       }
       filterOptions={x => x}
       options={options}
+      noOptionsText={intl.formatMessage(messages.noOptions)}
       autoComplete
       includeInputInList
       filterSelectedOptions
@@ -191,6 +123,7 @@ export const GlobalSearch: FC<GlobalSearchProps> = ({ onChangeCriteria }) => {
           label={intl.formatMessage(messages.searchChannels)}
           variant="outlined"
           fullWidth
+          helperText={intl.formatMessage(messages.searchChannelsHelperText)}
         />
       )}
       renderTags={(value: Option[], getTagProps) =>
@@ -202,13 +135,32 @@ export const GlobalSearch: FC<GlobalSearchProps> = ({ onChangeCriteria }) => {
                 {intl.formatMessage(messages.searchOptionType, {
                   type: option.type,
                 })}
-                : <strong>{option.label}</strong>
+                {": "}
+                <strong>
+                  {option.extraLabel
+                    ? `${option.label}, ${option.extraLabel}`
+                    : option.label}
+                </strong>
               </>
             }
             {...getTagProps({ index })}
           />
         ))
       }
+      renderOption={(option: Option) => (
+        <Grid container>
+          <Grid item xs>
+            <Typography variant="body1" component="p">
+              {option.label}
+            </Typography>
+            {option.extraLabel && (
+              <Typography variant="body2" color="textSecondary" component="p">
+                {option.extraLabel}
+              </Typography>
+            )}
+          </Grid>
+        </Grid>
+      )}
     />
   );
 };

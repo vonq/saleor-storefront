@@ -1,7 +1,5 @@
 import {
   Box,
-  Button,
-  CardActions,
   CircularProgress,
   Container,
   Grid,
@@ -10,14 +8,18 @@ import {
   Typography,
 } from "@material-ui/core";
 import * as React from "react";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { SearchProductCriteria } from "@temp/core/apiLayer/productService";
 import useInfiniteScroll from "@temp/core/useInfiniteScroll";
-import GlobalSearch from "@temp/views/MediaChannels/components/GlobalSearch";
 
-import { MoreInfoDrawer, ProductCard, Sidebar } from "./components";
+import {
+  GlobalSearch,
+  MoreInfoDrawer,
+  ProductList,
+  Sidebar,
+} from "./components";
 import { messages } from "./messages";
 
 const useStyles = makeStyles<Theme>(theme => ({
@@ -57,10 +59,13 @@ export const PageView: React.FC<PageProps> = ({
   const [product, setProduct] = useState(null);
   const loadMoreRef = useInfiniteScroll(onLoadMore, [productList]);
 
-  const showProductInfo = product => () => {
-    setProduct(product);
-    setOpen(true);
-  };
+  const showProductInfo = useCallback(
+    product => () => {
+      setProduct(product);
+      setOpen(true);
+    },
+    []
+  );
 
   return (
     <Container maxWidth="xl" className={classes.root}>
@@ -100,22 +105,10 @@ export const PageView: React.FC<PageProps> = ({
             )}
           </Grid>
 
-          {productList.map(product => (
-            <Grid item xs={12} md={6} lg={4} xl={3} key={product.product_id}>
-              <ProductCard product={product} onClick={showProductInfo(product)}>
-                <CardActions>
-                  <Button
-                    size="small"
-                    fullWidth
-                    color="primary"
-                    onClick={showProductInfo(product)}
-                  >
-                    <FormattedMessage {...messages.moreInformation} />
-                  </Button>
-                </CardActions>
-              </ProductCard>
-            </Grid>
-          ))}
+          <ProductList
+            productList={productList}
+            showProductInfo={showProductInfo}
+          />
 
           <Grid item xs={12} className={classes.loading}>
             {!!hasMore && <div ref={loadMoreRef} />}

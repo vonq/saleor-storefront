@@ -21,8 +21,11 @@ const fetchProducts = (
     limit,
     offset,
   });
+  const headers = { "Accept-Language": "en" }; // @todo: Get from user
 
-  return fetch(`${pkbUrl}products/?${query}`).then(response => response.json());
+  return fetch(`${pkbUrl}products/?${query}`, { headers }).then(response =>
+    response.json()
+  );
 };
 
 const initialState = {
