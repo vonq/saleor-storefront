@@ -96,6 +96,7 @@ export const GlobalSearch: FC<GlobalSearchProps> = ({ onChangeCriteria }) => {
   return (
     <Autocomplete
       multiple
+      autoHighlight
       getOptionLabel={option => option.label}
       groupBy={option =>
         intl.formatMessage(messages.searchOptionType, { type: option.type })
