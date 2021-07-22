@@ -10,28 +10,39 @@ import { SearchProductCriteria } from "@temp/core/apiLayer/productService";
 import { getOptions, Option, OptionType } from "../getOptions";
 import { messages } from "../messages";
 
+/**
+ * Make sure `options` contains:
+ *  - only one JobFunction or JobTitle
+ *  - only one Location
+ *  - only one ChannelTitle
+ *
+ *  Remove extra options, preserve the last added one
+ */
 const normalizeOptions = (options: Option[]) =>
+  // Reverse the array that way we can easily remove the older ones
   options.reverse().reduce(
-    (acc, option) => {
+    (state, option) => {
       if (
-        acc[option.type] ||
-        (option.type === OptionType.JobFunction && acc.jobTitle) ||
-        (option.type === OptionType.JobTitle && acc.jobFunction)
+        state.seenTypes[option.type] ||
+        (option.type === OptionType.JobFunction && state.seenTypes.jobTitle) ||
+        (option.type === OptionType.JobTitle && state.seenTypes.jobFunction)
       ) {
-        return acc;
+        return state;
       }
 
-      acc[option.type] = true;
-      acc.options.unshift(option);
+      state.seenTypes[option.type] = true;
+      state.options.unshift(option);
 
-      return acc;
+      return state;
     },
     {
       options: [] as Option[],
-      channelTitle: false,
-      jobTitle: false,
-      jobFunction: false,
-      location: false,
+      seenTypes: {
+        channelTitle: false,
+        jobTitle: false,
+        jobFunction: false,
+        location: false,
+      },
     }
   ).options;
 
