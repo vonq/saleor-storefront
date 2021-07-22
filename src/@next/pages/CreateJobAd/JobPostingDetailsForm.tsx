@@ -8,7 +8,7 @@ import {
 } from "@material-ui/core";
 import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
 import { useCheckout } from "@saleor/sdk";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { CheckoutMetadataTypes } from "@app/CheckoutUtils/constants";
 import { findOptionByField } from "@app/CheckoutUtils/helpers";
@@ -28,7 +28,9 @@ import JobAdStepContainer from "@pages/CreateJobAd/JobAdStepContainer";
 import JobPostingFieldContainer from "@pages/CreateJobAd/JobPostingFieldContainer";
 import JobStepNumber from "@pages/CreateJobAd/JobStepNumber";
 
-interface JobCategory {
+import { fetchJobFunctionList } from "./utils";
+
+export interface JobCategory {
   id: number;
   name: string;
   children?: Array<JobCategory>;
@@ -38,46 +40,13 @@ const JobPostingDetailsForm = () => {
   const { checkout } = useCheckout();
   const { metadata, setMetadataField } = useCheckoutMetadata();
 
-  const JOB_FUNCTION_API_URL =
-    "https://pkb.web-production.vonq-aws.com/job-functions";
-
   const [jobFunctionList, setJobFunctionList] = useState<JobCategory[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchJobList = async () => {
       setLoading(true);
-      const headers = new Headers();
-      headers.set("Authorization", "Basic dm9ucV9wa2I6UHIwZFBrYlZvbnEyMDIx");
-
-      const response = await fetch(JOB_FUNCTION_API_URL, {
-        method: "GET",
-        headers,
-      });
-      const jobFunctionMap = new Map();
-      const res = await response.json();
-      const collectJobList = (job: JobCategory) => {
-        if (!jobFunctionMap.has(job.id)) {
-          jobFunctionMap.set(job.id, job.name);
-        }
-        if (!job?.children || !job.children.length) {
-          return;
-        }
-        const { children } = job;
-        children.forEach((childJob: JobCategory) => {
-          if (!jobFunctionMap.has(childJob.id)) {
-            jobFunctionMap.set(childJob.id, childJob.name);
-          }
-          collectJobList(childJob);
-        });
-      };
-      res.forEach((job: JobCategory) => {
-        collectJobList(job);
-      });
-      const jobList = Array.from(jobFunctionMap, ([name, value]) => ({
-        id: name,
-        name: value,
-      }));
+      const jobList = await fetchJobFunctionList();
       setJobFunctionList(jobList);
       setLoading(false);
     };
@@ -123,13 +92,12 @@ const JobPostingDetailsForm = () => {
       ),
     contactName: metadata && metadata[CheckoutMetadataTypes.ContactName],
     contactPhone: metadata && metadata[CheckoutMetadataTypes.ContactNumber],
-    jobFunction:
-      metadata &&
-      findOptionByField(
-        jobFunctionList,
-        metadata[CheckoutMetadataTypes.JobFunction],
-        "id"
-      ),
+    jobFunction: metadata && metadata[CheckoutMetadataTypes.JobFunction],
+    // findOptionByField(
+    //   jobFunctionList,
+
+    //   "id"
+    // ),
     seniority:
       metadata &&
       findOptionByField(
@@ -171,6 +139,28 @@ const JobPostingDetailsForm = () => {
             ),
           }}
         />
+      </JobPostingFieldContainer>
+      {/* Job Function */}
+      <JobPostingFieldContainer title="Job Function">
+        <FormControl variant="outlined" error>
+          <Select
+            value={values.jobFunction}
+            onChange={e => {
+              setMetadataField(
+                CheckoutMetadataTypes.JobFunction,
+                e.target.value
+              );
+            }}
+            displayEmpty
+          >
+            {jobFunctionList.map(job => (
+              <MenuItem key={job.id} value={job.id}>
+                {job.name}
+              </MenuItem>
+            ))}
+          </Select>
+          <FormHelperText>error</FormHelperText>
+        </FormControl>
       </JobPostingFieldContainer>
       {/* Job Industry */}
       <JobPostingFieldContainer
