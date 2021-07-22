@@ -1,6 +1,6 @@
 import { useAuth, useCart, useCheckout } from "@saleor/sdk";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { Loader } from "@components/atoms";
 import {
@@ -8,6 +8,8 @@ import {
   createCheckoutQuery,
 } from "@components/organisms/SetTargetGroup/queries";
 import CreateJobAdContent from "@pages/CreateJobAd/CreateJobAdContent";
+import { JobCategory } from "@pages/CreateJobAd/JobPostingDetailsForm";
+import { fetchJobFunctionList } from "@pages/CreateJobAd/utils";
 
 const CreateJobAd = () => {
   const { replace } = useRouter();
@@ -22,7 +24,22 @@ const CreateJobAd = () => {
     // completeCheckout,
   } = useCheckout();
 
-  if (!cartLoaded || !checkoutLoaded) {
+  const [jobFunctionList, setJobFunctionList] = useState<JobCategory[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchJobList = async () => {
+      setLoading(true);
+      const jobList = await fetchJobFunctionList();
+      setJobFunctionList(jobList);
+      setLoading(false);
+    };
+    if (!jobFunctionList || !jobFunctionList.length) {
+      fetchJobList();
+    }
+  }, []);
+
+  if (!cartLoaded || !checkoutLoaded || loading) {
     return <Loader />;
   }
 
@@ -64,7 +81,7 @@ const CreateJobAd = () => {
     return null;
   }
 
-  return <CreateJobAdContent />;
+  return <CreateJobAdContent jobFunctionList={jobFunctionList} />;
 };
 
 export default CreateJobAd;

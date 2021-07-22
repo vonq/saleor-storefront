@@ -7,28 +7,14 @@ import {
   TextField,
 } from "@material-ui/core";
 import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
-import { useCheckout } from "@saleor/sdk";
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import { CheckoutMetadataTypes } from "@app/CheckoutUtils/constants";
-import { findOptionByField } from "@app/CheckoutUtils/helpers";
-import { Loader } from "@components/atoms";
-import {
-  currencies,
-  employmentTypes,
-  periods,
-} from "@components/organisms/CreateJobAd/constants";
-import {
-  EducationOptions,
-  IndustryOptions,
-  SeniorityOptions,
-} from "@components/organisms/SetTargetGroup/constants";
+import { IndustryOptions } from "@components/organisms/SetTargetGroup/constants";
 import { useCheckoutMetadata } from "@hooks/useCheckoutMetadata";
 import JobAdStepContainer from "@pages/CreateJobAd/JobAdStepContainer";
 import JobPostingFieldContainer from "@pages/CreateJobAd/JobPostingFieldContainer";
 import JobStepNumber from "@pages/CreateJobAd/JobStepNumber";
-
-import { fetchJobFunctionList } from "./utils";
 
 export interface JobCategory {
   id: number;
@@ -36,84 +22,12 @@ export interface JobCategory {
   children?: Array<JobCategory>;
 }
 
-const JobPostingDetailsForm = () => {
-  const { checkout } = useCheckout();
-  const { metadata, setMetadataField } = useCheckoutMetadata();
-
-  const [jobFunctionList, setJobFunctionList] = useState<JobCategory[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchJobList = async () => {
-      setLoading(true);
-      const jobList = await fetchJobFunctionList();
-      setJobFunctionList(jobList);
-      setLoading(false);
-    };
-    if (!jobFunctionList || !jobFunctionList.length) {
-      fetchJobList();
-    }
-  }, []);
-
-  if (!checkout?.id || loading) {
-    return <Loader />;
-  }
-
-  const values = {
-    jobTitle: metadata && metadata[CheckoutMetadataTypes.JobTitle],
-    jobDescription: metadata && metadata[CheckoutMetadataTypes.JobDescription],
-    jobDetailLink: metadata && metadata[CheckoutMetadataTypes.VacancyURL],
-    applicationLink: metadata && metadata[CheckoutMetadataTypes.ApplicationURL],
-    jobExperience: metadata && metadata[CheckoutMetadataTypes.MinExp],
-    employmentType:
-      metadata &&
-      findOptionByField(
-        employmentTypes,
-        metadata[CheckoutMetadataTypes.VacancyType],
-        "enum"
-      ),
-    minHours: metadata && metadata[CheckoutMetadataTypes.MinWorkingHours],
-    maxHours: metadata && metadata[CheckoutMetadataTypes.MaxWorkingHours],
-    minSalary: metadata && metadata[CheckoutMetadataTypes.SalaryMinAmount],
-    maxSalary: metadata && metadata[CheckoutMetadataTypes.SalaryMaxAmount],
-    currency:
-      metadata &&
-      findOptionByField(
-        currencies,
-        metadata[CheckoutMetadataTypes.SalaryCurrency],
-        "enum"
-      ),
-    period:
-      metadata &&
-      findOptionByField(
-        periods,
-        metadata[CheckoutMetadataTypes.SalaryPerPeriod],
-        "enum"
-      ),
-    contactName: metadata && metadata[CheckoutMetadataTypes.ContactName],
-    contactPhone: metadata && metadata[CheckoutMetadataTypes.ContactNumber],
-    jobFunction: metadata && metadata[CheckoutMetadataTypes.JobFunction],
-    // findOptionByField(
-    //   jobFunctionList,
-
-    //   "id"
-    // ),
-    seniority:
-      metadata &&
-      findOptionByField(
-        SeniorityOptions,
-        metadata[CheckoutMetadataTypes.Seniority],
-        "id"
-      ),
-    industry: metadata && metadata[CheckoutMetadataTypes.Industry],
-    education:
-      metadata &&
-      findOptionByField(
-        EducationOptions,
-        metadata[CheckoutMetadataTypes.EducationLevel],
-        "id"
-      ),
-  };
+const JobPostingDetailsForm = ({
+  jobFunctionList,
+}: {
+  jobFunctionList: Array<JobCategory>;
+}) => {
+  const { metadataValues, setMetadataField } = useCheckoutMetadata();
 
   return (
     <JobAdStepContainer>
@@ -127,7 +41,7 @@ const JobPostingDetailsForm = () => {
           variant="outlined"
           // error
           // helperText="error test"
-          value={values.jobTitle}
+          value={metadataValues.jobTitle}
           onChange={e => {
             setMetadataField(CheckoutMetadataTypes.JobTitle, e.target.value);
           }}
@@ -144,7 +58,8 @@ const JobPostingDetailsForm = () => {
       <JobPostingFieldContainer title="Job Function">
         <FormControl variant="outlined" error>
           <Select
-            value={values.jobFunction}
+            value={metadataValues.jobFunction}
+            defaultValue=""
             onChange={e => {
               setMetadataField(
                 CheckoutMetadataTypes.JobFunction,
@@ -169,7 +84,8 @@ const JobPostingDetailsForm = () => {
       >
         <FormControl variant="outlined" error>
           <Select
-            value={values.industry}
+            value={metadataValues.industry}
+            defaultValue=""
             onChange={e => {
               setMetadataField(CheckoutMetadataTypes.Industry, e.target.value);
             }}
@@ -190,13 +106,16 @@ const JobPostingDetailsForm = () => {
         description="Choose how you want to fill in your job description."
       >
         <FormControl variant="outlined">
-          <Select value="" onChange={() => {}} displayEmpty>
-            {IndustryOptions.map(industry => (
-              <MenuItem key={industry.id} value={industry.id}>
-                {industry.name}
-              </MenuItem>
-            ))}
-          </Select>
+          <TextField
+            variant="outlined"
+            value={metadataValues.jobDescription}
+            onChange={e => {
+              setMetadataField(
+                CheckoutMetadataTypes.JobDescription,
+                e.target.value
+              );
+            }}
+          />
         </FormControl>
       </JobPostingFieldContainer>
       {/* Link to job detail page */}
@@ -206,6 +125,10 @@ const JobPostingDetailsForm = () => {
       >
         <TextField
           variant="outlined"
+          value={metadataValues.jobDetailLink}
+          onChange={e => {
+            setMetadataField(CheckoutMetadataTypes.VacancyURL, e.target.value);
+          }}
           error
           helperText="Please fill in the full URL address, with http(s)://."
         />
@@ -217,6 +140,13 @@ const JobPostingDetailsForm = () => {
       >
         <TextField
           variant="outlined"
+          value={metadataValues.applicationLink}
+          onChange={e => {
+            setMetadataField(
+              CheckoutMetadataTypes.ApplicationURL,
+              e.target.value
+            );
+          }}
           helperText="Please fill in the full URL address, with http(s)://."
         />
       </JobPostingFieldContainer>

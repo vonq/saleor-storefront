@@ -9,7 +9,9 @@ import {
 import React from "react";
 
 import JobCriteriaForm from "@pages/CreateJobAd/JobCriteriaForm";
-import JobPostingDetailsForm from "@pages/CreateJobAd/JobPostingDetailsForm";
+import JobPostingDetailsForm, {
+  JobCategory,
+} from "@pages/CreateJobAd/JobPostingDetailsForm";
 
 const useStyles = makeStyles<Theme>(theme => ({
   root: {
@@ -22,7 +24,11 @@ const useStyles = makeStyles<Theme>(theme => ({
   },
 }));
 
-const CreateJobAdContent = () => {
+const CreateJobAdContent = ({
+  jobFunctionList,
+}: {
+  jobFunctionList: Array<JobCategory>;
+}) => {
   const classes = useStyles();
   return (
     <Container maxWidth="xl" className={classes.root}>
@@ -37,7 +43,7 @@ const CreateJobAdContent = () => {
               fields are required by job boards to be able to post on it.
             </Typography>
           </Box>
-          <JobPostingDetailsForm />
+          <JobPostingDetailsForm jobFunctionList={jobFunctionList} />
           <JobCriteriaForm />
         </Grid>
       </Grid>

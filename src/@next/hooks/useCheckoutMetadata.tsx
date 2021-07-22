@@ -1,6 +1,8 @@
 /* eslint-disable no-console */
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+
+import { CheckoutMetadataTypes } from "@app/CheckoutUtils/constants";
 
 import { useLocalStorage } from "./useLocalStorage";
 
@@ -39,5 +41,39 @@ export const useCheckoutMetadata = () => {
     });
   };
 
-  return { metadata, setMetadata, appendMetadata, setMetadataField };
+  const metadataValues = useMemo(
+    () => ({
+      // Job Posting Details
+      jobTitle: metadata && metadata[CheckoutMetadataTypes.JobTitle],
+      jobDescription:
+        metadata && metadata[CheckoutMetadataTypes.JobDescription],
+      jobDetailLink: metadata && metadata[CheckoutMetadataTypes.VacancyURL],
+      applicationLink:
+        metadata && metadata[CheckoutMetadataTypes.ApplicationURL],
+      jobExperience: metadata && metadata[CheckoutMetadataTypes.MinExp],
+      jobFunction: metadata && metadata[CheckoutMetadataTypes.JobFunction],
+      industry: metadata && metadata[CheckoutMetadataTypes.Industry],
+      // Job Criteria
+      employmentType: metadata && metadata[CheckoutMetadataTypes.VacancyType],
+      minHours: metadata && metadata[CheckoutMetadataTypes.MinWorkingHours],
+      maxHours: metadata && metadata[CheckoutMetadataTypes.MaxWorkingHours],
+      minSalary: metadata && metadata[CheckoutMetadataTypes.SalaryMinAmount],
+      maxSalary: metadata && metadata[CheckoutMetadataTypes.SalaryMaxAmount],
+      currency: metadata && metadata[CheckoutMetadataTypes.SalaryCurrency],
+      period: metadata && metadata[CheckoutMetadataTypes.SalaryPerPeriod],
+      contactName: metadata && metadata[CheckoutMetadataTypes.ContactName],
+      contactPhone: metadata && metadata[CheckoutMetadataTypes.ContactNumber],
+      seniority: metadata && metadata[CheckoutMetadataTypes.Seniority],
+      education: metadata && metadata[CheckoutMetadataTypes.EducationLevel],
+    }),
+    [metadata]
+  );
+
+  return {
+    metadata,
+    metadataValues,
+    setMetadata,
+    appendMetadata,
+    setMetadataField,
+  };
 };

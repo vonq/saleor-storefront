@@ -10,6 +10,7 @@ import {
 } from "@material-ui/core";
 import React from "react";
 
+import { CheckoutMetadataTypes } from "@app/CheckoutUtils/constants";
 import {
   currencies,
   employmentTypes,
@@ -19,6 +20,7 @@ import {
   EducationOptions,
   SeniorityOptions,
 } from "@components/organisms/SetTargetGroup/constants";
+import { useCheckoutMetadata } from "@hooks/useCheckoutMetadata";
 import JobAdStepContainer from "@pages/CreateJobAd/JobAdStepContainer";
 import JobPostingFieldContainer from "@pages/CreateJobAd/JobPostingFieldContainer";
 import JobStepNumber from "@pages/CreateJobAd/JobStepNumber";
@@ -33,6 +35,7 @@ const useStyles = makeStyles<Theme>(theme => ({
 
 const JobCriteriaForm = () => {
   const classes = useStyles();
+  const { metadataValues, setMetadataField } = useCheckoutMetadata();
 
   return (
     <JobAdStepContainer>
@@ -40,7 +43,17 @@ const JobCriteriaForm = () => {
       {/* Min Education Level */}
       <JobPostingFieldContainer title="Minimum level of education">
         <FormControl variant="outlined">
-          <Select value="" onChange={() => {}} displayEmpty>
+          <Select
+            value={metadataValues.education}
+            defaultValue=""
+            onChange={e => {
+              setMetadataField(
+                CheckoutMetadataTypes.EducationLevel,
+                e.target.value
+              );
+            }}
+            displayEmpty
+          >
             {EducationOptions.map(option => (
               <MenuItem key={option.id} value={option.id}>
                 {option.name}
@@ -52,7 +65,17 @@ const JobCriteriaForm = () => {
       {/* Employment Type */}
       <JobPostingFieldContainer title="Employment Type">
         <FormControl variant="outlined">
-          <Select value="" onChange={() => {}} displayEmpty>
+          <Select
+            value={metadataValues.employmentType}
+            defaultValue=""
+            onChange={e => {
+              setMetadataField(
+                CheckoutMetadataTypes.VacancyType,
+                e.target.value
+              );
+            }}
+            displayEmpty
+          >
             {employmentTypes.map(option => (
               <MenuItem key={option.enum} value={option.enum}>
                 {option.type}
@@ -64,7 +87,14 @@ const JobCriteriaForm = () => {
       {/* Seniority */}
       <JobPostingFieldContainer title="Seniority">
         <FormControl variant="outlined">
-          <Select value="" onChange={() => {}} displayEmpty>
+          <Select
+            value={metadataValues.seniority}
+            defaultValue=""
+            onChange={e => {
+              setMetadataField(CheckoutMetadataTypes.Seniority, e.target.value);
+            }}
+            displayEmpty
+          >
             {SeniorityOptions.map(option => (
               <MenuItem key={option.id} value={option.id}>
                 {option.name}
@@ -76,7 +106,7 @@ const JobCriteriaForm = () => {
       {/* Hours per week */}
       <JobPostingFieldContainer title="Hours per week">
         <Box className={classes.multiItemRow}>
-          {/* Min Salary */}
+          {/* Min Hours */}
           <Typography
             variant="body2"
             component="label"
@@ -84,8 +114,18 @@ const JobCriteriaForm = () => {
           >
             Min.
           </Typography>
-          <TextField variant="outlined" type="number" />
-          {/* Max Salary */}
+          <TextField
+            variant="outlined"
+            type="number"
+            value={metadataValues.minHours}
+            onChange={e =>
+              setMetadataField(
+                CheckoutMetadataTypes.MinWorkingHours,
+                e.target.value
+              )
+            }
+          />
+          {/* Max Hours */}
           <Typography
             variant="body2"
             component="label"
@@ -93,7 +133,17 @@ const JobCriteriaForm = () => {
           >
             Max.
           </Typography>
-          <TextField variant="outlined" type="number" />
+          <TextField
+            variant="outlined"
+            type="number"
+            value={metadataValues.maxHours}
+            onChange={e =>
+              setMetadataField(
+                CheckoutMetadataTypes.MaxWorkingHours,
+                e.target.value
+              )
+            }
+          />
         </Box>
       </JobPostingFieldContainer>
       {/* Salary */}
@@ -110,7 +160,17 @@ const JobCriteriaForm = () => {
           >
             From
           </Typography>
-          <TextField variant="outlined" type="number" />
+          <TextField
+            variant="outlined"
+            type="number"
+            value={metadataValues.minSalary}
+            onChange={e =>
+              setMetadataField(
+                CheckoutMetadataTypes.SalaryMinAmount,
+                e.target.value
+              )
+            }
+          />
           {/* Salary To */}
           <Typography
             variant="body2"
@@ -119,7 +179,17 @@ const JobCriteriaForm = () => {
           >
             To
           </Typography>
-          <TextField variant="outlined" type="number" />
+          <TextField
+            variant="outlined"
+            type="number"
+            value={metadataValues.maxSalary}
+            onChange={e =>
+              setMetadataField(
+                CheckoutMetadataTypes.SalaryMaxAmount,
+                e.target.value
+              )
+            }
+          />
           {/* Currency */}
           <Typography
             variant="body2"
@@ -129,7 +199,17 @@ const JobCriteriaForm = () => {
             In the currency
           </Typography>
           <FormControl variant="outlined">
-            <Select value="" onChange={() => {}} displayEmpty>
+            <Select
+              value={metadataValues.currency}
+              defaultValue=""
+              onChange={e => {
+                setMetadataField(
+                  CheckoutMetadataTypes.SalaryCurrency,
+                  e.target.value
+                );
+              }}
+              displayEmpty
+            >
               {currencies.map(option => (
                 <MenuItem key={option.enum} value={option.enum}>
                   {option.currency}
@@ -142,7 +222,17 @@ const JobCriteriaForm = () => {
             Period
           </Typography>
           <FormControl variant="outlined">
-            <Select value="" onChange={() => {}} displayEmpty>
+            <Select
+              value={metadataValues.period}
+              defaultValue=""
+              onChange={e => {
+                setMetadataField(
+                  CheckoutMetadataTypes.SalaryPerPeriod,
+                  e.target.value
+                );
+              }}
+              displayEmpty
+            >
               {periods.map(option => (
                 <MenuItem key={option.enum} value={option.enum}>
                   {option.period}

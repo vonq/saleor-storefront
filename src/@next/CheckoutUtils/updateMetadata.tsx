@@ -50,6 +50,8 @@ export interface MetadataUpdateVariables {
   metadata: MetadataInput[];
 }
 
+export { updateMetadata as updateMetadataQuery };
+
 export const TypedMetadataUpdateMutation = TypedMutation<
   MetadataUpdate,
   MetadataUpdateVariables
