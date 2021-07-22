@@ -6,6 +6,7 @@ import { Integrations as ApmIntegrations } from "@sentry/apm";
 import * as Sentry from "@sentry/browser";
 import type { AppProps } from "next/app";
 import Head from "next/head";
+import Router from 'next/router';
 import * as React from "react";
 import { positions, Provider as AlertProvider } from "react-alert";
 import TagManager from "react-gtm-module";
@@ -51,6 +52,11 @@ const saleorConfig: ConfigInput = { apiUrl, channel: channelSlug };
 
 const notificationConfig = { position: positions.BOTTOM_RIGHT, timeout: 2500 };
 
+const onRedirectCallback = (appState) => {
+  // Use Next.js's Router.replace method to replace the url
+  Router.replace(appState?.returnTo || '/');
+};
+
 const App = ({ Component, pageProps }: AppProps) => {
   React.useEffect(() => {
     // Remove the server-side injected CSS.
@@ -73,7 +79,8 @@ const App = ({ Component, pageProps }: AppProps) => {
         domain={auth0Domain}
         clientId={auth0ClientId}
         cacheLocation={"localstorage"}
-        redirectUri={typeof window !== "undefined" && window.location.origin}
+        redirectUri={typeof window !== "undefined" && window.location.origin + '/auth_callback'}
+        onRedirectCallback={onRedirectCallback}
       >
         <ThemeProvider theme={defaultTheme}>
           <MuiThemeProvider theme={muiTheme}>
