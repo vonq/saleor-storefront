@@ -1,15 +1,12 @@
 import { useAuth, useCart, useCheckout } from "@saleor/sdk";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 import {
   CheckoutMetadataTypes,
   CheckoutValueTypes,
 } from "@app/CheckoutUtils/constants";
-import {
-  MetadataError,
-  updateMetadataQuery,
-} from "@app/CheckoutUtils/updateMetadata";
+import { updateMetadataQuery } from "@app/CheckoutUtils/updateMetadata";
 import { Loader } from "@components/atoms";
 import {
   apolloClient,
@@ -35,7 +32,8 @@ const CreateJobAd = () => {
 
   const [jobFunctionList, setJobFunctionList] = useState<JobCategory[]>([]);
   const [loading, setLoading] = useState(true);
-  const { metadataValues, setMetadataErrors } = useCheckoutMetadata();
+  const { metadataValues } = useCheckoutMetadata();
+  const [metadataErrors, setMetadataErrors] = useState<any>([]);
 
   useEffect(() => {
     const fetchJobList = async () => {
@@ -60,26 +58,28 @@ const CreateJobAd = () => {
           key: CheckoutMetadataTypes[CheckoutValueTypes[key]],
           value: metadataValues[key],
         }));
-      const res = await apolloClient.mutate({
+      const { data } = await apolloClient.mutate({
         mutation: updateMetadataQuery,
         variables: {
           id: checkout?.id || "",
           metadata,
         },
       });
-      const errors = res?.data?.updateMetadata?.metadataErrors;
-      if (errors && errors.length) {
-        const newErrors: any = {};
-        errors.forEach((error: { field: string; message: string }) => {
-          newErrors[error.field] = error.message;
-        });
-        setMetadataErrors(newErrors);
-      } else {
-        setMetadataErrors({});
-      }
+      setMetadataErrors(data?.updateMetadata?.metadataErrors);
     }, 5000);
     return () => clearInterval(intervalId);
   }, [checkout?.id]);
+
+  const metaErrors: any = useMemo(() => {
+    if (!metadataErrors || !metadataErrors.length) {
+      return {};
+    }
+    const newErrors: any = {};
+    metadataErrors.forEach((error: { field: string; message: string }) => {
+      newErrors[error.field] = error.message;
+    });
+    return newErrors;
+  }, [metadataErrors]);
 
   if (!cartLoaded || !checkoutLoaded || loading) {
     return <Loader />;
@@ -123,7 +123,12 @@ const CreateJobAd = () => {
     return null;
   }
 
-  return <CreateJobAdContent jobFunctionList={jobFunctionList} />;
+  return (
+    <CreateJobAdContent
+      jobFunctionList={jobFunctionList}
+      metaErrors={metaErrors}
+    />
+  );
 };
 
 export default CreateJobAd;

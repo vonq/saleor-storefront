@@ -13,7 +13,6 @@ export const useCheckoutMetadata = () => {
   } = useLocalStorage("data_checkout");
 
   const [metadata, setStoredMetadata] = useState<any>(checkoutData?.metadata);
-  const [metadataErrors, setMetadataErrors] = useState<any>({});
 
   useEffect(() => {
     setCheckoutData({
@@ -73,10 +72,8 @@ export const useCheckoutMetadata = () => {
   return {
     metadata,
     metadataValues,
-    metadataErrors,
     setMetadata,
     appendMetadata,
     setMetadataField,
-    setMetadataErrors,
   };
 };

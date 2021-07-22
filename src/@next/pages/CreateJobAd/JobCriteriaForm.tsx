@@ -33,7 +33,7 @@ const useStyles = makeStyles<Theme>(theme => ({
   },
 }));
 
-const JobCriteriaForm = () => {
+const JobCriteriaForm = ({ metaErrors }: { metaErrors: any }) => {
   const classes = useStyles();
   const { metadataValues, setMetadataField } = useCheckoutMetadata();
 

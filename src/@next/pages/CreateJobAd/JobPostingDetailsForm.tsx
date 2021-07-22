@@ -24,14 +24,14 @@ export interface JobCategory {
 
 const JobPostingDetailsForm = ({
   jobFunctionList,
+  metaErrors,
 }: {
   jobFunctionList: Array<JobCategory>;
+  metaErrors: any;
 }) => {
-  const {
-    metadataValues,
-    metadataErrors,
-    setMetadataField,
-  } = useCheckoutMetadata();
+  const { metadataValues, setMetadataField } = useCheckoutMetadata();
+
+  console.log("+++ waiting errors here +++", metaErrors);
 
   return (
     <JobAdStepContainer>
@@ -43,7 +43,7 @@ const JobPostingDetailsForm = ({
       >
         <TextField
           variant="outlined"
-          error={metadataErrors!.vacancyJobtitle}
+          error={metaErrors!.vacancyJobtitle}
           // helperText="error test"
           value={metadataValues.jobTitle}
           onChange={e => {
@@ -133,8 +133,8 @@ const JobPostingDetailsForm = ({
           onChange={e => {
             setMetadataField(CheckoutMetadataTypes.VacancyURL, e.target.value);
           }}
-          error
-          helperText="Please fill in the full URL address, with http(s)://."
+          error={!!metaErrors?.vacancyTrackingVacancyUrl}
+          helperText={metaErrors?.vacancyTrackingVacancyUrl || ""}
         />
       </JobPostingFieldContainer>
       {/* Link to application page */}

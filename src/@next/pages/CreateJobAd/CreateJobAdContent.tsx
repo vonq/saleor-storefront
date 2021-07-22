@@ -26,8 +26,10 @@ const useStyles = makeStyles<Theme>(theme => ({
 
 const CreateJobAdContent = ({
   jobFunctionList,
+  metaErrors,
 }: {
   jobFunctionList: Array<JobCategory>;
+  metaErrors: any;
 }) => {
   const classes = useStyles();
   return (
@@ -43,8 +45,11 @@ const CreateJobAdContent = ({
               fields are required by job boards to be able to post on it.
             </Typography>
           </Box>
-          <JobPostingDetailsForm jobFunctionList={jobFunctionList} />
-          <JobCriteriaForm />
+          <JobPostingDetailsForm
+            jobFunctionList={jobFunctionList}
+            metaErrors={metaErrors}
+          />
+          <JobCriteriaForm metaErrors={metaErrors} />
         </Grid>
       </Grid>
     </Container>
