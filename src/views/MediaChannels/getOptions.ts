@@ -1,6 +1,4 @@
-import { stringify } from "query-string";
-
-import { pkbUrl } from "@temp/constants";
+import * as pkbApi from "@temp/core/apiLayer/pkbApi";
 
 export enum OptionType {
   ChannelTitle = "channelTitle",
@@ -16,12 +14,12 @@ export interface Option {
   value: string | number;
 }
 
-const fetchJobTitle = async (text: string): Promise<Option[]> => {
-  const query = stringify({ text, limit: 5 });
-  const headers = { "Accept-Language": "en" }; // @todo: Get from user
-  const response = await fetch(`${pkbUrl}job-titles/?${query}`, { headers })
-    .then(response => response.json())
-    .catch(() => []);
+const LIMIT = 5;
+
+const getJobTitles = async (text: string): Promise<Option[]> => {
+  const response = await pkbApi
+    .getJobTitles({ text, limit: LIMIT })
+    .catch(() => null);
 
   if (!Array.isArray(response?.results)) {
     return [];
@@ -36,18 +34,14 @@ const fetchJobTitle = async (text: string): Promise<Option[]> => {
   });
 };
 
-const fetchJobFunctions = async (text: string): Promise<Option[]> => {
-  const query = stringify({ text });
-  const headers = { "Accept-Language": "en" }; // @todo: Get from user
-  const response = await fetch(`${pkbUrl}job-functions/?${query}`, { headers })
-    .then(response => response.json())
-    .catch(() => []);
+const getJobFunctions = async (text: string): Promise<Option[]> => {
+  const response = await pkbApi.getJobFunctions({ text }).catch(() => null);
 
   if (!Array.isArray(response)) {
     return [];
   }
 
-  return response.slice(0, 4).map(i => {
+  return response.slice(0, LIMIT - 1).map(i => {
     return {
       type: OptionType.JobFunction,
       label: i.name,
@@ -72,18 +66,14 @@ const extractWithin = (location: any, filter: string[]) => {
   return [location.canonical_name, ...extractWithin(location.within, filter)];
 };
 
-const fetchLocations = async (text: string): Promise<Option[]> => {
-  const query = stringify({ text });
-  const headers = { "Accept-Language": "en" }; // @todo: Get from user
-  const response = await fetch(`${pkbUrl}locations/?${query}`, { headers })
-    .then(response => response.json())
-    .catch(() => []);
+const getLocations = async (text: string, limit = 5): Promise<Option[]> => {
+  const response = await pkbApi.getLocations({ text }).catch(() => null);
 
   if (!Array.isArray(response)) {
     return [];
   }
 
-  return response.slice(0, 4).map(i => {
+  return response.slice(0, limit - 1).map(i => {
     return {
       type: OptionType.Location,
       label: i.canonical_name,
@@ -94,7 +84,7 @@ const fetchLocations = async (text: string): Promise<Option[]> => {
   });
 };
 
-export const fetchOptions = (searchText: string) => {
+export const getOptions = (searchText: string) => {
   const waitFor: Promise<Option[]>[] = [
     Promise.resolve([
       {
@@ -103,9 +93,9 @@ export const fetchOptions = (searchText: string) => {
         value: searchText,
       },
     ]),
-    fetchJobTitle(searchText),
-    fetchJobFunctions(searchText),
-    fetchLocations(searchText),
+    getJobTitles(searchText),
+    getJobFunctions(searchText),
+    getLocations(searchText),
   ];
 
   return Promise.all(waitFor).then(result => result.flat());

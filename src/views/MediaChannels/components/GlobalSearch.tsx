@@ -5,13 +5,9 @@ import * as React from "react";
 import { FC, useMemo } from "react";
 import { useIntl } from "react-intl";
 
-import {
-  fetchOptions,
-  Option,
-  OptionType,
-} from "@temp/core/apiLayer/productSearchOptionsService";
 import { SearchProductCriteria } from "@temp/core/apiLayer/productService";
 
+import { getOptions, Option, OptionType } from "../getOptions";
 import { messages } from "../messages";
 
 const normalizeOptions = (options: Option[]) =>
@@ -70,7 +66,7 @@ export const GlobalSearch: FC<GlobalSearchProps> = ({ onChangeCriteria }) => {
   const fetch = useMemo(
     () =>
       throttle((searchText, callback: (results: Option[]) => void) => {
-        fetchOptions(searchText).then(results => callback(results));
+        getOptions(searchText).then(results => callback(results));
       }, 200),
     []
   );
