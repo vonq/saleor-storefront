@@ -1,3 +1,3 @@
-import CreateJobAd from "@pages/CheckoutPage/CreateJobAd";
+import CreateJobAd from "@pages/CreateJobAd";
 
 export default CreateJobAd;
