@@ -7,7 +7,7 @@ interface IProps {
   children: ReactNode;
 }
 
-const JobAdSubTitleHeader = ({ title, description, children }: IProps) => (
+const JobPostingFieldContainer = ({ title, description, children }: IProps) => (
   <Box display="flex" flexDirection="column">
     <Typography variant="h6" component="h3">
       {title}
@@ -21,4 +21,4 @@ const JobAdSubTitleHeader = ({ title, description, children }: IProps) => (
   </Box>
 );
 
-export default JobAdSubTitleHeader;
+export default JobPostingFieldContainer;

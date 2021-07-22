@@ -10,16 +10,15 @@ import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
 import React from "react";
 
 import { IndustryOptions } from "@components/organisms/SetTargetGroup/constants";
-
-import JobAdSubTitleHeader from "./JobAdSubTitleHeader";
-import JobStepNumber from "./JobStepNumber";
+import JobPostingFieldContainer from "@pages/CreateJobAd/JobPostingFieldContainer";
+import JobStepNumber from "@pages/CreateJobAd/JobStepNumber";
 
 const JobPostingDetailsForm = () => {
   return (
     <>
       <JobStepNumber number={1} title="Job posting details" />
       {/* Job Title */}
-      <JobAdSubTitleHeader
+      <JobPostingFieldContainer
         title="Job title"
         description="This is the job title which will be shown to your candidates:"
       >
@@ -35,9 +34,9 @@ const JobPostingDetailsForm = () => {
             ),
           }}
         />
-      </JobAdSubTitleHeader>
+      </JobPostingFieldContainer>
       {/* Job Industry */}
-      <JobAdSubTitleHeader
+      <JobPostingFieldContainer
         title="Industry"
         description="Please fill in the industry of the job."
       >
@@ -51,9 +50,9 @@ const JobPostingDetailsForm = () => {
           </Select>
           <FormHelperText>error</FormHelperText>
         </FormControl>
-      </JobAdSubTitleHeader>
+      </JobPostingFieldContainer>
       {/* Job Description */}
-      <JobAdSubTitleHeader
+      <JobPostingFieldContainer
         title="Job description"
         description="Choose how you want to fill in your job description."
       >
@@ -66,9 +65,9 @@ const JobPostingDetailsForm = () => {
             ))}
           </Select>
         </FormControl>
-      </JobAdSubTitleHeader>
+      </JobPostingFieldContainer>
       {/* Link to job detail page */}
-      <JobAdSubTitleHeader
+      <JobPostingFieldContainer
         title="Link to job detail page"
         description="Fill in the URL that will be used as the landing page for your job ads."
       >
@@ -77,9 +76,9 @@ const JobPostingDetailsForm = () => {
           error
           helperText="Please fill in the full URL address, with http(s)://."
         />
-      </JobAdSubTitleHeader>
+      </JobPostingFieldContainer>
       {/* Link to application page */}
-      <JobAdSubTitleHeader
+      <JobPostingFieldContainer
         title="Link to application page"
         description="Fill in the URL of the page where a candidate fills in the application. Depending on your application process, this can also be the job detail page."
       >
@@ -87,7 +86,7 @@ const JobPostingDetailsForm = () => {
           variant="outlined"
           helperText="Please fill in the full URL address, with http(s)://."
         />
-      </JobAdSubTitleHeader>
+      </JobPostingFieldContainer>
     </>
   );
 };
