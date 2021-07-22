@@ -1,6 +1,7 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import * as React from "react";
+import { Auth0Provider, useAuth0 } from "@auth0/auth0-react";
 
 import { Loader } from "@components/atoms";
 import { channelSlug } from "@temp/constants";
@@ -12,6 +13,7 @@ import { TypedHomePageQuery } from "./queries";
 import "./scss/index.scss";
 
 const View: React.FC<NextPage> = () => {
+  const { getIdTokenClaims } = useAuth0();
   const { pathname, asPath, replace } = useRouter();
   const shouldRedirect = pathname === "/" && pathname !== asPath;
 
@@ -22,6 +24,16 @@ const View: React.FC<NextPage> = () => {
    * be added in SALEOR-1566.
    */
   React.useEffect(() => {
+    const getToken = async () => {
+      const claims = await getIdTokenClaims();
+      const idToken = claims && claims["__raw"];
+      if (idToken) {
+        console.log("[Access Token]", idToken);
+        localStorage.setItem("token", idToken);
+      }
+    };
+    getToken();
+
     if (shouldRedirect) {
       replace(asPath);
     }
