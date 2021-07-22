@@ -12,7 +12,8 @@ export const useCheckoutMetadata = () => {
     setValue: setCheckoutData,
   } = useLocalStorage("data_checkout");
 
-  const [metadata, setStoredMetadata] = useState(checkoutData?.metadata);
+  const [metadata, setStoredMetadata] = useState<any>(checkoutData?.metadata);
+  const [metadataErrors, setMetadataErrors] = useState<any>({});
 
   useEffect(() => {
     setCheckoutData({
@@ -41,7 +42,7 @@ export const useCheckoutMetadata = () => {
     });
   };
 
-  const metadataValues = useMemo(
+  const metadataValues: any = useMemo(
     () => ({
       // Job Posting Details
       jobTitle: metadata && metadata[CheckoutMetadataTypes.JobTitle],
@@ -72,8 +73,10 @@ export const useCheckoutMetadata = () => {
   return {
     metadata,
     metadataValues,
+    metadataErrors,
     setMetadata,
     appendMetadata,
     setMetadataField,
+    setMetadataErrors,
   };
 };

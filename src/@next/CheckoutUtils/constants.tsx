@@ -1,4 +1,4 @@
-export const CheckoutMetadataTypes = {
+export const CheckoutMetadataTypes: any = {
   JobTitle: "vacancy_jobTitle",
   JobDescription: "vacancy_description",
   Industry: "vacancy_taxonomy_industry",
@@ -20,4 +20,25 @@ export const CheckoutMetadataTypes = {
   CompanyLogo: "vacancy_companyLogo",
   TrackingUtm: "vacancy_tracking_utm",
   OrganizationName: "vacancy_organizationName",
+};
+
+export const CheckoutValueTypes: any = {
+  jobTitle: "JobTitle",
+  jobDescription: "JobDescription",
+  jobDetailLink: "VacancyURL",
+  applicationLink: "ApplicationURL",
+  jobExperience: "MinExp",
+  jobFunction: "JobFunction",
+  industry: "Industry",
+  employmentType: "VacancyType",
+  minHours: "MinWorkingHours",
+  maxHours: "MaxWorkingHours",
+  minSalary: "SalaryMinAmount",
+  maxSalary: "SalaryMaxAmount",
+  currency: "SalaryCurrency",
+  period: "SalaryPerPeriod",
+  contactName: "ContactName",
+  contactPhone: "ContactNumber",
+  seniority: "Seniority",
+  education: "EducationLevel",
 };

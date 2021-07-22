@@ -28,7 +28,7 @@ enum MetadataErrorCode {
   REQUIRED,
 }
 
-type MetadataError = {
+export type MetadataError = {
   field: String;
   message: String;
   code: MetadataErrorCode;

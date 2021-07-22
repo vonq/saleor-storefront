@@ -27,7 +27,11 @@ const JobPostingDetailsForm = ({
 }: {
   jobFunctionList: Array<JobCategory>;
 }) => {
-  const { metadataValues, setMetadataField } = useCheckoutMetadata();
+  const {
+    metadataValues,
+    metadataErrors,
+    setMetadataField,
+  } = useCheckoutMetadata();
 
   return (
     <JobAdStepContainer>
@@ -39,7 +43,7 @@ const JobPostingDetailsForm = ({
       >
         <TextField
           variant="outlined"
-          // error
+          error={metadataErrors!.vacancyJobtitle}
           // helperText="error test"
           value={metadataValues.jobTitle}
           onChange={e => {
