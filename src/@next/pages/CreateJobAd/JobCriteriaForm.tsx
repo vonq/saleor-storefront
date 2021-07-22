@@ -17,12 +17,13 @@ import {
   EducationOptions,
   SeniorityOptions,
 } from "@components/organisms/SetTargetGroup/constants";
+import JobAdStepContainer from "@pages/CreateJobAd/JobAdStepContainer";
 import JobPostingFieldContainer from "@pages/CreateJobAd/JobPostingFieldContainer";
 import JobStepNumber from "@pages/CreateJobAd/JobStepNumber";
 
 const JobCriteriaForm = () => {
   return (
-    <>
+    <JobAdStepContainer>
       <JobStepNumber number={2} title="Job criteria" />
       {/* Min Education Level */}
       <JobPostingFieldContainer title="Minimum level of education">
@@ -119,7 +120,7 @@ const JobCriteriaForm = () => {
           </FormControl>
         </Box>
       </JobPostingFieldContainer>
-    </>
+    </JobAdStepContainer>
   );
 };
 

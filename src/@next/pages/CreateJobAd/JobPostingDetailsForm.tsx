@@ -10,12 +10,13 @@ import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
 import React from "react";
 
 import { IndustryOptions } from "@components/organisms/SetTargetGroup/constants";
+import JobAdStepContainer from "@pages/CreateJobAd/JobAdStepContainer";
 import JobPostingFieldContainer from "@pages/CreateJobAd/JobPostingFieldContainer";
 import JobStepNumber from "@pages/CreateJobAd/JobStepNumber";
 
 const JobPostingDetailsForm = () => {
   return (
-    <>
+    <JobAdStepContainer>
       <JobStepNumber number={1} title="Job posting details" />
       {/* Job Title */}
       <JobPostingFieldContainer
@@ -87,7 +88,7 @@ const JobPostingDetailsForm = () => {
           helperText="Please fill in the full URL address, with http(s)://."
         />
       </JobPostingFieldContainer>
-    </>
+    </JobAdStepContainer>
   );
 };
 

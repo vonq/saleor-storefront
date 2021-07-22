@@ -21,4 +21,8 @@ const JobPostingFieldContainer = ({ title, description, children }: IProps) => (
   </Box>
 );
 
+JobPostingFieldContainer.defaultProps = {
+  description: "",
+};
+
 export default JobPostingFieldContainer;
