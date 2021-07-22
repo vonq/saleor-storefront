@@ -1,6 +1,7 @@
 import {
   Box,
   FormControl,
+  FormHelperText,
   makeStyles,
   MenuItem,
   Select,
@@ -42,7 +43,10 @@ const JobCriteriaForm = ({ metaErrors }: { metaErrors: any }) => {
       <JobStepNumber number={2} title="Job criteria" />
       {/* Min Education Level */}
       <JobPostingFieldContainer title="Minimum level of education">
-        <FormControl variant="outlined">
+        <FormControl
+          variant="outlined"
+          error={metaErrors?.vacancyEducationLevelId}
+        >
           <Select
             value={metadataValues.education}
             defaultValue=""
@@ -60,11 +64,16 @@ const JobCriteriaForm = ({ metaErrors }: { metaErrors: any }) => {
               </MenuItem>
             ))}
           </Select>
+          {metaErrors?.vacancyEducationLevelId && (
+            <FormHelperText>
+              {metaErrors.vacancyEducationLevelId}
+            </FormHelperText>
+          )}
         </FormControl>
       </JobPostingFieldContainer>
       {/* Employment Type */}
       <JobPostingFieldContainer title="Employment Type">
-        <FormControl variant="outlined">
+        <FormControl variant="outlined" error={metaErrors?.vacancyType}>
           <Select
             value={metadataValues.employmentType}
             defaultValue=""
@@ -82,11 +91,17 @@ const JobCriteriaForm = ({ metaErrors }: { metaErrors: any }) => {
               </MenuItem>
             ))}
           </Select>
+          {metaErrors?.vacancyType && (
+            <FormHelperText>{metaErrors.vacancyType}</FormHelperText>
+          )}
         </FormControl>
       </JobPostingFieldContainer>
       {/* Seniority */}
       <JobPostingFieldContainer title="Seniority">
-        <FormControl variant="outlined">
+        <FormControl
+          variant="outlined"
+          error={metaErrors?.vacancyTaxonomySeniorityId}
+        >
           <Select
             value={metadataValues.seniority}
             defaultValue=""
@@ -101,6 +116,11 @@ const JobCriteriaForm = ({ metaErrors }: { metaErrors: any }) => {
               </MenuItem>
             ))}
           </Select>
+          {metaErrors?.vacancyTaxonomySeniorityId && (
+            <FormHelperText>
+              {metaErrors.vacancyTaxonomySeniorityId}
+            </FormHelperText>
+          )}
         </FormControl>
       </JobPostingFieldContainer>
       {/* Hours per week */}
@@ -117,6 +137,7 @@ const JobCriteriaForm = ({ metaErrors }: { metaErrors: any }) => {
           <TextField
             variant="outlined"
             type="number"
+            defaultValue=""
             value={metadataValues.minHours}
             onChange={e =>
               setMetadataField(
@@ -124,6 +145,8 @@ const JobCriteriaForm = ({ metaErrors }: { metaErrors: any }) => {
                 e.target.value
               )
             }
+            error={metaErrors?.vacancyWorkinghoursMinimum}
+            helperText={metaErrors?.vacancyWorkinghoursMinimum}
           />
           {/* Max Hours */}
           <Typography
@@ -136,6 +159,7 @@ const JobCriteriaForm = ({ metaErrors }: { metaErrors: any }) => {
           <TextField
             variant="outlined"
             type="number"
+            defaultValue=""
             value={metadataValues.maxHours}
             onChange={e =>
               setMetadataField(
@@ -143,6 +167,8 @@ const JobCriteriaForm = ({ metaErrors }: { metaErrors: any }) => {
                 e.target.value
               )
             }
+            error={metaErrors?.vacancyWorkinghoursMaximum}
+            helperText={metaErrors?.vacancyWorkinghoursMaximum}
           />
         </Box>
       </JobPostingFieldContainer>
@@ -163,6 +189,7 @@ const JobCriteriaForm = ({ metaErrors }: { metaErrors: any }) => {
           <TextField
             variant="outlined"
             type="number"
+            defaultValue=""
             value={metadataValues.minSalary}
             onChange={e =>
               setMetadataField(
@@ -170,6 +197,8 @@ const JobCriteriaForm = ({ metaErrors }: { metaErrors: any }) => {
                 e.target.value
               )
             }
+            error={metaErrors?.vacancySalaryMinimumamount}
+            helperText={metaErrors?.vacancySalaryMinimumamount}
           />
           {/* Salary To */}
           <Typography
@@ -182,6 +211,7 @@ const JobCriteriaForm = ({ metaErrors }: { metaErrors: any }) => {
           <TextField
             variant="outlined"
             type="number"
+            defaultValue=""
             value={metadataValues.maxSalary}
             onChange={e =>
               setMetadataField(
@@ -189,6 +219,8 @@ const JobCriteriaForm = ({ metaErrors }: { metaErrors: any }) => {
                 e.target.value
               )
             }
+            error={metaErrors?.vacancySalaryMaximumamount}
+            helperText={metaErrors?.vacancySalaryMaximumamount}
           />
           {/* Currency */}
           <Typography
@@ -198,7 +230,10 @@ const JobCriteriaForm = ({ metaErrors }: { metaErrors: any }) => {
           >
             In the currency
           </Typography>
-          <FormControl variant="outlined">
+          <FormControl
+            variant="outlined"
+            error={metaErrors?.vacancySalaryCurrency}
+          >
             <Select
               value={metadataValues.currency}
               defaultValue=""
@@ -216,12 +251,20 @@ const JobCriteriaForm = ({ metaErrors }: { metaErrors: any }) => {
                 </MenuItem>
               ))}
             </Select>
+            {metaErrors?.vacancySalaryCurrency && (
+              <FormHelperText>
+                {metaErrors.vacancySalaryCurrency}
+              </FormHelperText>
+            )}
           </FormControl>
           {/* Period */}
           <Typography variant="body2" component="label">
             Period
           </Typography>
-          <FormControl variant="outlined">
+          <FormControl
+            variant="outlined"
+            error={metaErrors?.vacancySalaryPerperiod}
+          >
             <Select
               value={metadataValues.period}
               defaultValue=""
@@ -239,6 +282,11 @@ const JobCriteriaForm = ({ metaErrors }: { metaErrors: any }) => {
                 </MenuItem>
               ))}
             </Select>
+            {metaErrors?.vacancySalaryPerperiod && (
+              <FormHelperText>
+                {metaErrors.vacancySalaryPerperiod}
+              </FormHelperText>
+            )}
           </FormControl>
         </Box>
       </JobPostingFieldContainer>

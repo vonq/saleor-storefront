@@ -31,8 +31,6 @@ const JobPostingDetailsForm = ({
 }) => {
   const { metadataValues, setMetadataField } = useCheckoutMetadata();
 
-  console.log("+++ waiting errors here +++", metaErrors);
-
   return (
     <JobAdStepContainer>
       <JobStepNumber number={1} title="Job posting details" />
@@ -43,8 +41,9 @@ const JobPostingDetailsForm = ({
       >
         <TextField
           variant="outlined"
-          error={metaErrors!.vacancyJobtitle}
-          // helperText="error test"
+          error={metaErrors?.vacancyJobtitle}
+          helperText={metaErrors?.vacancyJobtitle}
+          defaultValue=""
           value={metadataValues.jobTitle}
           onChange={e => {
             setMetadataField(CheckoutMetadataTypes.JobTitle, e.target.value);
@@ -60,7 +59,10 @@ const JobPostingDetailsForm = ({
       </JobPostingFieldContainer>
       {/* Job Function */}
       <JobPostingFieldContainer title="Job Function">
-        <FormControl variant="outlined" error>
+        <FormControl
+          variant="outlined"
+          error={metaErrors?.vacancyTaxonomyJobcategoryid}
+        >
           <Select
             value={metadataValues.jobFunction}
             defaultValue=""
@@ -78,7 +80,11 @@ const JobPostingDetailsForm = ({
               </MenuItem>
             ))}
           </Select>
-          <FormHelperText>error</FormHelperText>
+          {metaErrors?.vacancyTaxonomyJobcategoryid && (
+            <FormHelperText>
+              {metaErrors.vacancyTaxonomyJobcategoryid}
+            </FormHelperText>
+          )}
         </FormControl>
       </JobPostingFieldContainer>
       {/* Job Industry */}
@@ -86,7 +92,10 @@ const JobPostingDetailsForm = ({
         title="Industry"
         description="Please fill in the industry of the job."
       >
-        <FormControl variant="outlined" error>
+        <FormControl
+          variant="outlined"
+          error={metaErrors?.vacancyTaxonomyIndustry}
+        >
           <Select
             value={metadataValues.industry}
             defaultValue=""
@@ -101,7 +110,11 @@ const JobPostingDetailsForm = ({
               </MenuItem>
             ))}
           </Select>
-          <FormHelperText>error</FormHelperText>
+          {metaErrors?.vacancyTaxonomyIndustry && (
+            <FormHelperText>
+              {metaErrors.vacancyTaxonomyIndustry}
+            </FormHelperText>
+          )}
         </FormControl>
       </JobPostingFieldContainer>
       {/* Job Description */}
@@ -112,7 +125,10 @@ const JobPostingDetailsForm = ({
         <FormControl variant="outlined">
           <TextField
             variant="outlined"
+            defaultValue=""
             value={metadataValues.jobDescription}
+            error={metaErrors?.vacancyDescription}
+            helperText={metaErrors?.vacancyDescription}
             onChange={e => {
               setMetadataField(
                 CheckoutMetadataTypes.JobDescription,
@@ -129,12 +145,13 @@ const JobPostingDetailsForm = ({
       >
         <TextField
           variant="outlined"
+          defaultValue=""
           value={metadataValues.jobDetailLink}
           onChange={e => {
             setMetadataField(CheckoutMetadataTypes.VacancyURL, e.target.value);
           }}
           error={!!metaErrors?.vacancyTrackingVacancyUrl}
-          helperText={metaErrors?.vacancyTrackingVacancyUrl || ""}
+          helperText={metaErrors?.vacancyTrackingVacancyUrl}
         />
       </JobPostingFieldContainer>
       {/* Link to application page */}
@@ -144,6 +161,7 @@ const JobPostingDetailsForm = ({
       >
         <TextField
           variant="outlined"
+          defaultValue=""
           value={metadataValues.applicationLink}
           onChange={e => {
             setMetadataField(
@@ -151,7 +169,8 @@ const JobPostingDetailsForm = ({
               e.target.value
             );
           }}
-          helperText="Please fill in the full URL address, with http(s)://."
+          error={metaErrors?.vacancyTrackingApplicationurl}
+          helperText={metaErrors?.vacancyTrackingApplicationurl}
         />
       </JobPostingFieldContainer>
     </JobAdStepContainer>
