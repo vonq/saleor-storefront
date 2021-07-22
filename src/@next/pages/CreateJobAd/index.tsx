@@ -32,8 +32,38 @@ const CreateJobAd = () => {
 
   const [jobFunctionList, setJobFunctionList] = useState<JobCategory[]>([]);
   const [loading, setLoading] = useState(true);
-  const { metadataValues } = useCheckoutMetadata();
   const [metadataErrors, setMetadataErrors] = useState<any>([]);
+  const { metadata } = useCheckoutMetadata();
+
+  const [metadataValues, setMetadataValues] = useState<any>({
+    // Job Posting Details
+    jobTitle: metadata && metadata[CheckoutMetadataTypes.JobTitle],
+    jobDescription: metadata && metadata[CheckoutMetadataTypes.JobDescription],
+    jobDetailLink: metadata && metadata[CheckoutMetadataTypes.VacancyURL],
+    applicationLink: metadata && metadata[CheckoutMetadataTypes.ApplicationURL],
+    jobExperience: metadata && metadata[CheckoutMetadataTypes.MinExp],
+    jobFunction: metadata && metadata[CheckoutMetadataTypes.JobFunction],
+    industry: metadata && metadata[CheckoutMetadataTypes.Industry],
+    // Job Criteria
+    employmentType: metadata && metadata[CheckoutMetadataTypes.VacancyType],
+    minHours: metadata && metadata[CheckoutMetadataTypes.MinWorkingHours],
+    maxHours: metadata && metadata[CheckoutMetadataTypes.MaxWorkingHours],
+    minSalary: metadata && metadata[CheckoutMetadataTypes.SalaryMinAmount],
+    maxSalary: metadata && metadata[CheckoutMetadataTypes.SalaryMaxAmount],
+    currency: metadata && metadata[CheckoutMetadataTypes.SalaryCurrency],
+    period: metadata && metadata[CheckoutMetadataTypes.SalaryPerPeriod],
+    contactName: metadata && metadata[CheckoutMetadataTypes.ContactName],
+    contactPhone: metadata && metadata[CheckoutMetadataTypes.ContactNumber],
+    seniority: metadata && metadata[CheckoutMetadataTypes.Seniority],
+    education: metadata && metadata[CheckoutMetadataTypes.EducationLevel],
+  });
+
+  const setMetaFieldData = (field: any, value: any) => {
+    setMetadataValues((values: any) => ({
+      ...values,
+      [field]: value,
+    }));
+  };
 
   useEffect(() => {
     const fetchJobList = async () => {
@@ -68,7 +98,7 @@ const CreateJobAd = () => {
       setMetadataErrors(data?.updateMetadata?.metadataErrors);
     }, 5000);
     return () => clearInterval(intervalId);
-  }, [checkout?.id]);
+  }, [checkout?.id, metadataValues]);
 
   const metaErrors: any = useMemo(() => {
     if (!metadataErrors || !metadataErrors.length) {
@@ -125,6 +155,8 @@ const CreateJobAd = () => {
 
   return (
     <CreateJobAdContent
+      setMetaFieldData={setMetaFieldData}
+      metadataValues={metadataValues}
       jobFunctionList={jobFunctionList}
       metaErrors={metaErrors}
     />

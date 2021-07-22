@@ -25,11 +25,15 @@ const useStyles = makeStyles<Theme>(theme => ({
 }));
 
 const CreateJobAdContent = ({
+  metadataValues,
   jobFunctionList,
   metaErrors,
+  setMetaFieldData,
 }: {
+  metadataValues: any;
   jobFunctionList: Array<JobCategory>;
   metaErrors: any;
+  setMetaFieldData: Function;
 }) => {
   const classes = useStyles();
   return (
@@ -46,10 +50,16 @@ const CreateJobAdContent = ({
             </Typography>
           </Box>
           <JobPostingDetailsForm
+            metadataValues={metadataValues}
             jobFunctionList={jobFunctionList}
             metaErrors={metaErrors}
+            setMetaFieldData={setMetaFieldData}
           />
-          <JobCriteriaForm metaErrors={metaErrors} />
+          <JobCriteriaForm
+            metaErrors={metaErrors}
+            metadataValues={metadataValues}
+            setMetaFieldData={setMetaFieldData}
+          />
         </Grid>
       </Grid>
     </Container>

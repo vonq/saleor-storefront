@@ -11,7 +11,6 @@ import React from "react";
 
 import { CheckoutMetadataTypes } from "@app/CheckoutUtils/constants";
 import { IndustryOptions } from "@components/organisms/SetTargetGroup/constants";
-import { useCheckoutMetadata } from "@hooks/useCheckoutMetadata";
 import JobAdStepContainer from "@pages/CreateJobAd/JobAdStepContainer";
 import JobPostingFieldContainer from "@pages/CreateJobAd/JobPostingFieldContainer";
 import JobStepNumber from "@pages/CreateJobAd/JobStepNumber";
@@ -23,14 +22,16 @@ export interface JobCategory {
 }
 
 const JobPostingDetailsForm = ({
+  metadataValues,
   jobFunctionList,
   metaErrors,
+  setMetaFieldData,
 }: {
+  metadataValues: any;
   jobFunctionList: Array<JobCategory>;
   metaErrors: any;
+  setMetaFieldData: Function;
 }) => {
-  const { metadataValues, setMetadataField } = useCheckoutMetadata();
-
   return (
     <JobAdStepContainer>
       <JobStepNumber number={1} title="Job posting details" />
@@ -44,9 +45,9 @@ const JobPostingDetailsForm = ({
           error={metaErrors?.vacancyJobtitle}
           helperText={metaErrors?.vacancyJobtitle}
           defaultValue=""
-          value={metadataValues.jobTitle}
+          value={metadataValues?.jobTitle}
           onChange={e => {
-            setMetadataField(CheckoutMetadataTypes.JobTitle, e.target.value);
+            setMetaFieldData("jobTitle", e.target.value);
           }}
           InputProps={{
             startAdornment: (
@@ -64,13 +65,10 @@ const JobPostingDetailsForm = ({
           error={metaErrors?.vacancyTaxonomyJobcategoryid}
         >
           <Select
-            value={metadataValues.jobFunction}
+            value={metadataValues?.jobFunction}
             defaultValue=""
             onChange={e => {
-              setMetadataField(
-                CheckoutMetadataTypes.JobFunction,
-                e.target.value
-              );
+              setMetaFieldData("jobFunction", e.target.value);
             }}
             displayEmpty
           >
@@ -97,10 +95,10 @@ const JobPostingDetailsForm = ({
           error={metaErrors?.vacancyTaxonomyIndustry}
         >
           <Select
-            value={metadataValues.industry}
+            value={metadataValues?.industry}
             defaultValue=""
             onChange={e => {
-              setMetadataField(CheckoutMetadataTypes.Industry, e.target.value);
+              setMetaFieldData("industry", e.target.value);
             }}
             displayEmpty
           >
@@ -126,14 +124,11 @@ const JobPostingDetailsForm = ({
           <TextField
             variant="outlined"
             defaultValue=""
-            value={metadataValues.jobDescription}
+            value={metadataValues?.jobDescription}
             error={metaErrors?.vacancyDescription}
             helperText={metaErrors?.vacancyDescription}
             onChange={e => {
-              setMetadataField(
-                CheckoutMetadataTypes.JobDescription,
-                e.target.value
-              );
+              setMetaFieldData("jobDescription", e.target.value);
             }}
           />
         </FormControl>
@@ -146,9 +141,9 @@ const JobPostingDetailsForm = ({
         <TextField
           variant="outlined"
           defaultValue=""
-          value={metadataValues.jobDetailLink}
+          value={metadataValues?.jobDetailLink}
           onChange={e => {
-            setMetadataField(CheckoutMetadataTypes.VacancyURL, e.target.value);
+            setMetaFieldData("jobDetailLink", e.target.value);
           }}
           error={!!metaErrors?.vacancyTrackingVacancyUrl}
           helperText={metaErrors?.vacancyTrackingVacancyUrl}
@@ -162,12 +157,9 @@ const JobPostingDetailsForm = ({
         <TextField
           variant="outlined"
           defaultValue=""
-          value={metadataValues.applicationLink}
+          value={metadataValues?.applicationLink}
           onChange={e => {
-            setMetadataField(
-              CheckoutMetadataTypes.ApplicationURL,
-              e.target.value
-            );
+            setMetaFieldData("applicationLink", e.target.value);
           }}
           error={metaErrors?.vacancyTrackingApplicationurl}
           helperText={metaErrors?.vacancyTrackingApplicationurl}

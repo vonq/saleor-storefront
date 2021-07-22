@@ -11,7 +11,6 @@ import {
 } from "@material-ui/core";
 import React from "react";
 
-import { CheckoutMetadataTypes } from "@app/CheckoutUtils/constants";
 import {
   currencies,
   employmentTypes,
@@ -21,7 +20,6 @@ import {
   EducationOptions,
   SeniorityOptions,
 } from "@components/organisms/SetTargetGroup/constants";
-import { useCheckoutMetadata } from "@hooks/useCheckoutMetadata";
 import JobAdStepContainer from "@pages/CreateJobAd/JobAdStepContainer";
 import JobPostingFieldContainer from "@pages/CreateJobAd/JobPostingFieldContainer";
 import JobStepNumber from "@pages/CreateJobAd/JobStepNumber";
@@ -34,9 +32,16 @@ const useStyles = makeStyles<Theme>(theme => ({
   },
 }));
 
-const JobCriteriaForm = ({ metaErrors }: { metaErrors: any }) => {
+const JobCriteriaForm = ({
+  metaErrors,
+  metadataValues,
+  setMetaFieldData,
+}: {
+  metaErrors: any;
+  metadataValues: any;
+  setMetaFieldData: Function;
+}) => {
   const classes = useStyles();
-  const { metadataValues, setMetadataField } = useCheckoutMetadata();
 
   return (
     <JobAdStepContainer>
@@ -48,13 +53,10 @@ const JobCriteriaForm = ({ metaErrors }: { metaErrors: any }) => {
           error={metaErrors?.vacancyEducationLevelId}
         >
           <Select
-            value={metadataValues.education}
+            value={metadataValues?.education}
             defaultValue=""
             onChange={e => {
-              setMetadataField(
-                CheckoutMetadataTypes.EducationLevel,
-                e.target.value
-              );
+              setMetaFieldData("education", e.target.value);
             }}
             displayEmpty
           >
@@ -75,13 +77,10 @@ const JobCriteriaForm = ({ metaErrors }: { metaErrors: any }) => {
       <JobPostingFieldContainer title="Employment Type">
         <FormControl variant="outlined" error={metaErrors?.vacancyType}>
           <Select
-            value={metadataValues.employmentType}
+            value={metadataValues?.employmentType}
             defaultValue=""
             onChange={e => {
-              setMetadataField(
-                CheckoutMetadataTypes.VacancyType,
-                e.target.value
-              );
+              setMetaFieldData("employmentType", e.target.value);
             }}
             displayEmpty
           >
@@ -103,10 +102,10 @@ const JobCriteriaForm = ({ metaErrors }: { metaErrors: any }) => {
           error={metaErrors?.vacancyTaxonomySeniorityId}
         >
           <Select
-            value={metadataValues.seniority}
+            value={metadataValues?.seniority}
             defaultValue=""
             onChange={e => {
-              setMetadataField(CheckoutMetadataTypes.Seniority, e.target.value);
+              setMetaFieldData("seniority", e.target.value);
             }}
             displayEmpty
           >
@@ -138,13 +137,8 @@ const JobCriteriaForm = ({ metaErrors }: { metaErrors: any }) => {
             variant="outlined"
             type="number"
             defaultValue=""
-            value={metadataValues.minHours}
-            onChange={e =>
-              setMetadataField(
-                CheckoutMetadataTypes.MinWorkingHours,
-                e.target.value
-              )
-            }
+            value={metadataValues?.minHours}
+            onChange={e => setMetaFieldData("minHours", e.target.value)}
             error={metaErrors?.vacancyWorkinghoursMinimum}
             helperText={metaErrors?.vacancyWorkinghoursMinimum}
           />
@@ -160,13 +154,8 @@ const JobCriteriaForm = ({ metaErrors }: { metaErrors: any }) => {
             variant="outlined"
             type="number"
             defaultValue=""
-            value={metadataValues.maxHours}
-            onChange={e =>
-              setMetadataField(
-                CheckoutMetadataTypes.MaxWorkingHours,
-                e.target.value
-              )
-            }
+            value={metadataValues?.maxHours}
+            onChange={e => setMetaFieldData("maxHours", e.target.value)}
             error={metaErrors?.vacancyWorkinghoursMaximum}
             helperText={metaErrors?.vacancyWorkinghoursMaximum}
           />
@@ -190,13 +179,8 @@ const JobCriteriaForm = ({ metaErrors }: { metaErrors: any }) => {
             variant="outlined"
             type="number"
             defaultValue=""
-            value={metadataValues.minSalary}
-            onChange={e =>
-              setMetadataField(
-                CheckoutMetadataTypes.SalaryMinAmount,
-                e.target.value
-              )
-            }
+            value={metadataValues?.minSalary}
+            onChange={e => setMetaFieldData("minSalary", e.target.value)}
             error={metaErrors?.vacancySalaryMinimumamount}
             helperText={metaErrors?.vacancySalaryMinimumamount}
           />
@@ -212,13 +196,8 @@ const JobCriteriaForm = ({ metaErrors }: { metaErrors: any }) => {
             variant="outlined"
             type="number"
             defaultValue=""
-            value={metadataValues.maxSalary}
-            onChange={e =>
-              setMetadataField(
-                CheckoutMetadataTypes.SalaryMaxAmount,
-                e.target.value
-              )
-            }
+            value={metadataValues?.maxSalary}
+            onChange={e => setMetaFieldData("maxSalary", e.target.value)}
             error={metaErrors?.vacancySalaryMaximumamount}
             helperText={metaErrors?.vacancySalaryMaximumamount}
           />
@@ -235,13 +214,10 @@ const JobCriteriaForm = ({ metaErrors }: { metaErrors: any }) => {
             error={metaErrors?.vacancySalaryCurrency}
           >
             <Select
-              value={metadataValues.currency}
+              value={metadataValues?.currency}
               defaultValue=""
               onChange={e => {
-                setMetadataField(
-                  CheckoutMetadataTypes.SalaryCurrency,
-                  e.target.value
-                );
+                setMetaFieldData("currency", e.target.value);
               }}
               displayEmpty
             >
@@ -266,13 +242,10 @@ const JobCriteriaForm = ({ metaErrors }: { metaErrors: any }) => {
             error={metaErrors?.vacancySalaryPerperiod}
           >
             <Select
-              value={metadataValues.period}
+              value={metadataValues?.period}
               defaultValue=""
               onChange={e => {
-                setMetadataField(
-                  CheckoutMetadataTypes.SalaryPerPeriod,
-                  e.target.value
-                );
+                setMetaFieldData("period", e.target.value);
               }}
               displayEmpty
             >
