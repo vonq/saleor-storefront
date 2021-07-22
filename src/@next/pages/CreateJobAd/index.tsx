@@ -1,4 +1,5 @@
 import {
+  Box,
   Container,
   Grid,
   makeStyles,
@@ -23,15 +24,9 @@ const useStyles = makeStyles<Theme>(theme => ({
     display: "flex",
     flexWrap: "wrap",
   },
-  products: {
-    padding: theme.spacing(2),
-  },
-  loading: {
-    textAlign: "center",
-  },
-  step: {
-    backgroundColor: theme.palette.primary.main,
-    marginRight: theme.spacing(1),
+  header: {
+    marginTop: theme.spacing(5),
+    marginBottom: theme.spacing(2),
   },
 }));
 
@@ -95,13 +90,15 @@ const CreateJobAd = () => {
     <Container maxWidth="xl" className={classes.root}>
       <Grid container justify="center">
         <Grid item xs={8}>
-          <Typography variant="h4" component="h1">
-            Create your job ad(s)
-          </Typography>
-          <Typography variant="body1" component="h6">
-            Fill in the needed information for your job posting(s). Some fields
-            are required by job boards to be able to post on it.
-          </Typography>
+          <Box className={classes.header}>
+            <Typography variant="h4" component="h1">
+              Create your job ad(s)
+            </Typography>
+            <Typography variant="body1" component="h6">
+              Fill in the needed information for your job posting(s). Some
+              fields are required by job boards to be able to post on it.
+            </Typography>
+          </Box>
           <JobPostingDetailsForm />
           <JobCriteriaForm />
         </Grid>

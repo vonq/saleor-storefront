@@ -1,4 +1,4 @@
-import { Box, Typography } from "@material-ui/core";
+import { Box, makeStyles, Theme, Typography } from "@material-ui/core";
 import React, { ReactNode } from "react";
 
 interface IProps {
@@ -7,19 +7,40 @@ interface IProps {
   children: ReactNode;
 }
 
-const JobPostingFieldContainer = ({ title, description, children }: IProps) => (
-  <Box display="flex" flexDirection="column">
-    <Typography variant="h6" component="h3">
-      {title}
-    </Typography>
-    {description && (
-      <Typography variant="body2" component="p">
-        {description}
+const useStyles = makeStyles<Theme>(theme => ({
+  root: {
+    display: "flex",
+    flexDirection: "column",
+    marginBottom: theme.spacing(2),
+  },
+  title: {
+    marginBottom: theme.spacing(1),
+  },
+  description: {
+    marginBottom: theme.spacing(1),
+  },
+}));
+
+const JobPostingFieldContainer = ({ title, description, children }: IProps) => {
+  const classes = useStyles();
+  return (
+    <Box className={classes.root}>
+      <Typography variant="h6" component="h3" className={classes.title}>
+        {title}
       </Typography>
-    )}
-    {children}
-  </Box>
-);
+      {description && (
+        <Typography
+          variant="body2"
+          component="p"
+          className={classes.description}
+        >
+          {description}
+        </Typography>
+      )}
+      {children}
+    </Box>
+  );
+};
 
 JobPostingFieldContainer.defaultProps = {
   description: "",
