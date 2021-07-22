@@ -9,7 +9,6 @@ import {
 import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
 import React from "react";
 
-import { CheckoutMetadataTypes } from "@app/CheckoutUtils/constants";
 import { IndustryOptions } from "@components/organisms/SetTargetGroup/constants";
 import JobAdStepContainer from "@pages/CreateJobAd/JobAdStepContainer";
 import JobPostingFieldContainer from "@pages/CreateJobAd/JobPostingFieldContainer";

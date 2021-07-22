@@ -6,7 +6,10 @@ import {
   CheckoutMetadataTypes,
   CheckoutValueTypes,
 } from "@app/CheckoutUtils/constants";
-import { updateMetadataQuery } from "@app/CheckoutUtils/updateMetadata";
+import {
+  MetadataInput,
+  updateMetadataQuery,
+} from "@app/CheckoutUtils/updateMetadata";
 import { Loader } from "@components/atoms";
 import {
   apolloClient,
@@ -33,7 +36,7 @@ const CreateJobAd = () => {
   const [jobFunctionList, setJobFunctionList] = useState<JobCategory[]>([]);
   const [loading, setLoading] = useState(true);
   const [metadataErrors, setMetadataErrors] = useState<any>([]);
-  const { metadata } = useCheckoutMetadata();
+  const { metadata, appendMetadata } = useCheckoutMetadata();
 
   const [metadataValues, setMetadataValues] = useState<any>({
     // Job Posting Details
@@ -95,7 +98,21 @@ const CreateJobAd = () => {
           metadata,
         },
       });
-      setMetadataErrors(data?.updateMetadata?.metadataErrors);
+      const updateMetadata = data?.updateMetadata;
+      const errors = updateMetadata?.metadataErrors || [];
+      setMetadataErrors(errors);
+
+      if (errors?.length) {
+        return;
+      }
+
+      const newData =
+        updateMetadata?.item?.metadata.map(({ key, value }: MetadataInput) => ({
+          [key]: value,
+        })) || [];
+      const newMetadata = {};
+      Object.assign(newMetadata, ...newData);
+      appendMetadata(newMetadata);
     }, 5000);
     return () => clearInterval(intervalId);
   }, [checkout?.id, metadataValues]);

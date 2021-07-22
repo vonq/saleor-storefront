@@ -17,6 +17,7 @@ const useStyles = makeStyles<Theme>(theme => ({
   root: {
     display: "flex",
     flexWrap: "wrap",
+    maxWidth: "1248px",
   },
   header: {
     marginTop: theme.spacing(5),
@@ -39,7 +40,7 @@ const CreateJobAdContent = ({
   return (
     <Container maxWidth="xl" className={classes.root}>
       <Grid container justify="center">
-        <Grid item xs={8}>
+        <Grid item xs={12}>
           <Box className={classes.header}>
             <Typography variant="h4" component="h1">
               Create your job ad(s)
