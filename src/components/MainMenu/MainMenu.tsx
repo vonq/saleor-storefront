@@ -44,12 +44,13 @@ const MainMenu: React.FC<MainMenuProps> = ({ demoMode }) => {
   const overlayContext = useContext(OverlayContext);
 
   // const { user, signOut } = useAuth();
-  const { signOut } = useAuth();
-  const { user } = useAuth0();
+  const { user, logout } = useAuth0();
   const { items } = useCart();
 
   const handleSignOut = () => {
-    signOut();
+    logout({
+      returnTo: window.location.origin,
+    });
   };
 
   const cartItemsQuantity =
