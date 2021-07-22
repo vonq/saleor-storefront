@@ -4,8 +4,11 @@ import BackupIcon from "@material-ui/icons/Backup";
 import Button from "@material-ui/core/Button";
 import EventOutlinedIcon from "@material-ui/icons/EventOutlined";
 import PersonOutlinedIcon from "@material-ui/icons/PersonOutlined";
+import { useIntl } from "react-intl";
 import _get from "lodash/get";
 import _values from "lodash/values";
+
+import messages from '../messages';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -54,16 +57,15 @@ interface CompProps {
 
 export const VacancyListItem: React.FC<CompProps> = ({ data }) => {
   const classes = useStyles();
+  const intl = useIntl();
 
-  const createdAtParsed = new Date(
-    data["createdAt"]
-  ).toLocaleDateString();
+  const createdAtParsed = new Date(data["createdAt"]).toLocaleDateString();
 
   return (
     <div className={classes.root}>
       <div className={classes.card}>
         <div className={classes.cardInfo}>
-          <h2>{data['title']}</h2>
+          <h2>{data["title"]}</h2>
           <ul>
             <li>
               <BackupIcon />
@@ -81,7 +83,7 @@ export const VacancyListItem: React.FC<CompProps> = ({ data }) => {
         </div>
         <div className={classes.cardActions}>
           <Button variant="contained" color="primary" size="small">
-            Start campaign
+            {intl.formatMessage(messages.startCampaign)}
           </Button>
         </div>
       </div>

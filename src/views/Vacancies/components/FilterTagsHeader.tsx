@@ -1,12 +1,14 @@
 import React, { useMemo } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Chip, Typography } from "@material-ui/core";
+import { useIntl } from "react-intl";
 import _get from "lodash/get";
 
 import {
   VacancySearchCriteria,
   VacancyFacetMap,
 } from "@temp/core/apiLayer/vacancyService";
+import messages from "../messages";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -33,6 +35,7 @@ export const FilterTagsHeader: React.FC<CompProps> = ({
   onChangeCriteria,
 }) => {
   const classes = useStyles();
+  const intl = useIntl();
   const tags = flattenFacets(criteria, facetGroups);
 
   const handleTagDelete = (facetKey, value) => {
@@ -55,7 +58,7 @@ export const FilterTagsHeader: React.FC<CompProps> = ({
         className={classes.title}
         gutterBottom
       >
-        Filters
+        {intl.formatMessage(messages.filters)}
       </Typography>
 
       <div>

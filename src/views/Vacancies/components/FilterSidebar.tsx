@@ -3,12 +3,14 @@ import { makeStyles } from "@material-ui/core/styles";
 import { TextField, Typography, InputAdornment } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import CloseIcon from "@material-ui/icons/Close";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import {
   VacancySearchCriteria,
   VacancyFacetMap,
 } from "@temp/core/apiLayer/vacancyService";
 import FacetFilter from "./FacetFilter";
+import messages from "../messages";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -42,20 +44,22 @@ export const FilterSidebar: React.FC<CompProps> = ({
   onChangeCriteria,
 }) => {
   const classes = useStyles();
+  const intl = useIntl();
+
   const handleQueryChange = e => {
     onChangeCriteria("query", [e.target.value || ""]);
   };
   const handleQueryClear = () => {
     onChangeCriteria("query", "");
   };
-  const hasQuery = !!criteria["query"];
+  const isQueryPresent = !!criteria["query"];
 
   return (
     <div className={classes.root}>
       <div className={classes.group}>
         <TextField
           id="search-query"
-          placeholder="Search on vacancies"
+          placeholder={intl.formatMessage(messages.searchVacancies)}
           fullWidth
           value={criteria["query"]}
           onChange={handleQueryChange}
@@ -65,7 +69,7 @@ export const FilterSidebar: React.FC<CompProps> = ({
                 <SearchIcon />
               </InputAdornment>
             ),
-            ...(hasQuery && {
+            ...(isQueryPresent && {
               endAdornment: (
                 <InputAdornment
                   position="end"
@@ -86,10 +90,10 @@ export const FilterSidebar: React.FC<CompProps> = ({
           variant="subtitle2"
           className={classes.groupLabel}
         >
-          Search Results
+          {intl.formatMessage(messages.searchResults)}
         </Typography>
         <Typography color="textPrimary" variant="subtitle1">
-          {`${totalCount || 0} vacancies`}
+          <FormattedMessage {...messages.searchResultCount} values={{ totalCount }} />
         </Typography>
       </div>
 
@@ -100,7 +104,7 @@ export const FilterSidebar: React.FC<CompProps> = ({
           className={classes.groupLabel}
           gutterBottom
         >
-          Filter By
+          {intl.formatMessage(messages.filterBy)}
         </Typography>
 
         {Object.entries(facetGroups).map(([key, group]) => (
