@@ -8,6 +8,7 @@ import { useIntl } from "react-intl";
 import {
   fetchOptions,
   Option,
+  OptionType,
 } from "@temp/core/apiLayer/productSearchOptionsService";
 import { SearchProductCriteria } from "@temp/core/apiLayer/productService";
 
@@ -18,8 +19,8 @@ const normalizeOptions = (options: Option[]) =>
     (acc, option) => {
       if (
         acc[option.type] ||
-        (option.type === "jobFunction" && acc.jobTitle) ||
-        (option.type === "jobTitle" && acc.jobFunction)
+        (option.type === OptionType.JobFunction && acc.jobTitle) ||
+        (option.type === OptionType.JobTitle && acc.jobFunction)
       ) {
         return acc;
       }
@@ -41,13 +42,13 @@ const normalizeOptions = (options: Option[]) =>
 const toSearchProductCriteria = (options: Option[]): SearchProductCriteria => {
   return options.reduce<SearchProductCriteria>((acc, option) => {
     switch (option.type) {
-      case "channelTitle":
+      case OptionType.ChannelTitle:
         return { ...acc, name: String(option.value) };
-      case "jobFunction":
+      case OptionType.JobFunction:
         return { ...acc, jobFunctionId: Number(option.value) };
-      case "jobTitle":
+      case OptionType.JobTitle:
         return { ...acc, jobTitleId: Number(option.value) };
-      case "location":
+      case OptionType.Location:
         return { ...acc, includeLocationId: Number(option.value) };
       default:
         return acc;

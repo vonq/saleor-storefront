@@ -2,8 +2,15 @@ import { stringify } from "query-string";
 
 import { pkbUrl } from "@temp/constants";
 
+export enum OptionType {
+  ChannelTitle = "channelTitle",
+  JobTitle = "jobTitle",
+  JobFunction = "jobFunction",
+  Location = "location",
+}
+
 export interface Option {
-  type: "channelTitle" | "jobTitle" | "jobFunction" | "location";
+  type: OptionType;
   label: string;
   extraLabel?: string;
   value: string | number;
@@ -22,7 +29,7 @@ const fetchJobTitle = async (text: string): Promise<Option[]> => {
 
   return response.results.map(i => {
     return {
-      type: "jobTitle",
+      type: OptionType.JobTitle,
       label: i.name,
       value: i.id,
     };
@@ -42,7 +49,7 @@ const fetchJobFunctions = async (text: string): Promise<Option[]> => {
 
   return response.slice(0, 4).map(i => {
     return {
-      type: "jobFunction",
+      type: OptionType.JobFunction,
       label: i.name,
       value: i.id,
     };
@@ -78,7 +85,7 @@ const fetchLocations = async (text: string): Promise<Option[]> => {
 
   return response.slice(0, 4).map(i => {
     return {
-      type: "location",
+      type: OptionType.Location,
       label: i.canonical_name,
       extraLabel:
         extractWithin(i.within, ["region", "country"]).join(", ") || null,
@@ -91,7 +98,7 @@ export const fetchOptions = (searchText: string) => {
   const waitFor: Promise<Option[]>[] = [
     Promise.resolve([
       {
-        type: "channelTitle",
+        type: OptionType.ChannelTitle,
         label: searchText,
         value: searchText,
       },
