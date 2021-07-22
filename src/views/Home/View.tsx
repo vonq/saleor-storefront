@@ -13,7 +13,7 @@ import { TypedHomePageQuery } from "./queries";
 import "./scss/index.scss";
 
 const View: React.FC<NextPage> = () => {
-  const { getIdTokenClaims } = useAuth0();
+  const { getAccessTokenSilently } = useAuth0();
   const { pathname, asPath, replace } = useRouter();
   const shouldRedirect = pathname === "/" && pathname !== asPath;
 
@@ -25,11 +25,12 @@ const View: React.FC<NextPage> = () => {
    */
   React.useEffect(() => {
     const getToken = async () => {
-      const claims = await getIdTokenClaims();
-      const idToken = claims && claims["__raw"];
-      if (idToken) {
-        console.log("[Access Token]", idToken);
-        localStorage.setItem("token", idToken);
+      try {
+        const accessToken = await getAccessTokenSilently();
+        console.log("[Access Token]", accessToken);
+        localStorage.setItem("token", accessToken);
+      } catch(err) {
+        console.log(err);
       }
     };
     getToken();
