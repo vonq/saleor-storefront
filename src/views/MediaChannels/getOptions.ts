@@ -35,19 +35,33 @@ const getJobTitles = async (text: string): Promise<Option[]> => {
 };
 
 const getJobFunctions = async (text: string): Promise<Option[]> => {
-  const response = await pkbApi.getJobFunctions({ text }).catch(() => null);
+  if (!this.jobFunctionList) {
+    this.jobFunctionList = pkbApi
+      .getJobFunctions()
+      .catch(() => null)
+      .then(response => {
+        if (!Array.isArray(response)) {
+          return [];
+        }
 
-  if (!Array.isArray(response)) {
-    return [];
+        const toOption = i => [
+          {
+            type: OptionType.JobFunction,
+            label: i.name,
+            value: i.id,
+          },
+          ...(Array.isArray(i.children) ? i.children.flatMap(toOption) : []),
+        ];
+
+        return response
+          .flatMap(toOption)
+          .sort((a, b) => a.label?.localeCompare(b.label));
+      });
   }
 
-  return response.slice(0, LIMIT).map(i => {
-    return {
-      type: OptionType.JobFunction,
-      label: i.name,
-      value: i.id,
-    };
-  });
+  return (await this.jobFunctionList)
+    .filter(i => i.label?.toLowerCase().includes(text?.toLowerCase()))
+    .slice(0, LIMIT);
 };
 
 const extractWithin = (location: any, filter: string[]) => {
