@@ -41,7 +41,7 @@ const getJobFunctions = async (text: string): Promise<Option[]> => {
     return [];
   }
 
-  return response.slice(0, LIMIT - 1).map(i => {
+  return response.slice(0, LIMIT).map(i => {
     return {
       type: OptionType.JobFunction,
       label: i.name,
@@ -66,14 +66,14 @@ const extractWithin = (location: any, filter: string[]) => {
   return [location.canonical_name, ...extractWithin(location.within, filter)];
 };
 
-const getLocations = async (text: string, limit = 5): Promise<Option[]> => {
+const getLocations = async (text: string): Promise<Option[]> => {
   const response = await pkbApi.getLocations({ text }).catch(() => null);
 
   if (!Array.isArray(response)) {
     return [];
   }
 
-  return response.slice(0, limit - 1).map(i => {
+  return response.slice(0, LIMIT).map(i => {
     return {
       type: OptionType.Location,
       label: i.canonical_name,
