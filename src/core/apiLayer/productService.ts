@@ -1,7 +1,6 @@
-import { stringify } from "query-string";
 import { useEffect, useReducer } from "react";
 
-import { pkbUrl } from "@temp/constants";
+import * as pkbApi from "@temp/core/apiLayer/pkbApi";
 
 export interface SearchProductCriteria {
   name?: string;
@@ -9,24 +8,6 @@ export interface SearchProductCriteria {
   jobTitleId?: number;
   includeLocationId?: number;
 }
-
-const fetchProducts = (
-  criteria: SearchProductCriteria,
-  limit: number,
-  offset: number
-) => {
-  const query = stringify({
-    ...criteria,
-    currency: "EUR",
-    limit,
-    offset,
-  });
-  const headers = { "Accept-Language": "en" }; // @todo: Get from user
-
-  return fetch(`${pkbUrl}products/?${query}`, { headers }).then(response =>
-    response.json()
-  );
-};
 
 const initialState = {
   productList: [],
@@ -118,8 +99,14 @@ export const useSearchProducts = (
   const loadMore = () => dispatch({ type: "loadMore" });
 
   useEffect(() => {
-    fetchProducts(state.criteria, state.pageSize, state.offset).then(
-      (data: any) => {
+    pkbApi
+      .getProducts({
+        ...state.criteria,
+        currency: "EUR",
+        limit: state.pageSize,
+        offset: state.offset,
+      })
+      .then((data: any) => {
         dispatch({
           type: "itemsLoaded",
           totalCount: data.count,
@@ -127,8 +114,7 @@ export const useSearchProducts = (
           criteria: state.criteria,
           offset: state.offset,
         });
-      }
-    );
+      });
   }, [state.criteria, state.offset]);
 
   return {
