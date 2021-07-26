@@ -15,6 +15,7 @@ const useStyles = makeStyles(theme => ({
     display: "flex",
   },
   mainContent: {
+    marginTop: theme.spacing(2),
     padding: theme.spacing(2),
   },
   loaderRow: {
@@ -83,7 +84,7 @@ const VacanciesPageView: React.FC<PageProps> = ({
               }
             >
               {itemList.map(item => (
-                <VacancyCard key={item["vacancyId"]} data={item} />
+                <VacancyCard key={item["vacancyId"]} details={item} />
               ))}
             </InfiniteScroll>
           </Grid>

@@ -1,5 +1,13 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import {
+  Box,
+  Card,
+  CardActions,
+  CardContent,
+  Grid,
+  Typography,
+  makeStyles,
+} from "@material-ui/core";
 import BackupIcon from "@material-ui/icons/Backup";
 import Button from "@material-ui/core/Button";
 import EventOutlinedIcon from "@material-ui/icons/EventOutlined";
@@ -8,86 +16,75 @@ import { useIntl } from "react-intl";
 import _get from "lodash/get";
 import _values from "lodash/values";
 
+import { VacancyItem } from "@temp/core/apiLayer/vacancyService";
 import messages from "../messages";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    backgroundColor: "#f1f5f5",
-    boxShadow: "0 1px 3px 0 rgba(51, 51, 51, 0.2)",
-    marginBottom: "1rem",
-    borderRadius: "3px",
-    padding: "1.5rem",
+    marginBottom: theme.spacing(2),
   },
-  card: {
+  cardContent: {
+    padding: theme.spacing(2.5),
+  },
+  tagList: {
     display: "flex",
-    justifyContent: "space-between",
   },
-  cardInfo: {
-    "& > h2": {
-      fontWeight: 700,
-      marginBottom: "0.5rem",
-    },
-    "& ul": {
-      display: "flex",
-      fontSize: 14,
-    },
-    "& ul > li": {
-      display: "flex",
-      alignItems: "center",
-      "&:not(:first-child)": {
-        marginLeft: "1.5rem",
-      },
-    },
-    "& svg": {
-      width: "1.25rem",
-      height: "1.25rem",
-      marginRight: "0.5rem",
-    },
+  tag: {
+    display: "flex",
+    alignItems: "center",
+    marginRight: theme.spacing(3),
   },
-  cardActions: {},
+  icon: {
+    marginRight: theme.spacing(1),
+  },
 }));
+
 interface CompProps {
-  data: {
-    vacancyId: string;
-    sourceName: string;
-    createdAt: string;
-    title: string;
-  };
+  details: VacancyItem;
 }
 
-export const VacancyCard: React.FC<CompProps> = ({ data }) => {
+export const VacancyCard: React.FC<CompProps> = ({ details }) => {
   const classes = useStyles();
   const intl = useIntl();
 
-  const createdAtParsed = new Date(data["createdAt"]).toLocaleDateString();
-
   return (
-    <div className={classes.root}>
-      <div className={classes.card}>
-        <div className={classes.cardInfo}>
-          <h2>{data["title"]}</h2>
-          <ul>
-            <li>
-              <BackupIcon />
-              <span>{data["sourceName"]}</span>
-            </li>
-            <li>
-              <PersonOutlinedIcon />
-              <span>{data["recruiterName"]}</span>
-            </li>
-            <li>
-              <EventOutlinedIcon />
-              <span>{createdAtParsed}</span>
-            </li>
-          </ul>
-        </div>
-        <div className={classes.cardActions}>
-          <Button variant="contained" color="primary" size="small">
-            {intl.formatMessage(messages.startCampaign)}
-          </Button>
-        </div>
-      </div>
-    </div>
+    <Card variant="outlined" className={classes.root}>
+      <CardContent className={classes.cardContent}>
+        <Grid container direction="row" justify="space-between">
+          <Box>
+            <Typography variant="h6" gutterBottom>
+              {details.title}
+            </Typography>
+            <ul className={classes.tagList}>
+              <li className={classes.tag}>
+                <BackupIcon color="secondary" className={classes.icon} />
+                <Typography variant="subtitle2">
+                  {details.sourceName}
+                </Typography>
+              </li>
+              <li className={classes.tag}>
+                <PersonOutlinedIcon color="secondary" className={classes.icon} />
+                <Typography variant="subtitle2">
+                  {details.recruiterName}
+                </Typography>
+              </li>
+              <li className={classes.tag}>
+                <EventOutlinedIcon color="secondary" className={classes.icon} />
+                <Typography variant="subtitle2">
+                  {new Date(details.createdAt).toLocaleDateString()}
+                </Typography>
+              </li>
+            </ul>
+          </Box>
+
+          <CardActions>
+            <Button variant="outlined" color="primary">
+              <Typography variant="button">{intl.formatMessage(messages.startCampaign)}</Typography>
+            </Button>
+          </CardActions>
+        </Grid>
+      </CardContent>
+    </Card>
   );
 };
 
