@@ -9,8 +9,11 @@ import { makeStyles } from "@material-ui/core/styles";
 import SearchIcon from "@material-ui/icons/Search";
 import _get from "lodash/get";
 import React, { useMemo, useState } from "react";
+import { useIntl } from "react-intl";
 
 import { VacancyFacetSingle } from "@temp/core/apiLayer/vacancyService";
+
+import messages from "../messages";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -43,6 +46,7 @@ export const FacetFilter: React.FC<CompProps> = ({
   onChangeCriteria,
 }) => {
   const classes = useStyles();
+  const intl = useIntl();
   const [query, setQuery] = useState("");
   const optionsFiltered = useMemo(
     () =>
@@ -81,9 +85,8 @@ export const FacetFilter: React.FC<CompProps> = ({
       </Typography>
 
       <TextField
-        id="search-query"
-        // placeholder={`Search on ${facetDetails["label"]}`}
-        placeholder="Search"
+        data-testid={`query-${facetInfo.key}`}
+        placeholder={intl.formatMessage(messages.search)}
         fullWidth
         value={query}
         onChange={handleQueryChange}

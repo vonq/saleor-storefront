@@ -57,7 +57,7 @@ export const ActiveFilterTags: React.FC<CompProps> = ({
   }
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} data-testid="active-filter-tags">
       <Typography
         color="textSecondary"
         variant="subtitle2"

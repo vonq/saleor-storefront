@@ -9,7 +9,7 @@ import {
   VacancySearchCriteria,
 } from "@temp/core/apiLayer/vacancyService";
 
-import { FilterSidebar, ActiveFilterTags, VacancyCard } from "./components";
+import { ActiveFilterTags, FilterSidebar, VacancyCard } from "./components";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -48,7 +48,12 @@ const VacanciesPageView: React.FC<PageProps> = ({
   const classes = useStyles();
 
   return (
-    <Container maxWidth="xl" disableGutters className={classes.root}>
+    <Container
+      maxWidth="xl"
+      disableGutters
+      className={classes.root}
+      data-testid="page-wrapper"
+    >
       <Grid container>
         <Grid item xs={12} md={3} lg={3} xl={2}>
           <FilterSidebar
@@ -73,13 +78,18 @@ const VacanciesPageView: React.FC<PageProps> = ({
             />
 
             <InfiniteScroll
+              data-testid="vacancy-card-list"
               threshold={0}
               pageStart={0}
               initialLoad={false}
               hasMore={hasMore}
               loadMore={onLoadMore}
               loader={
-                <div className={classes.loaderRow} key="spinner-bottom">
+                <div
+                  className={classes.loaderRow}
+                  key="spinner-bottom"
+                  data-testid="loading-spinner"
+                >
                   <Loader />
                 </div>
               }

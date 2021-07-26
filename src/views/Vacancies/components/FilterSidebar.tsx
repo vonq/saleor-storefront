@@ -56,10 +56,10 @@ export const FilterSidebar: React.FC<CompProps> = ({
   const isQueryPresent = !!criteria.query;
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} data-testid="filter-sidebar">
       <div className={classes.group}>
         <TextField
-          id="search-query"
+          data-testid="query-global"
           placeholder={intl.formatMessage(messages.searchVacancies)}
           fullWidth
           value={criteria.query}
