@@ -1,13 +1,14 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import { Chip, Typography } from "@material-ui/core";
-import { useIntl } from "react-intl";
+import { makeStyles } from "@material-ui/core/styles";
 import _get from "lodash/get";
+import React from "react";
+import { useIntl } from "react-intl";
 
 import {
-  VacancySearchCriteria,
   VacancyFacetMap,
+  VacancySearchCriteria,
 } from "@temp/core/apiLayer/vacancyService";
+
 import messages from "../messages";
 
 const useStyles = makeStyles(theme => ({
@@ -95,6 +96,7 @@ const flattenFacets = (
   criteria: VacancySearchCriteria,
   facetGroups: VacancyFacetMap
 ) => {
+  const { facets } = criteria;
   const findLabel = (facetKey, value) => {
     const option = _get(facetGroups, [facetKey, "options"], []).find(
       e => e.key === value
@@ -102,19 +104,19 @@ const flattenFacets = (
     return option ? option.label || option.key : "";
   };
 
-  const { facets } = criteria;
-  let tags = [];
-
-  for (let key in facets) {
-    for (let value of facets[key]) {
-      tags.push({
-        facetKey: key,
-        value: value,
-        label: findLabel(key, value),
+  return Object.keys(facets).reduce((tagList, facetKey) => {
+    const values = facets[facetKey];
+    if (Array.isArray(values)) {
+      values.forEach(value => {
+        tagList.push({
+          facetKey,
+          value,
+          label: findLabel(facetKey, value),
+        });
       });
     }
-  }
-  return tags;
+    return tagList;
+  }, []);
 };
 
 export default FilterTagsHeader;
