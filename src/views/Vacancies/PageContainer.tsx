@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { NextPage } from "next";
 import PageView from "./PageView";
 import {
-  PAGE_SIZE,
   VacancySearchCriteria,
   useApiForVacancyFacets,
   useApiForVacancyList,
@@ -22,7 +21,7 @@ export const PageContainer: NextPage = () => {
     loading: listLoading,
     hasMore,
     loadMore,
-  } = useApiForVacancyList(criteria, PAGE_SIZE);
+  } = useApiForVacancyList(criteria);
   const { facetGroups } = useApiForVacancyFacets(criteria);
 
   // Listener for search query, facets change

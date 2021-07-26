@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Chip, Typography } from "@material-ui/core";
 import { useIntl } from "react-intl";
@@ -12,7 +12,8 @@ import messages from "../messages";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    marginBottom: theme.spacing(1),
+    marginBottom: theme.spacing(2),
+    width: "100%",
   },
   title: {
     textTransform: "uppercase",

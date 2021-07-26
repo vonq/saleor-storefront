@@ -1,27 +1,24 @@
 import * as React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import InfiniteScroll from "react-infinite-scroller";
+import { Container, Grid, makeStyles } from "@material-ui/core";
 
+import { Loader } from "@components/atoms";
 import {
   VacancyItem,
   VacancySearchCriteria,
   VacancyFacetMap,
 } from "@temp/core/apiLayer/vacancyService";
-import { FilterSidebar, FilterTagsHeader, VacancyList } from "./components";
+import { FilterSidebar, FilterTagsHeader, VacancyCard } from "./components";
 
 const useStyles = makeStyles(theme => ({
   root: {
     display: "flex",
   },
-  sidebar: {
-    flex: "none",
-    width: "18rem",
-    minHeight: "100%",
+  mainContent: {
+    padding: theme.spacing(2),
   },
-  content: {
-    flex: 1,
-    maxWidth: "48rem",
-    margin: "1.5rem auto",
-    minHeight: "100%",
+  loaderRow: {
+    height: theme.spacing(8),
   },
 }));
 
@@ -44,33 +41,55 @@ const VacanciesPageView: React.FC<PageProps> = ({
   criteria,
   hasMore,
   onChangeCriteria,
-  onLoadMore
+  onLoadMore,
 }) => {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
-      <div className={classes.sidebar}>
-        <FilterSidebar
-          totalCount={totalCount}
-          facetGroups={facetGroups}
-          criteria={criteria}
-          onChangeCriteria={onChangeCriteria}
-        />
-      </div>
-      <div className={classes.content}>
-        <FilterTagsHeader
-          facetGroups={facetGroups}
-          criteria={criteria}
-          onChangeCriteria={onChangeCriteria}
-        />
-        <VacancyList
-          itemList={itemList}
-          hasMore={hasMore}
-          onLoadMore={onLoadMore}
-        />
-      </div>
-    </div>
+    <Container maxWidth="xl" disableGutters className={classes.root}>
+      <Grid container>
+        <Grid item xs={12} md={3} lg={3} xl={2}>
+          <FilterSidebar
+            totalCount={totalCount}
+            facetGroups={facetGroups}
+            criteria={criteria}
+            onChangeCriteria={onChangeCriteria}
+          />
+        </Grid>
+        <Grid
+          item
+          container
+          xs
+          justify="center"
+          className={classes.mainContent}
+        >
+          <Grid item xs={12} md={8}>
+            <FilterTagsHeader
+              facetGroups={facetGroups}
+              criteria={criteria}
+              onChangeCriteria={onChangeCriteria}
+            />
+
+            <InfiniteScroll
+              threshold={0}
+              pageStart={0}
+              initialLoad={false}
+              hasMore={hasMore}
+              loadMore={onLoadMore}
+              loader={
+                <div className={classes.loaderRow} key="spinner-bottom">
+                  <Loader />
+                </div>
+              }
+            >
+              {itemList.map(item => (
+                <VacancyCard key={item["vacancyId"]} data={item} />
+              ))}
+            </InfiniteScroll>
+          </Grid>
+        </Grid>
+      </Grid>
+    </Container>
   );
 };
 

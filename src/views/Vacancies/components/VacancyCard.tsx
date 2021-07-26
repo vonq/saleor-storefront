@@ -8,7 +8,7 @@ import { useIntl } from "react-intl";
 import _get from "lodash/get";
 import _values from "lodash/values";
 
-import messages from '../messages';
+import messages from "../messages";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -55,7 +55,7 @@ interface CompProps {
   };
 }
 
-export const VacancyListItem: React.FC<CompProps> = ({ data }) => {
+export const VacancyCard: React.FC<CompProps> = ({ data }) => {
   const classes = useStyles();
   const intl = useIntl();
 
@@ -91,4 +91,4 @@ export const VacancyListItem: React.FC<CompProps> = ({ data }) => {
   );
 };
 
-export default VacancyListItem;
+export default VacancyCard;

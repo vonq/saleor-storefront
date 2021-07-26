@@ -3,7 +3,7 @@ import { fetchVacancyFacets, fetchVacancyList } from "./api";
 
 import { VacancyFacetSingle, VacancySearchCriteria } from "./types";
 
-export const PAGE_SIZE = 24;
+const PAGE_SIZE = 24;
 
 /**
  * Hooks for list of vacancies
@@ -71,7 +71,7 @@ function reducerForList(state, action) {
 
 export const useApiForVacancyList = (
   criteria: VacancySearchCriteria,
-  pageSize: number
+  pageSize: number = PAGE_SIZE
 ) => {
   const [state, dispatch] = useReducer(reducerForList, {
     ...initStateForList,
