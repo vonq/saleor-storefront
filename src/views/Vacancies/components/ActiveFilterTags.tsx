@@ -100,7 +100,6 @@ const flattenFacets = (
   criteria: VacancySearchCriteria,
   facetGroups: VacancyFacetMap
 ) => {
-  const { facets } = criteria;
   const findLabel = (facetKey, value) => {
     const option = _get(facetGroups, [facetKey, "options"], []).find(
       e => e.key === value
@@ -108,17 +107,17 @@ const flattenFacets = (
     return option ? option.label || option.key : "";
   };
 
-  return Object.keys(facets).reduce((tagList, facetKey) => {
-    const values = facets[facetKey];
-    if (Array.isArray(values)) {
-      values.forEach(value => {
-        tagList.push({
-          facetKey,
-          value,
-          label: findLabel(facetKey, value),
-        });
+  return Object.entries(criteria.facets).reduce((tagList, current) => {
+    const [facetKey, facetValues] = current;
+
+    facetValues.forEach(value => {
+      tagList.push({
+        facetKey,
+        value,
+        label: findLabel(facetKey, value),
       });
-    }
+    });
+
     return tagList;
   }, []);
 };
