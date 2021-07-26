@@ -1,22 +1,23 @@
-import React from "react";
 import {
   Box,
   Card,
   CardActions,
   CardContent,
   Grid,
-  Typography,
   makeStyles,
+  Typography,
 } from "@material-ui/core";
-import BackupIcon from "@material-ui/icons/Backup";
 import Button from "@material-ui/core/Button";
+import BackupIcon from "@material-ui/icons/Backup";
 import EventOutlinedIcon from "@material-ui/icons/EventOutlined";
 import PersonOutlinedIcon from "@material-ui/icons/PersonOutlined";
-import { useIntl } from "react-intl";
 import _get from "lodash/get";
 import _values from "lodash/values";
+import React from "react";
+import { useIntl } from "react-intl";
 
 import { VacancyItem } from "@temp/core/apiLayer/vacancyService";
+
 import messages from "../messages";
 
 const useStyles = makeStyles(theme => ({
@@ -63,7 +64,10 @@ export const VacancyCard: React.FC<CompProps> = ({ details }) => {
                 </Typography>
               </li>
               <li className={classes.tag}>
-                <PersonOutlinedIcon color="secondary" className={classes.icon} />
+                <PersonOutlinedIcon
+                  color="secondary"
+                  className={classes.icon}
+                />
                 <Typography variant="subtitle2">
                   {details.recruiterName}
                 </Typography>
@@ -79,7 +83,9 @@ export const VacancyCard: React.FC<CompProps> = ({ details }) => {
 
           <CardActions>
             <Button variant="outlined" color="primary">
-              <Typography variant="button">{intl.formatMessage(messages.startCampaign)}</Typography>
+              <Typography variant="button">
+                {intl.formatMessage(messages.startCampaign)}
+              </Typography>
             </Button>
           </CardActions>
         </Grid>

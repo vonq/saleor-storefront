@@ -1,16 +1,17 @@
-import React from "react";
+import { InputAdornment, TextField, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { TextField, Typography, InputAdornment } from "@material-ui/core";
-import SearchIcon from "@material-ui/icons/Search";
 import CloseIcon from "@material-ui/icons/Close";
+import SearchIcon from "@material-ui/icons/Search";
+import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import {
-  VacancySearchCriteria,
   VacancyFacetMap,
+  VacancySearchCriteria,
 } from "@temp/core/apiLayer/vacancyService";
-import FacetFilter from "./FacetFilter";
+
 import messages from "../messages";
+import FacetFilter from "./FacetFilter";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -52,7 +53,7 @@ export const FilterSidebar: React.FC<CompProps> = ({
   const handleQueryClear = () => {
     onChangeCriteria("query", "");
   };
-  const isQueryPresent = !!criteria["query"];
+  const isQueryPresent = !!criteria.query;
 
   return (
     <div className={classes.root}>
@@ -61,7 +62,7 @@ export const FilterSidebar: React.FC<CompProps> = ({
           id="search-query"
           placeholder={intl.formatMessage(messages.searchVacancies)}
           fullWidth
-          value={criteria["query"]}
+          value={criteria.query}
           onChange={handleQueryChange}
           InputProps={{
             startAdornment: (
@@ -93,7 +94,10 @@ export const FilterSidebar: React.FC<CompProps> = ({
           {intl.formatMessage(messages.searchResults)}
         </Typography>
         <Typography color="textPrimary" variant="subtitle1">
-          <FormattedMessage {...messages.searchResultCount} values={{ totalCount }} />
+          <FormattedMessage
+            {...messages.searchResultCount}
+            values={{ totalCount }}
+          />
         </Typography>
       </div>
 

@@ -1,7 +1,8 @@
 import { stringify } from "query-string";
 
-import { vacancyBaseUrl, companyId } from "@temp/constants";
-import { VacancySearchParams } from './types';
+import { companyId, vacancyBaseUrl } from "@temp/constants";
+
+import { VacancySearchParams } from "./types";
 
 const stringifyPayload = ({ offset, limit, criteria }: VacancySearchParams) => {
   const payload = {

@@ -1,12 +1,13 @@
+import { NextPage } from "next";
 import React, { useState } from "react";
 
-import { NextPage } from "next";
-import PageView from "./PageView";
 import {
-  VacancySearchCriteria,
   useApiForVacancyFacets,
   useApiForVacancyList,
+  VacancySearchCriteria,
 } from "@temp/core/apiLayer/vacancyService";
+
+import PageView from "./PageView";
 
 const initCriteria: VacancySearchCriteria = {
   query: "",

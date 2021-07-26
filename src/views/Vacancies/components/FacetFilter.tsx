@@ -1,14 +1,14 @@
-import React, { useMemo, useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import {
   Checkbox,
   FormControlLabel,
+  InputAdornment,
   TextField,
   Typography,
-  InputAdornment,
 } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 import SearchIcon from "@material-ui/icons/Search";
 import _get from "lodash/get";
+import React, { useMemo, useState } from "react";
 
 import { VacancyFacetSingle } from "@temp/core/apiLayer/vacancyService";
 
@@ -53,12 +53,12 @@ export const FacetFilter: React.FC<CompProps> = ({
   );
 
   const isChecked = option => {
-    const values = criteriaFacets[facetInfo["key"]] || [];
+    const values = criteriaFacets[facetInfo.key] || [];
     return values.includes(option.key);
   };
 
   const handleCheckOption = option => {
-    const facetKey = facetInfo["key"];
+    const facetKey = facetInfo.key;
     const values = criteriaFacets[facetKey] || [];
     const newValues = values.includes(option.key)
       ? values.filter(e => e !== option.key)
@@ -77,7 +77,7 @@ export const FacetFilter: React.FC<CompProps> = ({
         variant="subtitle2"
         classes={{ root: classes.title }}
       >
-        {facetInfo["label"]}
+        {facetInfo.label}
       </Typography>
 
       <TextField
@@ -99,7 +99,7 @@ export const FacetFilter: React.FC<CompProps> = ({
       <div className={classes.checkboxes}>
         {optionsFiltered.map(option => (
           <FormControlLabel
-            key={option["key"]}
+            key={option.key}
             classes={{
               root: classes.checkboxWrapper,
               label: classes.checkboxLabel,
@@ -111,9 +111,7 @@ export const FacetFilter: React.FC<CompProps> = ({
                 size="small"
               />
             }
-            label={`${option["label"] || option["key"]} (${
-              option["recordCount"]
-            })`}
+            label={`${option.label || option.key} (${option.recordCount})`}
           />
         ))}
       </div>

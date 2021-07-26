@@ -31,5 +31,5 @@ export interface VacancyFacetSingle {
 }
 
 export interface VacancyFacetMap {
-  [key: string]: VacancyFacetSingle
+  [key: string]: VacancyFacetSingle;
 }

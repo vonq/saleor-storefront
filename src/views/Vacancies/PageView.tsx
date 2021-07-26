@@ -1,13 +1,14 @@
+import { Container, Grid, makeStyles } from "@material-ui/core";
 import * as React from "react";
 import InfiniteScroll from "react-infinite-scroller";
-import { Container, Grid, makeStyles } from "@material-ui/core";
 
 import { Loader } from "@components/atoms";
 import {
+  VacancyFacetMap,
   VacancyItem,
   VacancySearchCriteria,
-  VacancyFacetMap,
 } from "@temp/core/apiLayer/vacancyService";
+
 import { FilterSidebar, FilterTagsHeader, VacancyCard } from "./components";
 
 const useStyles = makeStyles(theme => ({
@@ -84,7 +85,7 @@ const VacanciesPageView: React.FC<PageProps> = ({
               }
             >
               {itemList.map(item => (
-                <VacancyCard key={item["vacancyId"]} details={item} />
+                <VacancyCard key={item.vacancyId} details={item} />
               ))}
             </InfiniteScroll>
           </Grid>
