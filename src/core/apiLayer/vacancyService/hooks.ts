@@ -30,7 +30,7 @@ function reducerForList(state, action) {
         criteria: action.criteria,
         offset: 0,
         itemList: [],
-        hasMore: false,
+        hasMore: true,
         loading: true,
       };
 
