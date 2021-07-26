@@ -1,11 +1,7 @@
 import { Box, makeStyles, Theme } from "@material-ui/core";
-import Input from "@material-ui/core/Input";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import SearchIcon from "@material-ui/icons/Search";
 import * as React from "react";
-import { useIntl } from "react-intl";
 
-import { messages } from "../messages";
+import { SearchProductCriteria } from "@temp/core/apiLayer/productService";
 
 const useStyles = makeStyles<Theme>(theme => ({
   root: {
@@ -17,33 +13,14 @@ const useStyles = makeStyles<Theme>(theme => ({
 }));
 
 interface SitebarProps {
-  criteria: { name?: string };
-  onChangeCriteria: (criteria: any) => void;
+  criteria: SearchProductCriteria;
+  onChangeCriteria: (criteria: SearchProductCriteria) => void;
 }
 
-export const Sitebar: React.FC<SitebarProps> = ({
-  criteria,
-  onChangeCriteria,
-}) => {
+export const Sitebar: React.FC<SitebarProps> = () => {
   const classes = useStyles();
-  const intl = useIntl();
 
-  return (
-    <Box className={classes.root}>
-      <Input
-        id="search-channles-text"
-        placeholder={intl.formatMessage(messages.searchChannels)}
-        fullWidth
-        value={criteria.name}
-        onChange={e => onChangeCriteria({ ...criteria, name: e.target.value })}
-        startAdornment={
-          <InputAdornment position="start">
-            <SearchIcon />
-          </InputAdornment>
-        }
-      />
-    </Box>
-  );
+  return <Box className={classes.root} />;
 };
 
 export default Sitebar;
