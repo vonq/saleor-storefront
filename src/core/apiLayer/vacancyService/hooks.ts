@@ -1,6 +1,6 @@
 import { useEffect, useReducer } from "react";
-import { fetchVacancyFacets, fetchVacancyList } from "./api";
 
+import { fetchVacancyFacets, fetchVacancyList } from "./api";
 import { VacancyFacetSingle, VacancySearchCriteria } from "./types";
 
 const PAGE_SIZE = 24;
@@ -48,7 +48,7 @@ function reducerForList(state, action) {
         ...state,
         loading: false,
         itemList,
-        totalCount: totalCount,
+        totalCount,
         hasMore: itemList.length < totalCount,
       };
     }
@@ -132,7 +132,6 @@ function reducerForFacets(state, action) {
       return {
         ...state,
         criteria: action.criteria,
-        facetGroups: {},
         loading: true,
       };
 

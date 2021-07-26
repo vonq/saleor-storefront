@@ -38,7 +38,10 @@ export const FilterTagsHeader: React.FC<CompProps> = ({
 }) => {
   const classes = useStyles();
   const intl = useIntl();
-  const tags = flattenFacets(criteria, facetGroups);
+  const tagList = React.useMemo(() => flattenFacets(criteria, facetGroups), [
+    criteria,
+    facetGroups,
+  ]);
 
   const handleTagDelete = (facetKey, value) => {
     const values = criteria.facets[facetKey] || [];
@@ -48,7 +51,7 @@ export const FilterTagsHeader: React.FC<CompProps> = ({
     onChangeCriteria(facetKey, newValues);
   };
 
-  if (!tags.length) {
+  if (!tagList.length) {
     return null;
   }
 
@@ -64,7 +67,7 @@ export const FilterTagsHeader: React.FC<CompProps> = ({
       </Typography>
 
       <div>
-        {tags.map(tag => (
+        {tagList.map(tag => (
           <FilterTag
             key={`${tag.facetKey}-${tag.value}`}
             {...tag}
