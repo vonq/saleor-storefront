@@ -3,6 +3,7 @@ import Input from "@material-ui/core/Input";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import SearchIcon from "@material-ui/icons/Search";
 import * as React from "react";
+import { useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { messages } from "../messages";
@@ -27,21 +28,50 @@ export const Sitebar: React.FC<SitebarProps> = ({
 }) => {
   const classes = useStyles();
   const intl = useIntl();
+  const [searchText, setSearchText] = useState(criteria.name);
+  const timer = useRef<number>();
+
+  const onChange = e => {
+    const name = e.target.value;
+    setSearchText(name);
+
+    if (timer.current !== null) {
+      clearTimeout(timer.current);
+    }
+
+    timer.current = setTimeout(() => {
+      timer.current = null;
+
+      onChangeCriteria({ ...criteria, name });
+    }, 1200);
+  };
+
+  const onSubmit = e => {
+    e.preventDefault();
+
+    if (timer.current !== null) {
+      clearTimeout(timer.current);
+    }
+
+    onChangeCriteria({ ...criteria, name: searchText });
+  };
 
   return (
     <Box className={classes.root}>
-      <Input
-        id="search-channles-text"
-        placeholder={intl.formatMessage(messages.searchChannels)}
-        fullWidth
-        value={criteria.name}
-        onChange={e => onChangeCriteria({ ...criteria, name: e.target.value })}
-        startAdornment={
-          <InputAdornment position="start">
-            <SearchIcon />
-          </InputAdornment>
-        }
-      />
+      <form onSubmit={onSubmit}>
+        <Input
+          id="search-channles-text"
+          placeholder={intl.formatMessage(messages.searchChannels)}
+          fullWidth
+          value={searchText}
+          onChange={onChange}
+          startAdornment={
+            <InputAdornment position="start">
+              <SearchIcon />
+            </InputAdornment>
+          }
+        />
+      </form>
     </Box>
   );
 };

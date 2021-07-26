@@ -1,6 +1,6 @@
 import { stringify } from "query-string";
 
-import { companyId, vacancyBaseUrl } from "@temp/constants";
+import { companyId, vacancyUrl } from "@temp/constants";
 
 import { VacancySearchParams } from "./types";
 
@@ -24,7 +24,7 @@ export const fetchVacancyList = (searchParams: VacancySearchParams) => {
   const queryString = stringifyPayload(searchParams);
 
   return fetch(
-    `${vacancyBaseUrl}/search/vacancies/${companyId}${queryString}`
+    `${vacancyUrl}/search/vacancies/${companyId}${queryString}`
   ).then(response => response.json());
 };
 
@@ -32,6 +32,6 @@ export const fetchVacancyFacets = (searchParams: VacancySearchParams) => {
   const queryString = stringifyPayload(searchParams);
 
   return fetch(
-    `${vacancyBaseUrl}/search/facets/${companyId}${queryString}`
+    `${vacancyUrl}/search/facets/${companyId}${queryString}`
   ).then(response => response.json());
 };
