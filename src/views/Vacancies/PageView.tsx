@@ -9,7 +9,7 @@ import {
   VacancySearchCriteria,
 } from "@temp/core/apiLayer/vacancyService";
 
-import { FilterSidebar, FilterTagsHeader, VacancyCard } from "./components";
+import { FilterSidebar, ActiveFilterTags, VacancyCard } from "./components";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -66,7 +66,7 @@ const VacanciesPageView: React.FC<PageProps> = ({
           className={classes.mainContent}
         >
           <Grid item xs={12} md={8}>
-            <FilterTagsHeader
+            <ActiveFilterTags
               facetGroups={facetGroups}
               criteria={criteria}
               onChangeCriteria={onChangeCriteria}

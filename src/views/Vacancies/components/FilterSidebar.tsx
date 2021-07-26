@@ -11,7 +11,7 @@ import {
 } from "@temp/core/apiLayer/vacancyService";
 
 import messages from "../messages";
-import FacetFilter from "./FacetFilter";
+import SingleFacetFilter from "./SingleFacetFilter";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -112,7 +112,7 @@ export const FilterSidebar: React.FC<CompProps> = ({
         </Typography>
 
         {Object.entries(facetGroups).map(([key, group]) => (
-          <FacetFilter
+          <SingleFacetFilter
             key={key}
             criteriaFacets={criteria.facets}
             facetInfo={group}

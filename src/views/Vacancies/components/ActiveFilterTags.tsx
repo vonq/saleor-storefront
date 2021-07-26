@@ -25,13 +25,14 @@ const useStyles = makeStyles(theme => ({
     marginBottom: theme.spacing(0.5),
   },
 }));
+
 interface CompProps {
   facetGroups: VacancyFacetMap;
   criteria: VacancySearchCriteria;
   onChangeCriteria: Function;
 }
 
-export const FilterTagsHeader: React.FC<CompProps> = ({
+export const ActiveFilterTags: React.FC<CompProps> = ({
   facetGroups,
   criteria,
   onChangeCriteria,
@@ -122,4 +123,4 @@ const flattenFacets = (
   }, []);
 };
 
-export default FilterTagsHeader;
+export default ActiveFilterTags;
