@@ -67,7 +67,7 @@ const VacanciesPageView: React.FC<PageProps> = ({
           item
           container
           xs
-          justify="center"
+          justifyContent="center"
           className={classes.mainContent}
         >
           <Grid item xs={12} md={8}>
