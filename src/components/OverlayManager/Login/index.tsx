@@ -1,5 +1,5 @@
+import { Auth0Context, useAuth0 } from "@auth0/auth0-react";
 import * as React from "react";
-import { useAuth0, Auth0Context } from '@auth0/auth0-react';
 import { FormattedMessage } from "react-intl";
 import ReactSVG from "react-svg";
 
@@ -25,23 +25,22 @@ class Login extends React.Component<
   { overlay: OverlayContextInterface; active?: "login" | "register" },
   { active: "login" | "register" }
 > {
-
   static contextType = Auth0Context;
 
   static defaultProps = {
     active: "login",
   };
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      active: props.active,
-    };
-  }
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     active: props.active,
+  //   };
+  // }
 
-  changeActiveTab = (active: "login" | "register") => {
-    this.setState({ active });
-  };
+  // changeActiveTab = (active: "login" | "register") => {
+  //   this.setState({ active });
+  // };
 
   redirectToAuth0 = () => {
     this.context.loginWithRedirect();
@@ -67,7 +66,10 @@ class Login extends React.Component<
             </div>
 
             <div className="login-form__button">
-              <Button testingContext="auth0SignIn" onClick={this.redirectToAuth0}>
+              <Button
+                testingContext="auth0SignIn"
+                onClick={this.redirectToAuth0}
+              >
                 <FormattedMessage defaultMessage="Sign in" />
               </Button>
             </div>

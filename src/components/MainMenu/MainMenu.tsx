@@ -1,5 +1,5 @@
-import { useAuth, useCart } from "@saleor/sdk";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useAuth, useCart } from "@saleor/sdk";
 import classNames from "classnames";
 import Link from "next/link";
 import React, { useContext, useEffect, useState } from "react";

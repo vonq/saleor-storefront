@@ -1,6 +1,5 @@
-import { useAuth } from "@saleor/sdk";
 import { useAuth0 } from "@auth0/auth0-react";
-
+import { useAuth } from "@saleor/sdk";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import React from "react";

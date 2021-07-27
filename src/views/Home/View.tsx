@@ -1,7 +1,7 @@
+import { Auth0Provider, useAuth0 } from "@auth0/auth0-react";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import * as React from "react";
-import { Auth0Provider, useAuth0 } from "@auth0/auth0-react";
 
 import { Loader } from "@components/atoms";
 import { channelSlug } from "@temp/constants";
@@ -29,7 +29,7 @@ const View: React.FC<NextPage> = () => {
         const accessToken = await getAccessTokenSilently();
         console.log("[Access Token]", accessToken);
         localStorage.setItem("token", accessToken);
-      } catch(err) {
+      } catch (err) {
         console.log(err);
       }
     };

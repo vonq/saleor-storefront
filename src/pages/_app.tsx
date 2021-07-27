@@ -6,7 +6,7 @@ import { Integrations as ApmIntegrations } from "@sentry/apm";
 import * as Sentry from "@sentry/browser";
 import type { AppProps } from "next/app";
 import Head from "next/head";
-import Router from 'next/router';
+import Router from "next/router";
 import * as React from "react";
 import { positions, Provider as AlertProvider } from "react-alert";
 import TagManager from "react-gtm-module";
@@ -22,8 +22,8 @@ import { App as StorefrontApp } from "../app";
 import { LocaleProvider } from "../components/Locale";
 import {
   apiUrl,
-  auth0Domain,
   auth0ClientId,
+  auth0Domain,
   channelSlug,
   sentryDsn,
   sentrySampleRate,
@@ -52,9 +52,9 @@ const saleorConfig: ConfigInput = { apiUrl, channel: channelSlug };
 
 const notificationConfig = { position: positions.BOTTOM_RIGHT, timeout: 2500 };
 
-const onRedirectCallback = (appState) => {
+const onRedirectCallback = appState => {
   // Use Next.js's Router.replace method to replace the url
-  Router.replace(appState?.returnTo || '/');
+  Router.replace(appState?.returnTo || "/");
 };
 
 const App = ({ Component, pageProps }: AppProps) => {
@@ -78,8 +78,11 @@ const App = ({ Component, pageProps }: AppProps) => {
       <Auth0Provider
         domain={auth0Domain}
         clientId={auth0ClientId}
-        cacheLocation={"localstorage"}
-        redirectUri={typeof window !== "undefined" && window.location.origin + '/auth_callback'}
+        cacheLocation="localstorage"
+        redirectUri={
+          typeof window !== "undefined" &&
+          `${window.location.origin}/auth/callback`
+        }
         onRedirectCallback={onRedirectCallback}
       >
         <ThemeProvider theme={defaultTheme}>
