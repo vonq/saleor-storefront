@@ -1,4 +1,4 @@
-import { Auth0Provider, useAuth0 } from "@auth0/auth0-react";
+import { useAuth0 } from "@auth0/auth0-react";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import * as React from "react";
