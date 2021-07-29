@@ -44,10 +44,12 @@ const CheckoutPage = () => {
     }
   };
 
-  if (!checkout?.id) {
+  if (!checkout?.token) {
     createCheckout();
-    return null;
+  } else {
+    replace(`${paths.checkoutCreateJobAd}/?id=${checkout.token}`);
   }
+  return <Loader />;
 };
 
 export { CheckoutPage };

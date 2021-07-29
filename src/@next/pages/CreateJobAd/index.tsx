@@ -90,8 +90,11 @@ const CreateJobAd = () => {
         }
       }
     };
-    if (cartLoaded) {
+    if (cartLoaded && token) {
       generateCheckoutDetails();
+    }
+    if (cartLoaded && !token) {
+      replace("/cart");
     }
   }, [token, cartLoaded]);
 
