@@ -65,6 +65,7 @@ export const createCheckoutQuery = gql`
     ) {
       checkout {
         id
+        token
         totalPrice {
           gross {
             amount

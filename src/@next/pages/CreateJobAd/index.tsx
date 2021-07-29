@@ -1,4 +1,4 @@
-import { useAuth, useCart, useCheckout } from "@saleor/sdk";
+import { useCart, useCheckout } from "@saleor/sdk";
 import { useRouter } from "next/router";
 import React, { useEffect, useMemo, useState } from "react";
 
@@ -11,55 +11,85 @@ import {
   updateMetadataQuery,
 } from "@app/CheckoutUtils/updateMetadata";
 import { Loader } from "@components/atoms";
-import {
-  apolloClient,
-  createCheckoutQuery,
-} from "@components/organisms/SetTargetGroup/queries";
+import { apolloClient } from "@components/organisms/SetTargetGroup/queries";
 import { useCheckoutMetadata } from "@hooks/useCheckoutMetadata";
 import CreateJobAdContent from "@pages/CreateJobAd/CreateJobAdContent";
 import { JobCategory } from "@pages/CreateJobAd/JobPostingDetailsForm";
-import { fetchJobFunctionList } from "@pages/CreateJobAd/utils";
+import { getCheckoutQuery } from "@pages/CreateJobAd/queries";
+
+import { fetchJobFunctionList } from "./utils";
 
 const CreateJobAd = () => {
-  const { replace } = useRouter();
-  const { user } = useAuth();
+  const { replace, query } = useRouter();
+  const token = query?.id;
+
   const { loaded: cartLoaded, items } = useCart();
-  const {
-    loaded: checkoutLoaded,
-    checkout,
-    // payment,
-    // availablePaymentGateways,
-    // createPayment,
-    // completeCheckout,
-  } = useCheckout();
+  const { loaded: checkoutLoaded, checkout } = useCheckout();
 
   const [jobFunctionList, setJobFunctionList] = useState<JobCategory[]>([]);
   const [loading, setLoading] = useState(true);
   const [metadataErrors, setMetadataErrors] = useState<any>([]);
   const { metadata, appendMetadata } = useCheckoutMetadata();
 
-  const [metadataValues, setMetadataValues] = useState<any>({
+  const parseMetadata = (data: any) => ({
     // Job Posting Details
-    jobTitle: metadata && metadata[CheckoutMetadataTypes.JobTitle],
-    jobDescription: metadata && metadata[CheckoutMetadataTypes.JobDescription],
-    jobDetailLink: metadata && metadata[CheckoutMetadataTypes.VacancyURL],
-    applicationLink: metadata && metadata[CheckoutMetadataTypes.ApplicationURL],
-    jobExperience: metadata && metadata[CheckoutMetadataTypes.MinExp],
-    jobFunction: metadata && metadata[CheckoutMetadataTypes.JobFunction],
-    industry: metadata && metadata[CheckoutMetadataTypes.Industry],
+    jobTitle: data && data[CheckoutMetadataTypes.JobTitle],
+    jobDescription: data && data[CheckoutMetadataTypes.JobDescription],
+    jobDetailLink: data && data[CheckoutMetadataTypes.VacancyURL],
+    applicationLink: data && data[CheckoutMetadataTypes.ApplicationURL],
+    jobExperience: data && data[CheckoutMetadataTypes.MinExp],
+    jobFunction: data && data[CheckoutMetadataTypes.JobFunction],
+    industry: data && data[CheckoutMetadataTypes.Industry],
     // Job Criteria
-    employmentType: metadata && metadata[CheckoutMetadataTypes.VacancyType],
-    minHours: metadata && metadata[CheckoutMetadataTypes.MinWorkingHours],
-    maxHours: metadata && metadata[CheckoutMetadataTypes.MaxWorkingHours],
-    minSalary: metadata && metadata[CheckoutMetadataTypes.SalaryMinAmount],
-    maxSalary: metadata && metadata[CheckoutMetadataTypes.SalaryMaxAmount],
-    currency: metadata && metadata[CheckoutMetadataTypes.SalaryCurrency],
-    period: metadata && metadata[CheckoutMetadataTypes.SalaryPerPeriod],
-    contactName: metadata && metadata[CheckoutMetadataTypes.ContactName],
-    contactPhone: metadata && metadata[CheckoutMetadataTypes.ContactNumber],
-    seniority: metadata && metadata[CheckoutMetadataTypes.Seniority],
-    education: metadata && metadata[CheckoutMetadataTypes.EducationLevel],
+    employmentType: data && data[CheckoutMetadataTypes.VacancyType],
+    minHours: data && data[CheckoutMetadataTypes.MinWorkingHours],
+    maxHours: data && data[CheckoutMetadataTypes.MaxWorkingHours],
+    minSalary: data && data[CheckoutMetadataTypes.SalaryMinAmount],
+    maxSalary: data && data[CheckoutMetadataTypes.SalaryMaxAmount],
+    currency: data && data[CheckoutMetadataTypes.SalaryCurrency],
+    period: data && data[CheckoutMetadataTypes.SalaryPerPeriod],
+    contactName: data && data[CheckoutMetadataTypes.ContactName],
+    contactPhone: data && data[CheckoutMetadataTypes.ContactNumber],
+    seniority: data && data[CheckoutMetadataTypes.Seniority],
+    education: data && data[CheckoutMetadataTypes.EducationLevel],
   });
+
+  const parsed = parseMetadata(metadata);
+
+  const [metadataValues, setMetadataValues] = useState<any>(parsed);
+
+  useEffect(() => {
+    const generateCheckoutDetails = async () => {
+      const { data } = await apolloClient.query({
+        query: getCheckoutQuery,
+        variables: {
+          token,
+        },
+      });
+      if (data?.checkout?.token === token) {
+        const newCheckout = data?.checkout;
+        const newData =
+          newCheckout?.metadata.map(({ key, value }: MetadataInput) => ({
+            [key]: value,
+          })) || [];
+        const newMetadata = {};
+        Object.assign(newMetadata, ...newData);
+        localStorage.setItem(
+          "data_checkout",
+          JSON.stringify({
+            ...newCheckout,
+            lines: items,
+            metadata: newMetadata,
+          })
+        );
+        const parsed = parseMetadata(newMetadata);
+        setMetadataValues(parsed);
+      }
+    };
+    if (cartLoaded) {
+      generateCheckoutDetails();
+    }
+  }, [token, cartLoaded]);
 
   const setMetaFieldData = (field: any, value: any) => {
     setMetadataValues((values: any) => ({
@@ -134,39 +164,6 @@ const CreateJobAd = () => {
 
   if (!items || !items.length) {
     replace("/cart");
-    return null;
-  }
-
-  const createCheckout = async () => {
-    try {
-      const email = user?.email || "customer@example.com";
-      const response = await apolloClient.mutate({
-        mutation: createCheckoutQuery,
-        variables: {
-          lines: (items || []).map(item => ({
-            quantity: item.quantity,
-            variantId: item.variant.id,
-          })),
-          email,
-        },
-      });
-      const newCheckout = response?.data?.checkoutCreate?.checkout;
-      localStorage.setItem(
-        "data_checkout",
-        JSON.stringify({
-          ...newCheckout,
-          lines: items,
-          metadata: {},
-        })
-      );
-      history.go(0);
-    } catch (error) {
-      console.log("Error on creating checkout", error); // eslint-disable-line no-console
-    }
-  };
-
-  if (!checkout?.id) {
-    createCheckout();
     return null;
   }
 
