@@ -50,7 +50,7 @@ const JobCriteriaForm = ({
       <JobPostingFieldContainer title="Minimum level of education">
         <FormControl
           variant="outlined"
-          error={metaErrors?.vacancyEducationLevelId}
+          error={metaErrors?.vacancyEducationlevelid}
         >
           <Select
             value={metadataValues?.education}
@@ -66,9 +66,9 @@ const JobCriteriaForm = ({
               </MenuItem>
             ))}
           </Select>
-          {metaErrors?.vacancyEducationLevelId && (
+          {metaErrors?.vacancyEducationlevelid && (
             <FormHelperText>
-              {metaErrors.vacancyEducationLevelId}
+              {metaErrors.vacancyEducationlevelid}
             </FormHelperText>
           )}
         </FormControl>
@@ -99,7 +99,7 @@ const JobCriteriaForm = ({
       <JobPostingFieldContainer title="Seniority">
         <FormControl
           variant="outlined"
-          error={metaErrors?.vacancyTaxonomySeniorityId}
+          error={metaErrors?.vacancyTaxonomySeniorityid}
         >
           <Select
             value={metadataValues?.seniority}
@@ -115,9 +115,9 @@ const JobCriteriaForm = ({
               </MenuItem>
             ))}
           </Select>
-          {metaErrors?.vacancyTaxonomySeniorityId && (
+          {metaErrors?.vacancyTaxonomySeniorityid && (
             <FormHelperText>
-              {metaErrors.vacancyTaxonomySeniorityId}
+              {metaErrors.vacancyTaxonomySeniorityid}
             </FormHelperText>
           )}
         </FormControl>

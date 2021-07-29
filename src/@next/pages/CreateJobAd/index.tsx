@@ -54,9 +54,9 @@ const CreateJobAd = () => {
     education: data && data[CheckoutMetadataTypes.EducationLevel],
   });
 
-  const parsed = parseMetadata(metadata);
-
-  const [metadataValues, setMetadataValues] = useState<any>(parsed);
+  const [metadataValues, setMetadataValues] = useState<any>(
+    parseMetadata(metadata)
+  );
 
   useEffect(() => {
     const generateCheckoutDetails = async () => {
@@ -78,12 +78,16 @@ const CreateJobAd = () => {
           "data_checkout",
           JSON.stringify({
             ...newCheckout,
-            lines: items,
             metadata: newMetadata,
           })
         );
         const parsed = parseMetadata(newMetadata);
         setMetadataValues(parsed);
+        if (!newCheckout?.lines?.length) {
+          replace("/cart");
+        } else if (!items?.length) {
+          history.go(0);
+        }
       }
     };
     if (cartLoaded) {
@@ -115,12 +119,10 @@ const CreateJobAd = () => {
       if (!checkout?.id) {
         return;
       }
-      const metadata = Object.keys(metadataValues)
-        .filter(key => !!metadataValues[key])
-        .map(key => ({
-          key: CheckoutMetadataTypes[CheckoutValueTypes[key]],
-          value: metadataValues[key],
-        }));
+      const metadata = Object.keys(metadataValues).map(key => ({
+        key: CheckoutMetadataTypes[CheckoutValueTypes[key]],
+        value: metadataValues[key] || "",
+      }));
       const { data } = await apolloClient.mutate({
         mutation: updateMetadataQuery,
         variables: {
@@ -161,12 +163,6 @@ const CreateJobAd = () => {
   if (!cartLoaded || !checkoutLoaded || loading) {
     return <Loader />;
   }
-
-  if (!items || !items.length) {
-    replace("/cart");
-    return null;
-  }
-
   return (
     <CreateJobAdContent
       setMetaFieldData={setMetaFieldData}
