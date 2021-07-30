@@ -27,13 +27,19 @@ const App: React.FC = ({ children }) => {
     isAuthenticated,
     user,
     getAccessTokenSilently,
+    getIdTokenClaims,
   } = useAuth0();
 
   useEffect(() => {
     const setTokenToSaleor = async () => {
       const organizationId = _get(user, 'org_id', '');
       const accessToken = await getAccessTokenSilently({ org_id: organizationId });
-      setAuthToken(accessToken);
+      const idTokenClaims = await getIdTokenClaims();
+      const idToken = _get(idTokenClaims, '__raw');
+      // @TODO: figure out which token can be accepted by Saleor
+      console.log('[Access Token]', accessToken);
+      console.log('[User Details]', user);
+      // setAuthToken(accessToken);
     };
 
     if (isAuthenticated) {
