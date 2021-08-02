@@ -1,4 +1,3 @@
-import { useAuth0 } from "@auth0/auth0-react";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import * as React from "react";
@@ -13,7 +12,6 @@ import { TypedHomePageQuery } from "./queries";
 import "./scss/index.scss";
 
 const View: React.FC<NextPage> = () => {
-  const { getAccessTokenSilently } = useAuth0();
   const { pathname, asPath, replace } = useRouter();
   const shouldRedirect = pathname === "/" && pathname !== asPath;
 
@@ -24,17 +22,6 @@ const View: React.FC<NextPage> = () => {
    * be added in SALEOR-1566.
    */
   React.useEffect(() => {
-    const getToken = async () => {
-      try {
-        const accessToken = await getAccessTokenSilently();
-        console.log("[Access Token]", accessToken);
-        localStorage.setItem("token", accessToken);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getToken();
-
     if (shouldRedirect) {
       replace(asPath);
     }
