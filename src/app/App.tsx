@@ -1,8 +1,9 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { setAuthToken } from "@saleor/sdk";
+import { access } from "fs-extra";
+import _get from "lodash/get";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
-import _get from "lodash/get";
 
 import { Loader } from "@components/atoms";
 import { demoMode } from "@temp/constants";
@@ -18,7 +19,6 @@ import ShopProvider from "../components/ShopProvider";
 import Notifications from "./Notifications";
 
 import "../globalStyles/scss/index.scss";
-import { access } from "fs-extra";
 
 const App: React.FC = ({ children }) => {
   const { pathname } = useRouter();
@@ -32,13 +32,15 @@ const App: React.FC = ({ children }) => {
 
   useEffect(() => {
     const setTokenToSaleor = async () => {
-      const organizationId = _get(user, 'org_id', '');
-      const accessToken = await getAccessTokenSilently({ org_id: organizationId });
+      const organizationId = _get(user, "org_id", "");
+      const accessToken = await getAccessTokenSilently({
+        org_id: organizationId,
+      });
       const idTokenClaims = await getIdTokenClaims();
-      const idToken = _get(idTokenClaims, '__raw');
+      const idToken = _get(idTokenClaims, "__raw");
       // @TODO: figure out which token can be accepted by Saleor
-      console.log('[Access Token]', accessToken);
-      console.log('[User Details]', user);
+      console.log("[Access Token]", accessToken);
+      console.log("[User Details]", user);
       // setAuthToken(accessToken);
     };
 
