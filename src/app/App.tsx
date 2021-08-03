@@ -38,10 +38,10 @@ const App: React.FC = ({ children }) => {
       });
       const idTokenClaims = await getIdTokenClaims();
       const idToken = _get(idTokenClaims, "__raw");
-      // @TODO: figure out which token can be accepted by Saleor
       console.log("[Access Token]", accessToken);
+      console.log("[ID Token]", idToken);
       console.log("[User Details]", user);
-      // setAuthToken(accessToken);
+      setAuthToken(idToken);
     };
 
     if (isAuthenticated) {
