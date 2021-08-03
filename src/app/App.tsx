@@ -5,6 +5,7 @@ import _get from "lodash/get";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 
+import { useSaleorTokenSetter } from "@temp/hooks";
 import { Loader } from "@components/atoms";
 import { demoMode } from "@temp/constants";
 
@@ -22,32 +23,8 @@ import "../globalStyles/scss/index.scss";
 
 const App: React.FC = ({ children }) => {
   const { pathname } = useRouter();
-  const {
-    isLoading,
-    isAuthenticated,
-    user,
-    getAccessTokenSilently,
-    getIdTokenClaims,
-  } = useAuth0();
-
-  useEffect(() => {
-    const setTokenToSaleor = async () => {
-      const organizationId = _get(user, "org_id", "");
-      const accessToken = await getAccessTokenSilently({
-        org_id: organizationId,
-      });
-      const idTokenClaims = await getIdTokenClaims();
-      const idToken = _get(idTokenClaims, "__raw");
-      console.log("[Access Token]", accessToken);
-      console.log("[ID Token]", idToken);
-      console.log("[User Details]", user);
-      setAuthToken(idToken);
-    };
-
-    if (isAuthenticated) {
-      setTokenToSaleor();
-    }
-  }, [isAuthenticated]);
+  const { isLoading } = useAuth0();
+  useSaleorTokenSetter();
 
   if (isLoading) {
     return <Loader />;
