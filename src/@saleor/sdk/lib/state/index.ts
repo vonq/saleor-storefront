@@ -143,9 +143,18 @@ export class SaleorState extends NamedObservable<StateItems> {
   private verityToken = async () => {
     const { data, dataError } = await this.jobsManager.run(
       "auth",
-      "verifySignInToken",
+      "externalVerifyToken",
       undefined
     );
+
+    ////////////////////////////
+    // legacy verifySignInToken
+    ////////////////////////////
+    // const { data, dataError } = await this.jobsManager.run(
+    //   "auth",
+    //   "verifySignInToken",
+    //   undefined
+    // );
 
     if (dataError || !data?.isValid) {
       await this.jobsManager.run("auth", "signOut", undefined);

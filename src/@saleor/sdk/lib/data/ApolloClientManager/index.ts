@@ -50,6 +50,10 @@ import {
   VerifyTokenVariables,
 } from "../../mutations/gqlTypes/VerifyToken";
 import {
+  ExternalVerifyToken,
+  ExternalVerifyTokenVariables,
+} from "../../mutations/gqlTypes/ExternalVerifyToken";
+import {
   RefreshToken,
   RefreshTokenVariables,
 } from "../../mutations/gqlTypes/RefreshToken";
@@ -253,6 +257,32 @@ export class ApolloClientManager {
         isValid: data?.tokenVerify?.isValid,
         payload: data?.tokenVerify?.payload,
         user: data?.tokenVerify?.user,
+      },
+    };
+  };
+
+  externalVerifyToken = async ({ token }: VerifySignInTokenInput) => {
+    const input = JSON.stringify({
+      token,
+    });
+
+    const { data } = await this.client.mutate<
+      ExternalVerifyToken,
+      ExternalVerifyTokenVariables
+    >({
+      fetchPolicy: "no-cache",
+      mutation: AuthMutations.externalTokenVerifyMutation,
+      variables: {
+        input,
+        pluginId: "vonq.authentication.auth0",
+      },
+    });
+
+    return {
+      data: {
+        isValid: data?.externalVerify?.isValid,
+        payload: JSON.parse(data?.externalVerify?.verifyData),
+        user: data?.externalVerify?.user,
       },
     };
   };

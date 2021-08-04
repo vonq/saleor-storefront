@@ -170,6 +170,31 @@ export class AuthJobs extends JobsHandler<AuthJobsEventsValues> {
     };
   };
 
+  externalVerifyToken = async () => {
+    const token = LocalStorageHandler.getSignInToken();
+
+    if (!token) {
+      return {
+        dataError: {
+          error: new Error(
+            "Verify sign in token impossible. No token to verify received."
+          ),
+          type: DataErrorAuthTypes.VERIFY_TOKEN,
+        },
+      };
+    }
+
+    const { data } = await this.apolloClientManager.externalVerifyToken({
+      token,
+    });
+
+    console.log('[Saleor SDK] after externalVerify:', data);
+
+    return {
+      data,
+    };
+  };
+
   refreshSignInToken = async ({
     refreshToken,
   }: {

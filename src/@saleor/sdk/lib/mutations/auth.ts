@@ -1,5 +1,6 @@
 import gql from "graphql-tag";
 
+import { fragmentUser } from "../fragments/auth";
 import { accountErrorFragment } from "../fragments/errors";
 
 export const tokenAuthMutation = gql`
@@ -45,6 +46,19 @@ export const tokenRefreshMutation = gql`
       }
       errors: accountErrors {
         ...AccountError
+      }
+    }
+  }
+`;
+
+export const externalTokenVerifyMutation = gql`
+  ${fragmentUser}
+  mutation ExternalVerifyToken($pluginId: String!, $input: JSONString!) {
+    externalVerify(pluginId: $pluginId, input: $input) {
+      isValid
+      verifyData
+      user {
+        ...User
       }
     }
   }
