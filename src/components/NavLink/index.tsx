@@ -2,9 +2,10 @@ import Link from "next/link";
 import * as React from "react";
 import { generatePath } from "react-router";
 
-import { generatePageUrl } from "../../core/utils";
 import { MenuItem } from "@graphql/gqlTypes/MenuItem";
 import { paths } from "@paths";
+
+import { generatePageUrl } from "../../core/utils";
 
 interface NavLinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   item: MenuItem;

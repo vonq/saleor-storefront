@@ -30,7 +30,7 @@ export interface MenuItem_collection {
 export interface MenuItem_page {
   __typename: "Page";
   slug: string;
-  pageType: { name: string };
+  pageType?: { name: string };
 }
 
 export interface MenuItem_parent {
