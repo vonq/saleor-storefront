@@ -1,10 +1,10 @@
+import LocalStorageHandlerProxy from "./Proxy";
 import {
   ICheckoutModel,
   IJobsModel,
   IPaymentModel,
   LocalStorageItems,
 } from "./types";
-import LocalStorageHandlerProxy from "./Proxy";
 
 export class LocalStorageHandler extends LocalStorageHandlerProxy {
   static getCheckout(): ICheckoutModel | null {

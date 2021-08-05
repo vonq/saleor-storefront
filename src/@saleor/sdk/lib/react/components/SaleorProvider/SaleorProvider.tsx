@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react";
 import ApolloClient from "apollo-client";
+import React, { useEffect, useState } from "react";
 import { ApolloProvider } from "react-apollo";
 
 import { SaleorManager } from "../../..";
 import { SaleorContext, SaleorContextType } from "../../context";
-
 import { IProps } from "./types";
 
 const SaleorProvider: React.FC<IProps> = ({

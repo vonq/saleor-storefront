@@ -1,10 +1,10 @@
 import { ApolloError } from "apollo-client";
 
+import BaseDetails from "../helpers/BaseDetails";
+import BaseList, { BaseListVariables } from "../helpers/BaseList";
 import { PasswordChange } from "../mutations/gqlTypes/PasswordChange";
 import { SetPassword } from "../mutations/gqlTypes/SetPassword";
 import { TokenAuth_tokenCreate } from "../mutations/gqlTypes/TokenAuth";
-import BaseDetails from "../helpers/BaseDetails";
-import BaseList, { BaseListVariables } from "../helpers/BaseList";
 
 export interface ErrorResponse<T> {
   error?: any;

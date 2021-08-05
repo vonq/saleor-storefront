@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 
-import { accountErrorFragment } from "../fragments/errors";
 import { userFragment } from "../fragments/auth";
+import { accountErrorFragment } from "../fragments/errors";
 
 export const setCustomerDefaultAddress = gql`
   ${userFragment}

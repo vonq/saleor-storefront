@@ -1,17 +1,17 @@
 import ApolloClient from "apollo-client";
+
+import { ProductDetails as ProductDetailsFragment } from "../../fragments/gqlTypes/ProductDetails";
 import {
   ProductDetails as ProductDetailsQuery,
   ProductDetailsVariables,
 } from "../../queries/gqlTypes/ProductDetails";
-import { ProductDetails as ProductDetailsFragment } from "../../fragments/gqlTypes/ProductDetails";
 import {
   ProductList as ProductListQuery,
   ProductList_products_edges_node,
   ProductListVariables,
 } from "../../queries/gqlTypes/ProductList";
-import { WithDetails, WithList } from "../types";
 import { Config } from "../../types";
-
+import { WithDetails, WithList } from "../types";
 import { ProductDetails } from "./ProductDetails";
 import { ProductList } from "./ProductList";
 

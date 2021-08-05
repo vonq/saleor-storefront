@@ -1,13 +1,12 @@
+import { CREDENTIAL_API_EXISTS } from "../../consts";
 import { User } from "../../fragments/gqlTypes/User";
 import { ErrorListener } from "../../helpers";
 import { JobsManager } from "../../jobs";
 import { SaleorState, SaleorStateLoaded } from "../../state";
 import { StateItems } from "../../state/types";
-
+import { Config } from "../../types";
 import { PromiseRunResponse } from "../types";
 import { DataErrorAuthTypes } from "./types";
-import { Config } from "../../types";
-import { CREDENTIAL_API_EXISTS } from "../../consts";
 
 export const BROWSER_NO_CREDENTIAL_API_MESSAGE =
   "Saleor SDK is unable to use browser Credential Management API.";
@@ -284,7 +283,7 @@ export class AuthAPI extends ErrorListener {
     let credentials;
     try {
       credentials = await navigator.credentials.get({
-        password: true,
+        // password: true,
       });
     } catch (credentialsError) {
       // eslint-disable-next-line no-console

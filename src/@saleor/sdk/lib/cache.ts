@@ -1,10 +1,11 @@
 import {
-  InMemoryCache,
   defaultDataIdFromObject,
+  InMemoryCache,
   NormalizedCacheObject,
 } from "apollo-cache-inmemory";
 import { persistCache as apolloPersistCache } from "apollo-cache-persist";
-import { PersistentStorage, PersistedData } from "apollo-cache-persist/types";
+import { PersistedData, PersistentStorage } from "apollo-cache-persist/types";
+
 import { LOCAL_STORAGE_EXISTS } from "./consts";
 
 interface SaleorCacheConfig {

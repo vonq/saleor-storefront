@@ -1,14 +1,14 @@
+import { BaseCollection } from "../../fragments/gqlTypes/BaseCollection";
 import BaseList, {
   GetPageInfo,
   GetTotalCount,
   MapQueryData,
 } from "../../helpers/BaseList";
+import { collections } from "../../queries/collections";
 import {
   CollectionList as CollectionListQuery,
   CollectionListVariables,
 } from "../../queries/gqlTypes/CollectionList";
-import { BaseCollection } from "../../fragments/gqlTypes/BaseCollection";
-import { collections } from "../../queries/collections";
 
 export class CollectionList extends BaseList<
   CollectionListQuery,

@@ -7,29 +7,25 @@ import {
 import { RequireOnlyOne } from "../tsHelpers";
 import * as AttributesList from "./attributes";
 import * as Collections from "./collections";
-import * as Orders from "./orders";
-import * as Product from "./products";
-import * as Shop from "./shop";
-
+import { Attributes, AttributesVariables } from "./gqlTypes/Attributes";
+import {
+  CollectionList,
+  CollectionListVariables,
+} from "./gqlTypes/CollectionList";
+import { GetShop } from "./gqlTypes/GetShop";
 import { OrderByToken, OrderByTokenVariables } from "./gqlTypes/OrderByToken";
+import { OrdersByUser, OrdersByUserVariables } from "./gqlTypes/OrdersByUser";
 import {
   UserOrderByToken,
   UserOrderByTokenVariables,
 } from "./gqlTypes/UserOrderByToken";
-
-import { Attributes, AttributesVariables } from "./gqlTypes/Attributes";
-
-import { GetShop } from "./gqlTypes/GetShop";
-
-import { OrdersByUser, OrdersByUserVariables } from "./gqlTypes/OrdersByUser";
 import {
   VariantsProducts,
   VariantsProductsVariables,
 } from "./gqlTypes/VariantsProducts";
-import {
-  CollectionListVariables,
-  CollectionList,
-} from "./gqlTypes/CollectionList";
+import * as Orders from "./orders";
+import * as Product from "./products";
+import * as Shop from "./shop";
 
 type QueryOptions<T = {}> = T extends { [n: string]: never }
   ? Omit<ApolloQueryOptions<{}>, "query">

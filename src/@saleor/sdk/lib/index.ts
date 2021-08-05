@@ -1,12 +1,12 @@
 import { ApolloClient } from "apollo-client";
 
 import { SaleorAPI } from "./api";
-import { Config, ConfigInput, ApolloConfigInput } from "./types";
 import APIProxy from "./api/APIProxy";
-import { createSaleorLinks } from "./links";
-import { createSaleorClient } from "./client";
 import { createSaleorCache } from "./cache";
+import { createSaleorClient } from "./client";
 import { defaultConfig } from "./config";
+import { createSaleorLinks } from "./links";
+import { ApolloConfigInput, Config, ConfigInput } from "./types";
 
 interface CreateAPIResult {
   api: SaleorAPI;

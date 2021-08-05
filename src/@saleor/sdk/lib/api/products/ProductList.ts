@@ -5,8 +5,8 @@ import BaseList, {
 } from "../../helpers/BaseList";
 import {
   ProductList as ProductListQuery,
-  ProductListVariables,
   ProductList_products_edges_node,
+  ProductListVariables,
 } from "../../queries/gqlTypes/ProductList";
 import { productList } from "../../queries/products";
 

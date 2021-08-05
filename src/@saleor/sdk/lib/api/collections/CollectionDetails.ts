@@ -1,10 +1,10 @@
+import { CollectionDetails as Collection } from "../../fragments/gqlTypes/CollectionDetails";
 import BaseDetails, { MapQueryData } from "../../helpers/BaseDetails";
+import { collectionDetails } from "../../queries/collections";
 import {
   CollectionDetails as CollectionDetailsQuery,
   CollectionDetailsVariables,
 } from "../../queries/gqlTypes/CollectionDetails";
-import { CollectionDetails as Collection } from "../../fragments/gqlTypes/CollectionDetails";
-import { collectionDetails } from "../../queries/collections";
 
 export class CollectionDetails extends BaseDetails<
   CollectionDetailsQuery,

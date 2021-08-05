@@ -4,39 +4,32 @@ import {
 } from "apollo-client";
 
 import * as Address from "./address";
-import * as User from "./user";
-
-import {
-  DeleteUserAddress,
-  DeleteUserAddressVariables,
-} from "./gqlTypes/DeleteUserAddress";
-
-import {
-  CreateUserAddress,
-  CreateUserAddressVariables,
-} from "./gqlTypes/CreateUserAddress";
-
-import {
-  SetCustomerDefaultAddress,
-  SetCustomerDefaultAddressVariables,
-} from "./gqlTypes/SetCustomerDefaultAddress";
-
-import {
-  UpdateUserAddress,
-  UpdateUserAddressVariables,
-} from "./gqlTypes/UpdateUserAddress";
-
-import { SetPassword, SetPasswordVariables } from "./gqlTypes/SetPassword";
-
-import {
-  PasswordChange,
-  PasswordChangeVariables,
-} from "./gqlTypes/PasswordChange";
-
 import {
   AccountUpdate,
   AccountUpdateVariables,
 } from "./gqlTypes/AccountUpdate";
+import {
+  CreateUserAddress,
+  CreateUserAddressVariables,
+} from "./gqlTypes/CreateUserAddress";
+import {
+  DeleteUserAddress,
+  DeleteUserAddressVariables,
+} from "./gqlTypes/DeleteUserAddress";
+import {
+  PasswordChange,
+  PasswordChangeVariables,
+} from "./gqlTypes/PasswordChange";
+import {
+  SetCustomerDefaultAddress,
+  SetCustomerDefaultAddressVariables,
+} from "./gqlTypes/SetCustomerDefaultAddress";
+import { SetPassword, SetPasswordVariables } from "./gqlTypes/SetPassword";
+import {
+  UpdateUserAddress,
+  UpdateUserAddressVariables,
+} from "./gqlTypes/UpdateUserAddress";
+import * as User from "./user";
 
 export type MutationOptions<TData, TVariables> = Omit<
   ApolloMutationOptions<TData, TVariables>,

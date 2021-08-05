@@ -1,8 +1,8 @@
 import React from "react";
 
 import { SaleorAPI } from "../api";
-import { SaleorContext } from "./context";
 import { ConfigInput } from "../types";
+import { SaleorContext } from "./context";
 
 export function useSaleorClient(): SaleorAPI {
   const saleor = React.useContext(SaleorContext);

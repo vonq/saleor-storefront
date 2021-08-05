@@ -1,9 +1,10 @@
 import gql from "graphql-tag";
-import { pageInfo } from "../fragments/pageInfo";
+
 import {
   baseCategoryFragment,
   categoryFragment,
 } from "../fragments/categories";
+import { pageInfo } from "../fragments/pageInfo";
 
 export const categoryList = gql`
   ${baseCategoryFragment}

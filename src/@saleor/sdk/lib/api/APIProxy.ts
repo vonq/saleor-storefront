@@ -6,13 +6,14 @@ import {
 } from "apollo-client";
 import { GraphQLError } from "graphql";
 
-import { UserOrderByToken } from "../queries/gqlTypes/UserOrderByToken";
-import { OrderByToken } from "../queries/gqlTypes/OrderByToken";
+import { getAuthToken } from "../auth";
+import { WINDOW_EXISTS } from "../consts";
+import { MUTATIONS } from "../mutations";
 import { PasswordChange } from "../mutations/gqlTypes/PasswordChange";
 import { SetPassword } from "../mutations/gqlTypes/SetPassword";
-import { getAuthToken } from "../auth";
-import { MUTATIONS } from "../mutations";
 import { QUERIES } from "../queries";
+import { OrderByToken } from "../queries/gqlTypes/OrderByToken";
+import { UserOrderByToken } from "../queries/gqlTypes/UserOrderByToken";
 import { RequireAtLeastOne } from "../tsHelpers";
 import {
   InferOptions,
@@ -28,7 +29,6 @@ import {
   mergeEdges,
 } from "../utils";
 import { SetPasswordChange, SetPasswordResult } from "./types";
-import { WINDOW_EXISTS } from "../consts";
 
 const handleDataErrors = <T extends QueryShape, TData>(
   mapFn: MapFn<T, TData> | WatchMapFn<T, TData>,
@@ -347,6 +347,7 @@ class APIProxy {
     promise: () => Promise<any>,
     mapFn: MapFn<T, TResult> | WatchMapFn<T, TResult>
   ) {
+    /* eslint-disable no-async-promise-executor */
     return new Promise<{ data: ReturnType<typeof mapFn> | null }>(
       async (resolve, reject) => {
         try {
@@ -363,6 +364,7 @@ class APIProxy {
         }
       }
     );
+    /* eslint-enable no-async-promise-executor */
   }
 }
 

@@ -1,13 +1,11 @@
 import { LocalStorageManager } from "../../data";
+import { ApolloClientManager } from "../../data/ApolloClientManager";
 import { ErrorListener } from "../../helpers";
 import { ICheckoutModel } from "../../helpers/LocalStorageHandler";
 import { JobsManager } from "../../jobs";
 import { ErrorCartTypes } from "../../jobs/Cart";
 import { SaleorState, SaleorStateLoaded } from "../../state";
 import { ISaleorStateSummeryPrices, StateItems } from "../../state/types";
-import { ApolloClientManager } from "../../data/ApolloClientManager";
-import { sortCheckoutLines } from "./utils";
-
 import { Config } from "../../types";
 import {
   IDiscount,
@@ -16,6 +14,7 @@ import {
   ISubtotalPrice,
   ITotalPrice,
 } from "./types";
+import { sortCheckoutLines } from "./utils";
 
 export class SaleorCartAPI extends ErrorListener {
   loaded: boolean;

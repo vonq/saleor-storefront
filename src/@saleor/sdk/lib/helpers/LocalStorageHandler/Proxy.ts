@@ -1,6 +1,6 @@
 import { LOCAL_STORAGE_EXISTS } from "../../consts";
 import { NamedObservable } from "../NamedObservable";
-import { LocalStorageItems, LocalStorageEvents } from "./types";
+import { LocalStorageEvents, LocalStorageItems } from "./types";
 
 /**
  * Sets or removes data from local storage in one of the specified data format.

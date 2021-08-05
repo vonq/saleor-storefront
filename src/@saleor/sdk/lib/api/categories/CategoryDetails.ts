@@ -1,10 +1,10 @@
+import { CategoryDetails as Category } from "../../fragments/gqlTypes/CategoryDetails";
 import BaseDetails, { MapQueryData } from "../../helpers/BaseDetails";
+import { categoryDetails } from "../../queries/category";
 import {
   CategoryDetails as CategoryDetailsQuery,
   CategoryDetailsVariables,
 } from "../../queries/gqlTypes/CategoryDetails";
-import { CategoryDetails as Category } from "../../fragments/gqlTypes/CategoryDetails";
-import { categoryDetails } from "../../queries/category";
 
 export class CategoryDetails extends BaseDetails<
   CategoryDetailsQuery,

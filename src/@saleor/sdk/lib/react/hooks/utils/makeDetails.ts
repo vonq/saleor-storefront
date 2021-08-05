@@ -1,8 +1,9 @@
-import { useApolloClient } from "react-apollo";
-import { useEffect, useRef, useState } from "react";
 import ApolloClient from "apollo-client";
-import { useSaleorConfig } from "../../helpers";
+import { useEffect, useRef, useState } from "react";
+import { useApolloClient } from "react-apollo";
+
 import BaseDetails from "../../../helpers/BaseDetails";
+import { useSaleorConfig } from "../../helpers";
 
 export function makeDetails<TObject, TQuery, TVariables>(
   createDetails: (

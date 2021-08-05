@@ -1,9 +1,9 @@
+import { ProductDetails as Product } from "../../fragments/gqlTypes/ProductDetails";
 import BaseDetails, { MapQueryData } from "../../helpers/BaseDetails";
 import {
   ProductDetails as ProductDetailsQuery,
   ProductDetailsVariables,
 } from "../../queries/gqlTypes/ProductDetails";
-import { ProductDetails as Product } from "../../fragments/gqlTypes/ProductDetails";
 import { productDetails } from "../../queries/products";
 
 export class ProductDetails extends BaseDetails<

@@ -1,5 +1,6 @@
 import round from "lodash/round";
 
+import { BROWSER_NO_CREDENTIAL_API_MESSAGE } from "../api/Auth";
 import { ApolloClientManager } from "../data/ApolloClientManager";
 import { PaymentGateway } from "../fragments/gqlTypes/PaymentGateway";
 import { User } from "../fragments/gqlTypes/User";
@@ -12,10 +13,9 @@ import {
   LocalStorageItems,
 } from "../helpers/LocalStorageHandler";
 import { JobsManager } from "../jobs";
+import { AuthJobsEvents } from "../jobs/Auth";
 import { Config } from "../types";
 import { ISaleorStateSummeryPrices, StateItems } from "./types";
-import { AuthJobsEvents } from "../jobs/Auth";
-import { BROWSER_NO_CREDENTIAL_API_MESSAGE } from "../api/Auth";
 
 export interface SaleorStateLoaded {
   user: boolean;
@@ -147,9 +147,9 @@ export class SaleorState extends NamedObservable<StateItems> {
       undefined
     );
 
-    ////////////////////////////
+    // //////////////////////////
     // legacy verifySignInToken
-    ////////////////////////////
+    // //////////////////////////
     // const { data, dataError } = await this.jobsManager.run(
     //   "auth",
     //   "verifySignInToken",

@@ -1,14 +1,14 @@
+import { BaseCategory } from "../../fragments/gqlTypes/BaseCategory";
 import BaseList, {
   GetPageInfo,
   GetTotalCount,
   MapQueryData,
 } from "../../helpers/BaseList";
+import { categoryChildrenList } from "../../queries/category";
 import {
   CategoryChildrenList as CategoryChildrenListQuery,
   CategoryChildrenListVariables,
 } from "../../queries/gqlTypes/CategoryChildrenList";
-import { BaseCategory } from "../../fragments/gqlTypes/BaseCategory";
-import { categoryChildrenList } from "../../queries/category";
 
 export class CategoryChildrenList extends BaseList<
   CategoryChildrenListQuery,

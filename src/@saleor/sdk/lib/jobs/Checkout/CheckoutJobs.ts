@@ -4,20 +4,20 @@ import {
 } from "../../api/Checkout/types";
 import { ApolloClientManager } from "../../data/ApolloClientManager";
 import { LocalStorageHandler } from "../../helpers/LocalStorageHandler";
+import { JobsHandler } from "../JobsHandler";
 import { JobRunResponse } from "../types";
 import {
-  CompleteCheckoutJobInput,
-  CreatePaymentJobInput,
-  RemovePromoCodeJobInput,
   AddPromoCodeJobInput,
-  SetShippingMethodJobInput,
-  ProvideCheckoutJobInput,
+  CompleteCheckoutJobInput,
   CreateCheckoutJobInput,
-  SetShippingAddressJobInput,
+  CreatePaymentJobInput,
+  ProvideCheckoutJobInput,
+  RemovePromoCodeJobInput,
   SetBillingAddressJobInput,
   SetBillingAddressWithEmailJobInput,
+  SetShippingAddressJobInput,
+  SetShippingMethodJobInput,
 } from "./types";
-import { JobsHandler } from "../JobsHandler";
 
 export type PromiseCheckoutJobRunResponse = Promise<
   JobRunResponse<DataErrorCheckoutTypes, FunctionErrorCheckoutTypes>

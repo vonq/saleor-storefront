@@ -1,6 +1,6 @@
-import { CategoryDetails } from "../../api/categories/CategoryDetails";
 import { CategoryAncestorsList } from "../../api/categories/CategoryAncestorsList";
 import { CategoryChildrenList } from "../../api/categories/CategoryChildrenList";
+import { CategoryDetails } from "../../api/categories/CategoryDetails";
 import { CategoryList } from "../../api/categories/CategoryList";
 import { makeDetails, makeList } from "./utils";
 

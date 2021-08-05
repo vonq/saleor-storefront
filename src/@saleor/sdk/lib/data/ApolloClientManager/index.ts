@@ -11,7 +11,6 @@ import {
   IPaymentModel,
 } from "../../helpers/LocalStorageHandler";
 import * as AuthMutations from "../../mutations/auth";
-import * as UserMutations from "../../mutations/user";
 import * as CheckoutMutations from "../../mutations/checkout";
 import {
   AddCheckoutPromoCode,
@@ -30,13 +29,21 @@ import {
   CreateCheckoutPaymentVariables,
 } from "../../mutations/gqlTypes/CreateCheckoutPayment";
 import {
-  RemoveCheckoutPromoCode,
-  RemoveCheckoutPromoCodeVariables,
-} from "../../mutations/gqlTypes/RemoveCheckoutPromoCode";
+  ExternalVerifyToken,
+  ExternalVerifyTokenVariables,
+} from "../../mutations/gqlTypes/ExternalVerifyToken";
+import {
+  RefreshToken,
+  RefreshTokenVariables,
+} from "../../mutations/gqlTypes/RefreshToken";
 import {
   RegisterAccount,
   RegisterAccountVariables,
 } from "../../mutations/gqlTypes/RegisterAccount";
+import {
+  RemoveCheckoutPromoCode,
+  RemoveCheckoutPromoCodeVariables,
+} from "../../mutations/gqlTypes/RemoveCheckoutPromoCode";
 import {
   ResetPasswordRequest,
   ResetPasswordRequestVariables,
@@ -45,18 +52,6 @@ import {
   TokenAuth,
   TokenAuthVariables,
 } from "../../mutations/gqlTypes/TokenAuth";
-import {
-  VerifyToken,
-  VerifyTokenVariables,
-} from "../../mutations/gqlTypes/VerifyToken";
-import {
-  ExternalVerifyToken,
-  ExternalVerifyTokenVariables,
-} from "../../mutations/gqlTypes/ExternalVerifyToken";
-import {
-  RefreshToken,
-  RefreshTokenVariables,
-} from "../../mutations/gqlTypes/RefreshToken";
 import {
   UpdateCheckoutBillingAddress,
   UpdateCheckoutBillingAddressVariables,
@@ -77,6 +72,11 @@ import {
   UpdateCheckoutShippingMethod,
   UpdateCheckoutShippingMethodVariables,
 } from "../../mutations/gqlTypes/UpdateCheckoutShippingMethod";
+import {
+  VerifyToken,
+  VerifyTokenVariables,
+} from "../../mutations/gqlTypes/VerifyToken";
+import * as UserMutations from "../../mutations/user";
 import * as CheckoutQueries from "../../queries/checkout";
 import { CheckoutDetails } from "../../queries/gqlTypes/CheckoutDetails";
 import {
@@ -91,10 +91,10 @@ import { UserDetails } from "../../queries/gqlTypes/UserDetails";
 import * as UserQueries from "../../queries/user";
 import { filterNotEmptyArrayItems } from "../../utils";
 import {
-  CreatePaymentInput,
   CompleteCheckoutInput,
-  VerifySignInTokenInput,
+  CreatePaymentInput,
   RefreshSignInTokenInput,
+  VerifySignInTokenInput,
 } from "./types";
 
 export class ApolloClientManager {
@@ -328,6 +328,7 @@ export class ApolloClientManager {
   ) => {
     let checkout: Checkout | null;
     try {
+      /* eslint-disable no-async-promise-executor */
       checkout = await new Promise(async (resolve, reject) => {
         let token = checkoutToken;
         if (isUserSignedIn) {
@@ -374,6 +375,7 @@ export class ApolloClientManager {
           resolve(null);
         }
       });
+      /* eslint-enable no-async-promise-executor */
 
       if (checkout) {
         return {

@@ -6,12 +6,12 @@ import { LocalStorageHandler } from "../helpers/LocalStorageHandler";
 import { JobsManager } from "../jobs";
 import { SaleorState } from "../state";
 import { Config } from "../types";
-import { AuthAPI } from "./Auth";
 import APIProxy from "./APIProxy";
+import { AuthAPI } from "./Auth";
 import { SaleorCartAPI } from "./Cart";
+import { CategoriesAPI } from "./categories/categories";
 import { SaleorCheckoutAPI } from "./Checkout";
 import { CollectionsAPI } from "./collections/collections";
-import { CategoriesAPI } from "./categories/categories";
 import { ProductsAPI } from "./products/products";
 
 export * from "./Checkout";

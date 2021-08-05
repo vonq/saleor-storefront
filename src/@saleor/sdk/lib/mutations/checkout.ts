@@ -1,12 +1,12 @@
 import gql from "graphql-tag";
 
 import { checkoutFragment } from "../fragments/checkout";
-import { paymentFragment } from "../fragments/payment";
-import { orderDetailFragment } from "../fragments/order";
 import {
   checkoutErrorFragment,
   paymentErrorFragment,
 } from "../fragments/errors";
+import { orderDetailFragment } from "../fragments/order";
+import { paymentFragment } from "../fragments/payment";
 
 export const updateCheckoutLineMutation = gql`
   ${checkoutFragment}

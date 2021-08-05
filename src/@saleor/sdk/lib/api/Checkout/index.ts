@@ -7,10 +7,11 @@ import {
 import { JobsManager } from "../../jobs";
 import { SaleorState, SaleorStateLoaded } from "../../state";
 import { StateItems } from "../../state/types";
-
 import { Config } from "../../types";
 import { PromiseRunResponse } from "../types";
 import {
+  CompleteCheckoutInput,
+  CreatePaymentInput,
   DataErrorCheckoutTypes,
   FunctionErrorCheckoutTypes,
   IAddress,
@@ -18,8 +19,6 @@ import {
   ICheckout,
   IPayment,
   IPromoCodeDiscount,
-  CreatePaymentInput,
-  CompleteCheckoutInput,
 } from "./types";
 
 type CheckoutResponse = PromiseRunResponse<

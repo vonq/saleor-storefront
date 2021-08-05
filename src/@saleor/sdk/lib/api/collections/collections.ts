@@ -1,18 +1,19 @@
 import ApolloClient from "apollo-client";
+
+import { BaseCollection } from "../../fragments/gqlTypes/BaseCollection";
+import { CollectionDetails as CollectionDetailsFragment } from "../../fragments/gqlTypes/CollectionDetails";
 import {
   CollectionDetails as CollectionDetailsQuery,
   CollectionDetailsVariables,
 } from "../../queries/gqlTypes/CollectionDetails";
-import { CollectionDetails as CollectionDetailsFragment } from "../../fragments/gqlTypes/CollectionDetails";
 import {
   CollectionList as CollectionListQuery,
   CollectionListVariables,
 } from "../../queries/gqlTypes/CollectionList";
-import { BaseCollection } from "../../fragments/gqlTypes/BaseCollection";
-import { WithDetails, WithList } from "../types";
 import { ConfigInput } from "../../types";
-import { CollectionList } from "./CollectionList";
+import { WithDetails, WithList } from "../types";
 import { CollectionDetails } from "./CollectionDetails";
+import { CollectionList } from "./CollectionList";
 
 export class CollectionsAPI
   implements

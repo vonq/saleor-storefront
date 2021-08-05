@@ -1,4 +1,4 @@
-import { ConfigInput, ApolloConfigInput } from "../../../types";
+import { ApolloConfigInput, ConfigInput } from "../../../types";
 
 export interface IProps {
   children: React.ReactElement | React.ReactNode;

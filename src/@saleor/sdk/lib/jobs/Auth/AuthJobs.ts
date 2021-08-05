@@ -1,10 +1,9 @@
+import { DataErrorAuthTypes } from "../../api/Auth/types";
 import { DataErrorCheckoutTypes } from "../../api/Checkout/types";
 import { ApolloClientManager } from "../../data/ApolloClientManager";
 import { LocalStorageHandler } from "../../helpers/LocalStorageHandler";
-import { DataErrorAuthTypes } from "../../api/Auth/types";
-
-import { JobRunResponse } from "../types";
 import { JobsHandler } from "../JobsHandler";
+import { JobRunResponse } from "../types";
 
 export enum AuthJobsEvents {
   SIGN_IN_TOKEN_REFRESHING,
@@ -188,7 +187,8 @@ export class AuthJobs extends JobsHandler<AuthJobsEventsValues> {
       token,
     });
 
-    console.log('[Saleor SDK] after externalVerify:', data);
+    // eslint-disable-next-line no-console
+    console.log("[Saleor SDK] after externalVerify:", data);
 
     return {
       data,

@@ -1,5 +1,5 @@
-import { SaleorState } from "../../state";
 import { LocalStorageHandler } from "../../helpers/LocalStorageHandler/LocalStorageHandler";
+import { SaleorState } from "../../state";
 
 export class LocalStorageManager {
   private handler: LocalStorageHandler;

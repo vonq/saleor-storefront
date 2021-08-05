@@ -1,12 +1,13 @@
 import ApolloClient from "apollo-client";
+
 import { PageInfo } from "../../fragments/gqlTypes/PageInfo";
 import {
-  GetBaseList,
-  MapQueryData,
   BaseListVariables,
+  GetBaseList,
+  GetBaseListResult,
   GetPageInfo,
   GetTotalCount,
-  GetBaseListResult,
+  MapQueryData,
 } from "./types";
 
 abstract class BaseList<TQuery, TObject, TVariables extends BaseListVariables> {
