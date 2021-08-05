@@ -1,24 +1,14 @@
 import Link from "next/link";
 import * as React from "react";
+import { generatePath } from "react-router";
 
-import {
-  generateCategoryUrl,
-  generateCollectionUrl,
-  generatePageUrl,
-} from "../../core/utils";
-import {
-  SecondaryMenu_menu_items,
-  SecondaryMenu_menu_items_children,
-} from "../Footer/gqlTypes/SecondaryMenu";
-import { MainMenu_menu_items } from "../MainMenu/gqlTypes/MainMenu";
-import { MainMenuSubItem } from "../MainMenu/gqlTypes/MainMenuSubItem";
+import { MenuItem } from "@graphql/gqlTypes/MenuItem";
+import { paths } from "@paths";
+
+import { generatePageUrl } from "../../core/utils";
 
 interface NavLinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
-  item:
-    | MainMenu_menu_items
-    | MainMenuSubItem
-    | SecondaryMenu_menu_items
-    | SecondaryMenu_menu_items_children;
+  item: MenuItem;
 }
 export const NavLink: React.FC<NavLinkProps> = ({ item, ...props }) => {
   const { name, url, category, collection, page } = item;
@@ -36,13 +26,13 @@ export const NavLink: React.FC<NavLinkProps> = ({ item, ...props }) => {
     );
   }
   if (category) {
-    return link(generateCategoryUrl(category.id, category.name));
+    return link(generatePath(paths.category, { slug: category.slug }));
   }
   if (collection) {
-    return link(generateCollectionUrl(collection.id, collection.name));
+    return link(generatePath(paths.collection, { slug: collection.slug }));
   }
   if (page) {
-    return link(generatePageUrl(page.slug, page.pageType.name));
+    return link(generatePageUrl(page.slug, page?.pageType?.name));
   }
 
   return <span {...props}>{name}</span>;

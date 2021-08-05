@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-duplicate-props */
 import { InputAdornment, TextField, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import CloseIcon from "@material-ui/icons/Close";
@@ -55,15 +56,18 @@ export const FilterSidebar: React.FC<CompProps> = ({
   };
   const isQueryPresent = !!criteria.query;
 
+  /* eslint-disable-line react/jsx-no-duplicate-props */
   return (
     <div className={classes.root} data-testid="filter-sidebar">
       <div className={classes.group}>
         <TextField
-          data-testid="query-global"
           placeholder={intl.formatMessage(messages.searchVacancies)}
           fullWidth
           value={criteria.query}
           onChange={handleQueryChange}
+          inputProps={{
+            "data-testid": "query-global",
+          }}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">

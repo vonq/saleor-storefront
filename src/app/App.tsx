@@ -7,7 +7,9 @@ import React, { useEffect } from "react";
 
 import { useSaleorTokenSetter } from "@temp/hooks";
 import { Loader } from "@components/atoms";
+import { useDynamicRouteRedirect } from "@hooks";
 import { demoMode } from "@temp/constants";
+import { ShopConfig } from "@utils/ssr";
 
 import {
   Footer,
@@ -21,22 +23,29 @@ import Notifications from "./Notifications";
 
 import "../globalStyles/scss/index.scss";
 
-const App: React.FC = ({ children }) => {
+type AppProps = ShopConfig;
+
+const App: React.FC<AppProps> = ({
+  footer,
+  mainMenu,
+  shopConfig,
+  children,
+}) => {
   const { pathname } = useRouter();
-  const { isLoading } = useAuth0();
+  // const willRedirect = useDynamicRouteRedirect();
+  // const { tokenRefreshing, tokenVerifying } = useAuth();
+  // const loading = tokenRefreshing || tokenVerifying || willRedirect;
+
+  const { isLoading: loading } = useAuth0();
   useSaleorTokenSetter();
 
-  if (isLoading) {
-    return <Loader />;
-  }
-
   return (
-    <ShopProvider>
+    <ShopProvider shopConfig={shopConfig}>
       <OverlayProvider pathname={pathname}>
         <MetaConsumer />
-        <MainMenu demoMode={demoMode} />
-        {children}
-        <Footer />
+        <MainMenu loading={loading} demoMode={demoMode} menu={mainMenu} />
+        {loading ? <Loader fullScreen /> : children}
+        <Footer menu={footer} />
         <OverlayManager />
         <Notifications />
       </OverlayProvider>
