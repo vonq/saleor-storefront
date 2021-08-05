@@ -1,6 +1,10 @@
 import { ServerStyleSheets } from "@material-ui/core/styles";
 import Document, { Head, Html, Main, NextScript } from "next/document";
 import React from "react";
+import fetch from "node-fetch";
+import { abortableFetch } from "abortcontroller-polyfill/dist/cjs-ponyfill";
+
+global.fetch = abortableFetch(fetch).fetch;
 
 class MyDocument extends Document {
   static async getInitialProps(ctx) {
