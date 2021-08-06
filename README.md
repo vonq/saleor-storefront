@@ -28,12 +28,12 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-- Node.js 12.0+
+- Node.js 14.16
 - A running instance of Saleor.
 
 To run the storefront, you have to set the `NEXT_PUBLIC_API_URI` environment variable to point to the Saleor GraphQL API.
 If you are running Saleor locally, with the default settings, `NEXT_PUBLIC_API_URI` is set to: `http://localhost:8000/graphql/`.
-To change it, either create a [.env.local` file](https://nextjs.org/docs/basic-features/environment-variables#loading-environment-variables) and add it there or set an env variable using `export` command.
+To change it, either create a [`.env.local` file](https://nextjs.org/docs/basic-features/environment-variables#loading-environment-variables) and add it there or set an env variable using `export` command.
 
 ### Installing
 
@@ -99,6 +99,12 @@ To compile the app and run it in production mode with next server run:
 
 ```
 $ npm run build:start
+```
+
+In order to enable Apollo Devtools in the production version, set the environmental variable
+
+```
+NEXT_PUBLIC_ENABLE_APOLLO_DEVTOOLS=true
 ```
 
 ## Cypress tests

@@ -3,13 +3,15 @@ declare const self: ServiceWorkerGlobalScope;
 export const getBuildManifest = (): NextBuildManifest => {
   const manifest = self.__BUILD_MANIFEST;
 
-  return Object.entries(manifest).reduce<NextBuildManifest>(
-    (manifest, [page, assets]) => ({
-      ...manifest,
-      [page]: assets.map(url => `/_next/${url}`),
-    }),
-    {}
-  );
+  return Object.entries(manifest)
+    .filter(([path]) => path.startsWith("/"))
+    .reduce<NextBuildManifest>(
+      (manifest, [page, assets]) => ({
+        ...manifest,
+        [page]: assets.map(url => `/_next/${url}`),
+      }),
+      {}
+    );
 };
 
 export const getBuildManifestPages = (): string[] => {
@@ -56,9 +58,9 @@ export const getRequestedPageFromURL = (url: string): string | undefined => {
   });
 };
 
-export const deleteEntriesForCache = (
-  CACHE_NAME: string
-) => async (): Promise<void> => {
+export const deleteEntriesForCache = (CACHE_NAME: string) => async (): Promise<
+  void
+> => {
   const cache = await self.caches.open(CACHE_NAME);
   const cachedRequests = await cache.keys();
 

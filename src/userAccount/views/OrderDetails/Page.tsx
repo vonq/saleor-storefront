@@ -35,6 +35,7 @@ const Page: React.FC<{
   downloadInvoice: () => void;
 }> = ({ guest, order, downloadInvoice }) => {
   const intl = useIntl();
+
   return order ? (
     <>
       {!guest && (
@@ -48,7 +49,7 @@ const Page: React.FC<{
         <div>
           <h3>
             <FormattedMessage
-              defaultMessage="Your order no.: {orderNum}"
+              defaultMessage="Your order number: {orderNum}"
               values={{ orderNum: order.number }}
             />
           </h3>

@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-duplicate-props */
 import {
   Checkbox,
   FormControlLabel,
@@ -85,11 +86,13 @@ export const FacetFilter: React.FC<CompProps> = ({
       </Typography>
 
       <TextField
-        data-testid={`query-${facetInfo.key}`}
         placeholder={intl.formatMessage(messages.search)}
         fullWidth
         value={query}
         onChange={handleQueryChange}
+        inputProps={{
+          "data-testid": `query-${facetInfo.key}`,
+        }}
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
