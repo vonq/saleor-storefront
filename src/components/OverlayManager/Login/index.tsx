@@ -1,4 +1,4 @@
-import { Auth0Context, useAuth0 } from "@auth0/auth0-react";
+import { Auth0Context } from "@auth0/auth0-react";
 import * as React from "react";
 import { FormattedMessage } from "react-intl";
 import ReactSVG from "react-svg";
@@ -8,17 +8,17 @@ import { OfflinePlaceholder } from "@components/atoms";
 import closeImg from "../../../images/x.svg";
 import {
   Button,
-  LoginForm,
+  // LoginForm,
   Offline,
   Online,
   Overlay,
   OverlayContextInterface,
-  OverlayTheme,
-  OverlayType,
+  // OverlayTheme,
+  // OverlayType,
 } from "../..";
-import ForgottenPassword from "./ForgottenPassword";
-import RegisterForm from "./RegisterForm";
 
+// import ForgottenPassword from "./ForgottenPassword";
+// import RegisterForm from "./RegisterForm";
 import "./scss/index.scss";
 
 class Login extends React.Component<
@@ -48,7 +48,8 @@ class Login extends React.Component<
 
   render() {
     const { overlay } = this.props;
-    const { show, hide } = overlay;
+    // const { show, hide } = overlay;
+    const { hide } = overlay;
 
     return (
       <Overlay testingContext="loginOverlay" context={overlay}>

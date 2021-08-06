@@ -42,7 +42,8 @@ const returnTab: any = (path: string, userDetails) => {
 
 export const AccountView: NextPage = () => {
   const intl = useIntl();
-  const { user, isAuthenticated, isLoading } = useAuth0();
+  const { isAuthenticated, isLoading } = useAuth0();
+  const { user } = useAuth();
   const { asPath, pathname } = useRouter();
   const links = [
     paths.account,

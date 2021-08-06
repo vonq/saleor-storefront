@@ -97,40 +97,40 @@ const App = ({
       <link rel="manifest" href="/manifest.json" />
     </Head>
     <Auth0Provider
-        domain={auth0Domain}
-        clientId={auth0ClientId}
-        cacheLocation="localstorage"
-        redirectUri={
-          typeof window !== "undefined" &&
-          `${window.location.origin}/auth/callback`
-        }
-        onRedirectCallback={onRedirectCallback}
-      >
-    <ThemeProvider theme={defaultTheme}>
-      <MuiThemeProvider theme={muiTheme}>
-        <AlertProvider
-          template={NotificationTemplate as any}
-          {...notificationConfig}
-        >
-          <ServiceWorkerProvider timeout={serviceWorkerTimeout}>
-            <LocaleProvider messages={messages}>
-              <GlobalStyle />
-              <NextQueryParamProvider>
-                <SaleorProvider config={saleorConfig}>
-                  <StorefrontApp
-                    footer={footer}
-                    mainMenu={mainMenu}
-                    shopConfig={shopConfig}
-                  >
-                    <Component {...pageProps} />
-                  </StorefrontApp>
-                </SaleorProvider>
-              </NextQueryParamProvider>
-            </LocaleProvider>
-          </ServiceWorkerProvider>
-        </AlertProvider>
-      </MuiThemeProvider>
-    </ThemeProvider>
+      domain={auth0Domain}
+      clientId={auth0ClientId}
+      cacheLocation="localstorage"
+      redirectUri={
+        typeof window !== "undefined" &&
+        `${window.location.origin}/auth/callback`
+      }
+      onRedirectCallback={onRedirectCallback}
+    >
+      <ThemeProvider theme={defaultTheme}>
+        <MuiThemeProvider theme={muiTheme}>
+          <AlertProvider
+            template={NotificationTemplate as any}
+            {...notificationConfig}
+          >
+            <ServiceWorkerProvider timeout={serviceWorkerTimeout}>
+              <LocaleProvider messages={messages}>
+                <GlobalStyle />
+                <NextQueryParamProvider>
+                  <SaleorProvider config={saleorConfig}>
+                    <StorefrontApp
+                      footer={footer}
+                      mainMenu={mainMenu}
+                      shopConfig={shopConfig}
+                    >
+                      <Component {...pageProps} />
+                    </StorefrontApp>
+                  </SaleorProvider>
+                </NextQueryParamProvider>
+              </LocaleProvider>
+            </ServiceWorkerProvider>
+          </AlertProvider>
+        </MuiThemeProvider>
+      </ThemeProvider>
     </Auth0Provider>
   </>
 );

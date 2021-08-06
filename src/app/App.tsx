@@ -1,14 +1,12 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import { setAuthToken } from "@saleor/sdk";
-import { access } from "fs-extra";
 import _get from "lodash/get";
 import { useRouter } from "next/router";
-import React, { useEffect } from "react";
+import React from "react";
 
-import { useSaleorTokenSetter } from "@temp/hooks";
 import { Loader } from "@components/atoms";
-import { useDynamicRouteRedirect } from "@hooks";
+// import { useDynamicRouteRedirect } from "@hooks";
 import { demoMode } from "@temp/constants";
+import { useSaleorTokenSetter } from "@temp/hooks";
 import { ShopConfig } from "@utils/ssr";
 
 import {
