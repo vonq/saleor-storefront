@@ -1,10 +1,11 @@
 import { ServerStyleSheets } from "@material-ui/core/styles";
-import Document, { Head, Html, Main, NextScript } from "next/document";
-import React from "react";
-import fetch from "node-fetch";
 import { abortableFetch } from "abortcontroller-polyfill/dist/cjs-ponyfill";
+import Document, { Head, Html, Main, NextScript } from "next/document";
+import fetch from "node-fetch";
+import React from "react";
 
-global.fetch = abortableFetch(fetch).fetch;
+const globalAny: any = global;
+globalAny.fetch = abortableFetch(fetch).fetch;
 
 class MyDocument extends Document {
   static async getInitialProps(ctx) {
