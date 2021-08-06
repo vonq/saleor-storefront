@@ -1,3 +1,4 @@
+import { Auth0Provider } from "@auth0/auth0-react";
 import { ThemeProvider as MuiThemeProvider } from "@material-ui/core/styles";
 import { SaleorProvider } from "@saleor/sdk";
 import { ConfigInput } from "@saleor/sdk/lib/types";
@@ -9,6 +10,7 @@ import type {
 } from "next/app";
 import NextApp from "next/app";
 import Head from "next/head";
+import Router from "next/router";
 import * as React from "react";
 import { positions, Provider as AlertProvider } from "react-alert";
 import TagManager from "react-gtm-module";
@@ -30,6 +32,8 @@ import {
 } from "../components/Locale";
 import {
   apiUrl,
+  auth0ClientId,
+  auth0Domain,
   channelSlug,
   sentryDsn,
   sentrySampleRate,
@@ -69,6 +73,11 @@ const saleorConfig: ConfigInput = { apiUrl, channel: channelSlug };
 
 const notificationConfig = { position: positions.BOTTOM_RIGHT, timeout: 2500 };
 
+const onRedirectCallback = appState => {
+  // Use Next.js's Router.replace method to replace the url
+  Router.replace(appState?.returnTo || "/");
+};
+
 type AppProps = NextAppProps & ShopConfig & { messages: LocaleMessages };
 
 const App = ({
@@ -87,31 +96,42 @@ const App = ({
       <link rel="icon" type="image/png" href="/favicon-36.png" />
       <link rel="manifest" href="/manifest.json" />
     </Head>
-    <ThemeProvider theme={defaultTheme}>
-      <MuiThemeProvider theme={muiTheme}>
-        <AlertProvider
-          template={NotificationTemplate as any}
-          {...notificationConfig}
-        >
-          <ServiceWorkerProvider timeout={serviceWorkerTimeout}>
-            <LocaleProvider messages={messages}>
-              <GlobalStyle />
-              <NextQueryParamProvider>
-                <SaleorProvider config={saleorConfig}>
-                  <StorefrontApp
-                    footer={footer}
-                    mainMenu={mainMenu}
-                    shopConfig={shopConfig}
-                  >
-                    <Component {...pageProps} />
-                  </StorefrontApp>
-                </SaleorProvider>
-              </NextQueryParamProvider>
-            </LocaleProvider>
-          </ServiceWorkerProvider>
-        </AlertProvider>
-      </MuiThemeProvider>
-    </ThemeProvider>
+    <Auth0Provider
+      domain={auth0Domain}
+      clientId={auth0ClientId}
+      cacheLocation="localstorage"
+      redirectUri={
+        typeof window !== "undefined" &&
+        `${window.location.origin}/auth/callback`
+      }
+      onRedirectCallback={onRedirectCallback}
+    >
+      <ThemeProvider theme={defaultTheme}>
+        <MuiThemeProvider theme={muiTheme}>
+          <AlertProvider
+            template={NotificationTemplate as any}
+            {...notificationConfig}
+          >
+            <ServiceWorkerProvider timeout={serviceWorkerTimeout}>
+              <LocaleProvider messages={messages}>
+                <GlobalStyle />
+                <NextQueryParamProvider>
+                  <SaleorProvider config={saleorConfig}>
+                    <StorefrontApp
+                      footer={footer}
+                      mainMenu={mainMenu}
+                      shopConfig={shopConfig}
+                    >
+                      <Component {...pageProps} />
+                    </StorefrontApp>
+                  </SaleorProvider>
+                </NextQueryParamProvider>
+              </LocaleProvider>
+            </ServiceWorkerProvider>
+          </AlertProvider>
+        </MuiThemeProvider>
+      </ThemeProvider>
+    </Auth0Provider>
   </>
 );
 

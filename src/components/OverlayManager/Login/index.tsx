@@ -1,3 +1,4 @@
+import { Auth0Context } from "@auth0/auth0-react";
 import * as React from "react";
 import { FormattedMessage } from "react-intl";
 import ReactSVG from "react-svg";
@@ -6,41 +7,49 @@ import { OfflinePlaceholder } from "@components/atoms";
 
 import closeImg from "../../../images/x.svg";
 import {
-  LoginForm,
+  Button,
+  // LoginForm,
   Offline,
   Online,
   Overlay,
   OverlayContextInterface,
-  OverlayTheme,
-  OverlayType,
+  // OverlayTheme,
+  // OverlayType,
 } from "../..";
-import ForgottenPassword from "./ForgottenPassword";
-import RegisterForm from "./RegisterForm";
 
+// import ForgottenPassword from "./ForgottenPassword";
+// import RegisterForm from "./RegisterForm";
 import "./scss/index.scss";
 
 class Login extends React.Component<
   { overlay: OverlayContextInterface; active?: "login" | "register" },
   { active: "login" | "register" }
 > {
+  static contextType = Auth0Context;
+
   static defaultProps = {
     active: "login",
   };
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      active: props.active,
-    };
-  }
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     active: props.active,
+  //   };
+  // }
 
-  changeActiveTab = (active: "login" | "register") => {
-    this.setState({ active });
+  // changeActiveTab = (active: "login" | "register") => {
+  //   this.setState({ active });
+  // };
+
+  redirectToAuth0 = () => {
+    this.context.loginWithRedirect();
   };
 
   render() {
     const { overlay } = this.props;
-    const { show, hide } = overlay;
+    // const { show, hide } = overlay;
+    const { hide } = overlay;
 
     return (
       <Overlay testingContext="loginOverlay" context={overlay}>
@@ -56,7 +65,16 @@ class Login extends React.Component<
                 className="overlay__header__close-icon"
               />
             </div>
-            <div className="login__tabs">
+
+            <div className="login-form__button">
+              <Button
+                testingContext="auth0SignIn"
+                onClick={this.redirectToAuth0}
+              >
+                <FormattedMessage defaultMessage="Sign in" />
+              </Button>
+            </div>
+            {/* <div className="login__tabs">
               <span
                 data-test="loginTab"
                 onClick={() => this.changeActiveTab("login")}
@@ -85,7 +103,7 @@ class Login extends React.Component<
               ) : (
                 <RegisterForm hide={hide} />
               )}
-            </div>
+            </div> */}
           </Online>
           <Offline>
             <OfflinePlaceholder />

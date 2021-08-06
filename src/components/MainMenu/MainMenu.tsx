@@ -1,3 +1,4 @@
+import { useAuth0 } from "@auth0/auth0-react";
 import { useAuth, useCart } from "@saleor/sdk";
 import classNames from "classnames";
 import Link from "next/link";
@@ -45,7 +46,9 @@ export const MainMenu: React.FC<MainMenuProps> = ({
   loading,
 }) => {
   const overlayContext = useContext(OverlayContext);
+
   const { user, signOut } = useAuth();
+  const { logout } = useAuth0();
   const { items } = useCart();
   const [activeDropdown, setActiveDropdown] = useState<string>(undefined);
 
@@ -55,7 +58,12 @@ export const MainMenu: React.FC<MainMenuProps> = ({
       items.reduce((prevVal, currVal) => prevVal + currVal.quantity, 0)) ||
     0;
 
-  const handleSignOut = () => signOut();
+  const handleSignOut = async () => {
+    await signOut();
+    logout({
+      returnTo: window.location.origin,
+    });
+  };
 
   const showDropdownHandler = (itemId: string, hasSubNavigation: boolean) => {
     if (hasSubNavigation) {

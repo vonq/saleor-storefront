@@ -1,10 +1,12 @@
-import { useAuth } from "@saleor/sdk";
+import { useAuth0 } from "@auth0/auth0-react";
+import _get from "lodash/get";
 import { useRouter } from "next/router";
 import React from "react";
 
 import { Loader } from "@components/atoms";
-import { useDynamicRouteRedirect } from "@hooks";
+// import { useDynamicRouteRedirect } from "@hooks";
 import { demoMode } from "@temp/constants";
+import { useSaleorTokenSetter } from "@temp/hooks";
 import { ShopConfig } from "@utils/ssr";
 
 import {
@@ -28,9 +30,12 @@ const App: React.FC<AppProps> = ({
   children,
 }) => {
   const { pathname } = useRouter();
-  const willRedirect = useDynamicRouteRedirect();
-  const { tokenRefreshing, tokenVerifying } = useAuth();
-  const loading = tokenRefreshing || tokenVerifying || willRedirect;
+  // const willRedirect = useDynamicRouteRedirect();
+  // const { tokenRefreshing, tokenVerifying } = useAuth();
+  // const loading = tokenRefreshing || tokenVerifying || willRedirect;
+
+  const { isLoading: loading } = useAuth0();
+  useSaleorTokenSetter();
 
   return (
     <ShopProvider shopConfig={shopConfig}>

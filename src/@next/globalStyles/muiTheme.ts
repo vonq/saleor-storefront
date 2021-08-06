@@ -1,5 +1,5 @@
 import { grey, red } from "@material-ui/core/colors";
-import { createMuiTheme } from "@material-ui/core/styles";
+import { createTheme } from "@material-ui/core/styles";
 
 declare module "@material-ui/core/styles/createPalette" {
   interface TypeBackground {
@@ -8,7 +8,7 @@ declare module "@material-ui/core/styles/createPalette" {
 }
 
 // Create a theme instance.
-export const muiTheme = createMuiTheme({
+export const muiTheme = createTheme({
   palette: {
     primary: {
       // main: "#556cd6",

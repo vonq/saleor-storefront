@@ -41,8 +41,8 @@ export const AccountTile: React.FC = () => {
             {isEditing ? (
               <AccountUpdateForm
                 initialValues={{
-                  firstName: (user && user.firstName) || "",
-                  lastName: (user && user.lastName) || "",
+                  firstName: user?.firstName || "",
+                  lastName: user?.lastName || "",
                 }}
                 handleSubmit={data => {
                   setAccountUpdate({ input: data });
@@ -55,12 +55,12 @@ export const AccountTile: React.FC = () => {
               <S.ContentOneLine data-test="personalDetailsSection">
                 <Attribute
                   description={intl.formatMessage(commonMessages.firstName)}
-                  attributeValue={(user && user.firstName) || "-"}
+                  attributeValue={user?.firstName || "-"}
                   testingContext="firstNameText"
                 />
                 <Attribute
                   description={intl.formatMessage(commonMessages.lastName)}
-                  attributeValue={(user && user.lastName) || "-"}
+                  attributeValue={user?.lastName || "-"}
                   testingContext="lastNameText"
                 />
               </S.ContentOneLine>

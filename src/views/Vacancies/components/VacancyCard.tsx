@@ -51,7 +51,7 @@ export const VacancyCard: React.FC<CompProps> = ({ details }) => {
   return (
     <Card variant="outlined" className={classes.root}>
       <CardContent className={classes.cardContent}>
-        <Grid container direction="row" justify="space-between">
+        <Grid container direction="row" justifyContent="space-between">
           <Box>
             <Typography variant="h6" gutterBottom>
               {details.title}

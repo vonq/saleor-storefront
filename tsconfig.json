@@ -9,6 +9,8 @@
     "target": "es6",
     "noUnusedLocals": true,
     "paths": {
+      "@saleor/sdk/lib/*": ["./src/@saleor/sdk/lib/*"],
+      "@saleor/sdk": ["./src/@saleor/sdk/lib/index.ts"],
       "@components/*": ["./src/@next/components/*"],
       "@components/atoms": ["./src/@next/components/atoms/index.ts"],
       "@components/molecules": ["./src/@next/components/molecules/index.ts"],

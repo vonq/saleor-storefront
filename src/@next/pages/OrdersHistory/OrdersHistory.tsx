@@ -1,4 +1,4 @@
-import { useAuth, useOrdersByUser } from "@saleor/sdk/";
+import { useAuth, useOrdersByUser } from "@saleor/sdk";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
