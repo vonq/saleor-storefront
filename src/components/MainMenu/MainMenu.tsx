@@ -47,8 +47,8 @@ export const MainMenu: React.FC<MainMenuProps> = ({
 }) => {
   const overlayContext = useContext(OverlayContext);
 
-  // const { user, signOut } = useAuth();
-  const { user, logout } = useAuth0();
+  const { user, signOut } = useAuth();
+  const { logout } = useAuth0();
   const { items } = useCart();
   const [activeDropdown, setActiveDropdown] = useState<string>(undefined);
 
@@ -58,7 +58,8 @@ export const MainMenu: React.FC<MainMenuProps> = ({
       items.reduce((prevVal, currVal) => prevVal + currVal.quantity, 0)) ||
     0;
 
-  const handleSignOut = () => {
+  const handleSignOut = async () => {
+    await signOut();
     logout({
       returnTo: window.location.origin,
     });
