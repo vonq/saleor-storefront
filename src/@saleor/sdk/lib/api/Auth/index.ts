@@ -234,6 +234,35 @@ export class AuthAPI extends ErrorListener {
   };
 
   /**
+   * Tries to authenticate user with token provided by external OAuth provider.
+   */
+  externalSignIn = async (): PromiseRunResponse<DataErrorAuthTypes> => {
+    const { data } = await this.jobsManager.run(
+      "auth",
+      "externalVerifyToken",
+      undefined
+    );
+
+    const {
+      data: userData,
+      dataError: userDataError,
+    } = await this.jobsManager.run("auth", "provideUser", undefined);
+
+    if (this.config.loadOnStart.checkout) {
+      await this.jobsManager.run("checkout", "provideCheckout", {
+        channel: this.config.channel,
+        isUserSignedIn: !!data?.user,
+      });
+    }
+
+    return {
+      data: userData,
+      dataError: userDataError,
+      pending: false,
+    };
+  };
+
+  /**
    * Sign out user by clearing cache, local storage and authentication token.
    */
   signOut = async (): PromiseRunResponse<DataErrorAuthTypes> => {

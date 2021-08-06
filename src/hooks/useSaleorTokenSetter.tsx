@@ -1,7 +1,7 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import { setAuthToken } from "@saleor/sdk";
+import { setAuthToken, useAuth } from "@saleor/sdk";
 import _get from "lodash/get";
-import React, { useEffect } from "react";
+import * as React from "react";
 
 // Once Auth0 authentication succeeds, copy token to Saleor SDK
 export default function useSaleorTokenSetter() {
@@ -11,8 +11,9 @@ export default function useSaleorTokenSetter() {
     getAccessTokenSilently,
     getIdTokenClaims,
   } = useAuth0();
+  const { authenticated, externalSignIn } = useAuth();
 
-  useEffect(() => {
+  React.useEffect(() => {
     const setTokenToSaleor = async () => {
       const organizationId = _get(user, "org_id", "");
       const accessToken = await getAccessTokenSilently({
@@ -20,10 +21,15 @@ export default function useSaleorTokenSetter() {
       });
       const idTokenClaims = await getIdTokenClaims();
       const idToken = _get(idTokenClaims, "__raw");
-      console.log("[Access Token]", accessToken);
-      console.log("[ID Token]", idToken);
-      console.log("[User Details]", user);
+      /* eslint-disable no-console */
+      console.log("[Auth0] access token:", accessToken);
+      console.log("[Auth0] id token:", idToken);
+      console.log("[Auth0] user:", user);
+      /* eslint-enable no-console */
       setAuthToken(idToken);
+      if (!authenticated) {
+        externalSignIn();
+      }
     };
 
     if (isAuthenticated) {
