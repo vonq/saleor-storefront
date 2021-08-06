@@ -145,7 +145,10 @@ App.getInitialProps = async (appContext: NextAppContext) => {
   const appProps = await NextApp.getInitialProps(appContext);
   let messages: LocaleMessages;
 
-  if (ssrMode) {
+  // if (ssrMode) {
+  // @TODO: for SPA page transition
+  // eslint-disable-next-line no-constant-condition
+  if (true) {
     if (!shopConfig) {
       shopConfig = await getShopConfig();
     }
