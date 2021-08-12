@@ -1,9 +1,9 @@
 import { Box, makeStyles, Theme, Typography } from "@material-ui/core";
-import React, { ReactNode } from "react";
+import React, { ReactElement, ReactNode } from "react";
 
 interface IProps {
-  title: string;
-  description?: string;
+  title: string | ReactElement;
+  description?: string | ReactElement;
   children: ReactNode;
 }
 

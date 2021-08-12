@@ -1,5 +1,5 @@
 import { Avatar, Box, makeStyles, Theme, Typography } from "@material-ui/core";
-import React from "react";
+import React, { ReactElement } from "react";
 
 const useStyles = makeStyles<Theme>(theme => ({
   root: {
@@ -19,7 +19,7 @@ const JobStepNumber = ({
   title,
 }: {
   number: number;
-  title: string;
+  title: string | ReactElement;
 }) => {
   const classes = useStyles();
   return (

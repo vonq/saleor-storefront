@@ -10,6 +10,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import React from "react";
+import { FormattedMessage } from "react-intl";
 
 import {
   currencies,
@@ -23,6 +24,7 @@ import {
 import JobAdStepContainer from "@pages/CreateJobAd/JobAdStepContainer";
 import JobPostingFieldContainer from "@pages/CreateJobAd/JobPostingFieldContainer";
 import JobStepNumber from "@pages/CreateJobAd/JobStepNumber";
+import { jobAdMessages } from "@temp/intl";
 
 const useStyles = makeStyles<Theme>(theme => ({
   multiItemRow: {
@@ -45,9 +47,14 @@ const JobCriteriaForm = ({
 
   return (
     <JobAdStepContainer>
-      <JobStepNumber number={2} title="Job criteria" />
+      <JobStepNumber
+        number={2}
+        title={<FormattedMessage {...jobAdMessages.jobCriteria} />}
+      />
       {/* Min Education Level */}
-      <JobPostingFieldContainer title="Minimum level of education">
+      <JobPostingFieldContainer
+        title={<FormattedMessage {...jobAdMessages.minEducationLevel} />}
+      >
         <FormControl
           variant="outlined"
           error={metaErrors?.vacancyEducationlevelid}
@@ -74,7 +81,9 @@ const JobCriteriaForm = ({
         </FormControl>
       </JobPostingFieldContainer>
       {/* Employment Type */}
-      <JobPostingFieldContainer title="Employment Type">
+      <JobPostingFieldContainer
+        title={<FormattedMessage {...jobAdMessages.employmentType} />}
+      >
         <FormControl variant="outlined" error={metaErrors?.vacancyType}>
           <Select
             value={metadataValues?.employmentType}
@@ -96,7 +105,9 @@ const JobCriteriaForm = ({
         </FormControl>
       </JobPostingFieldContainer>
       {/* Seniority */}
-      <JobPostingFieldContainer title="Seniority">
+      <JobPostingFieldContainer
+        title={<FormattedMessage {...jobAdMessages.seniority} />}
+      >
         <FormControl
           variant="outlined"
           error={metaErrors?.vacancyTaxonomySeniorityid}
@@ -123,7 +134,9 @@ const JobCriteriaForm = ({
         </FormControl>
       </JobPostingFieldContainer>
       {/* Hours per week */}
-      <JobPostingFieldContainer title="Hours per week">
+      <JobPostingFieldContainer
+        title={<FormattedMessage {...jobAdMessages.hoursPerWeek} />}
+      >
         <Box className={classes.multiItemRow}>
           {/* Min Hours */}
           <Typography
@@ -131,7 +144,7 @@ const JobCriteriaForm = ({
             component="label"
             className={classes.label}
           >
-            Min.
+            <FormattedMessage {...jobAdMessages.minHours} />
           </Typography>
           <TextField
             variant="outlined"
@@ -148,7 +161,7 @@ const JobCriteriaForm = ({
             component="label"
             className={classes.label}
           >
-            Max.
+            <FormattedMessage {...jobAdMessages.maxHours} />
           </Typography>
           <TextField
             variant="outlined"
@@ -163,8 +176,8 @@ const JobCriteriaForm = ({
       </JobPostingFieldContainer>
       {/* Salary */}
       <JobPostingFieldContainer
-        title="Salary (optional)"
-        description="Please note: don't use a decimal separator e.g. 3500 instead of 3.500."
+        title={<FormattedMessage {...jobAdMessages.salary} />}
+        description={<FormattedMessage {...jobAdMessages.salaryDescription} />}
       >
         <Box className={classes.multiItemRow}>
           {/* Salary From */}
@@ -173,7 +186,7 @@ const JobCriteriaForm = ({
             component="label"
             className={classes.label}
           >
-            From
+            <FormattedMessage {...jobAdMessages.salaryFrom} />
           </Typography>
           <TextField
             variant="outlined"
@@ -190,7 +203,7 @@ const JobCriteriaForm = ({
             component="label"
             className={classes.label}
           >
-            To
+            <FormattedMessage {...jobAdMessages.salaryTo} />
           </Typography>
           <TextField
             variant="outlined"
@@ -207,7 +220,7 @@ const JobCriteriaForm = ({
             component="label"
             className={classes.label}
           >
-            In the currency
+            <FormattedMessage {...jobAdMessages.currency} />
           </Typography>
           <FormControl
             variant="outlined"
@@ -235,7 +248,7 @@ const JobCriteriaForm = ({
           </FormControl>
           {/* Period */}
           <Typography variant="body2" component="label">
-            Period
+            <FormattedMessage {...jobAdMessages.period} />
           </Typography>
           <FormControl
             variant="outlined"

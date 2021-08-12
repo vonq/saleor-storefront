@@ -8,11 +8,13 @@ import {
 } from "@material-ui/core";
 import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
 import React from "react";
+import { FormattedMessage } from "react-intl";
 
 import { IndustryOptions } from "@components/organisms/SetTargetGroup/constants";
 import JobAdStepContainer from "@pages/CreateJobAd/JobAdStepContainer";
 import JobPostingFieldContainer from "@pages/CreateJobAd/JobPostingFieldContainer";
 import JobStepNumber from "@pages/CreateJobAd/JobStepNumber";
+import { jobAdMessages } from "@temp/intl";
 
 export interface JobCategory {
   id: number;
@@ -33,11 +35,16 @@ const JobPostingDetailsForm = ({
 }) => {
   return (
     <JobAdStepContainer>
-      <JobStepNumber number={1} title="Job posting details" />
+      <JobStepNumber
+        number={1}
+        title={<FormattedMessage {...jobAdMessages.jobPostingDetails} />}
+      />
       {/* Job Title */}
       <JobPostingFieldContainer
-        title="Job title"
-        description="This is the job title which will be shown to your candidates:"
+        title={<FormattedMessage {...jobAdMessages.jobTitle} />}
+        description={
+          <FormattedMessage {...jobAdMessages.jobTitleDescription} />
+        }
       >
         <TextField
           variant="outlined"
@@ -58,7 +65,9 @@ const JobPostingDetailsForm = ({
         />
       </JobPostingFieldContainer>
       {/* Job Function */}
-      <JobPostingFieldContainer title="Job Function">
+      <JobPostingFieldContainer
+        title={<FormattedMessage {...jobAdMessages.jobFunction} />}
+      >
         <FormControl
           variant="outlined"
           error={metaErrors?.vacancyTaxonomyJobcategoryid}
@@ -86,8 +95,10 @@ const JobPostingDetailsForm = ({
       </JobPostingFieldContainer>
       {/* Job Industry */}
       <JobPostingFieldContainer
-        title="Industry"
-        description="Please fill in the industry of the job."
+        title={<FormattedMessage {...jobAdMessages.jobIndustry} />}
+        description={
+          <FormattedMessage {...jobAdMessages.jobIndustryDescription} />
+        }
       >
         <FormControl
           variant="outlined"
@@ -116,8 +127,10 @@ const JobPostingDetailsForm = ({
       </JobPostingFieldContainer>
       {/* Job Description */}
       <JobPostingFieldContainer
-        title="Job description"
-        description="Choose how you want to fill in your job description."
+        title={<FormattedMessage {...jobAdMessages.jobDescription} />}
+        description={
+          <FormattedMessage {...jobAdMessages.jobDescriptionSummary} />
+        }
       >
         <FormControl variant="outlined">
           <TextField
@@ -134,8 +147,10 @@ const JobPostingDetailsForm = ({
       </JobPostingFieldContainer>
       {/* Link to job detail page */}
       <JobPostingFieldContainer
-        title="Link to job detail page"
-        description="Fill in the URL that will be used as the landing page for your job ads."
+        title={<FormattedMessage {...jobAdMessages.jobDetailPageUrl} />}
+        description={
+          <FormattedMessage {...jobAdMessages.jobDetailPageUrlDescription} />
+        }
       >
         <TextField
           variant="outlined"
@@ -150,8 +165,12 @@ const JobPostingDetailsForm = ({
       </JobPostingFieldContainer>
       {/* Link to application page */}
       <JobPostingFieldContainer
-        title="Link to application page"
-        description="Fill in the URL of the page where a candidate fills in the application. Depending on your application process, this can also be the job detail page."
+        title={<FormattedMessage {...jobAdMessages.jobApplicationPageUrl} />}
+        description={
+          <FormattedMessage
+            {...jobAdMessages.jobApplicationPageUrlDescription}
+          />
+        }
       >
         <TextField
           variant="outlined"

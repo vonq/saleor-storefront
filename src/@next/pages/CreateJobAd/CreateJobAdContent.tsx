@@ -7,11 +7,13 @@ import {
   Typography,
 } from "@material-ui/core";
 import React from "react";
+import { FormattedMessage } from "react-intl";
 
 import JobCriteriaForm from "@pages/CreateJobAd/JobCriteriaForm";
 import JobPostingDetailsForm, {
   JobCategory,
 } from "@pages/CreateJobAd/JobPostingDetailsForm";
+import { jobAdMessages } from "@temp/intl";
 
 const useStyles = makeStyles<Theme>(theme => ({
   root: {
@@ -43,11 +45,10 @@ const CreateJobAdContent = ({
         <Grid item xs={12}>
           <Box className={classes.header}>
             <Typography variant="h4" component="h1">
-              Create your job ad(s)
+              <FormattedMessage {...jobAdMessages.createJobAd} />
             </Typography>
             <Typography variant="body1" component="h6">
-              Fill in the needed information for your job posting(s). Some
-              fields are required by job boards to be able to post on it.
+              <FormattedMessage {...jobAdMessages.createJobAdDescription} />
             </Typography>
           </Box>
           <JobPostingDetailsForm

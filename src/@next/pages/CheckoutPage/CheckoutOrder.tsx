@@ -1,7 +1,9 @@
 import { useCart } from "@saleor/sdk";
 import React from "react";
+import { FormattedMessage } from "react-intl";
 
 import { Loader } from "@components/atoms";
+import { jobAdMessages } from "@temp/intl";
 
 const CheckoutOrder = () => {
   const { loaded: cartLoaded, items } = useCart();
@@ -11,7 +13,11 @@ const CheckoutOrder = () => {
   }
 
   if (!items || !items.length) {
-    return <div>No products in the basket</div>;
+    return (
+      <div>
+        <FormattedMessage {...jobAdMessages.noBasketProducts} />
+      </div>
+    );
   }
 };
 

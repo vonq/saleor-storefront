@@ -315,7 +315,6 @@ const CheckoutPage: React.FC<NextPage> = () => {
       handlePaymentConfirm();
     }
   }, [pathname, query, submitInProgress, checkout]);
-  // console.log(activeStep.step);
 
   useEffect(() => {
     const createCheckout = async () => {
