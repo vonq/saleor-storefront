@@ -27,7 +27,7 @@ const useStyles = makeStyles<Theme>(theme => ({
     width: "min(500px, 100vw)",
   },
   content: {
-    padding: theme.spacing(6, 2, 2, 2),
+    padding: theme.spacing(0, 2, 2, 2),
     overflowX: "hidden",
     overflowY: "auto",
   },
@@ -43,12 +43,7 @@ const useStyles = makeStyles<Theme>(theme => ({
     },
   },
   close: {
-    position: "absolute",
     textAlign: "end",
-    top: 0,
-    width: "100%",
-    background:
-      "linear-gradient(180deg, white 0%, white 75%, transparent 100%)",
   },
   deliveryTime: {
     display: "flex",
