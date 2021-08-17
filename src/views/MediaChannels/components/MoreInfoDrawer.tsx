@@ -19,6 +19,7 @@ import InfoIcon from "@material-ui/icons/Info";
 import * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { isValidHttpUrl } from "@temp/core/utils";
 import { messages } from "@temp/views/MediaChannels/messages";
 
 const useStyles = makeStyles<Theme>(theme => ({
@@ -89,18 +90,6 @@ interface MoreInfoDrawerProps {
   product: any;
   open: boolean;
   onClose: () => void;
-}
-
-function isValidHttpUrl(string) {
-  let url;
-
-  try {
-    url = new URL(string);
-  } catch (_) {
-    return false;
-  }
-
-  return url.protocol === "http:" || url.protocol === "https:";
 }
 
 export const MoreInfoDrawer: React.FC<MoreInfoDrawerProps> = ({
@@ -235,9 +224,9 @@ export const MoreInfoDrawer: React.FC<MoreInfoDrawerProps> = ({
               </Tooltip>
             </Typography>
             <Typography className={classes.paragraph}>
-              {cross_postings.filter(isValidHttpUrl).map((url, i) => (
+              {cross_postings.map((url, i) => (
                 <span key={url}>
-                  {isValidHttpUrl ? (
+                  {isValidHttpUrl(url) ? (
                     <Link
                       href={url}
                       target="_blank"
