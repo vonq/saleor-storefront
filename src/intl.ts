@@ -281,3 +281,95 @@ export function translateOrderStatus(status: string, intl: IntlShape): string {
       return status;
   }
 }
+
+export const jobAdMessages = defineMessages({
+  noBasketProducts: {
+    defaultMessage: "No products in the basket",
+  },
+  createJobAd: {
+    defaultMessage: "Create your job ad(s)",
+  },
+  createJobAdDescription: {
+    defaultMessage:
+      "Fill in the needed information for your job posting(s). Some fields are required by job boards to be able to post on it.",
+  },
+  jobTitle: {
+    defaultMessage: "Job title",
+  },
+  jobTitleDescription: {
+    defaultMessage:
+      "This is the job title which will be shown to your candidates:",
+  },
+  jobIndustry: {
+    defaultMessage: "Industry",
+  },
+  jobIndustryDescription: {
+    defaultMessage: "Please fill in the industry of the job.",
+  },
+  jobDescription: {
+    defaultMessage: "Job description",
+  },
+  jobDescriptionSummary: {
+    defaultMessage: "Choose how you want to fill in your job description.",
+  },
+  jobDetailPageUrl: {
+    defaultMessage: "Link to job detail page",
+  },
+  jobDetailPageUrlDescription: {
+    defaultMessage:
+      "Fill in the URL that will be used as the landing page for your job ads.",
+  },
+  jobApplicationPageUrl: {
+    defaultMessage: "Link to application page",
+  },
+  jobApplicationPageUrlDescription: {
+    defaultMessage:
+      "Fill in the URL of the page where a candidate fills in the application. Depending on your application process, this can also be the job detail page.",
+  },
+  jobCriteria: {
+    defaultMessage: "Job criteria",
+  },
+  minEducationLevel: {
+    defaultMessage: "Minimum level of education",
+  },
+  employmentType: {
+    defaultMessage: "Employment Type",
+  },
+  seniority: {
+    defaultMessage: "Seniority",
+  },
+  hoursPerWeek: {
+    defaultMessage: "Hours per week",
+  },
+  minHours: {
+    defaultMessage: "Min.",
+  },
+  maxHours: {
+    defaultMessage: "Max.",
+  },
+  salary: {
+    defaultMessage: "Salary (optional)",
+  },
+  salaryDescription: {
+    defaultMessage:
+      "Please note: don't use a decimal separator e.g. 3500 instead of 3.500.",
+  },
+  salaryFrom: {
+    defaultMessage: "From",
+  },
+  salaryTo: {
+    defaultMessage: "To",
+  },
+  currency: {
+    defaultMessage: "In the currency",
+  },
+  period: {
+    defaultMessage: "Period",
+  },
+  jobPostingDetails: {
+    defaultMessage: "Job posting details",
+  },
+  jobFunction: {
+    defaultMessage: "Job Function",
+  },
+});

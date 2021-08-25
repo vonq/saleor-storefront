@@ -17,10 +17,13 @@ export const paths = {
   product: `${baseUrl}product/${slugUrl}`,
   search: `${baseUrl}search`,
   wishlist: `${baseUrl}wishlist`,
+  errorPage: `${baseUrl}/404`,
   /**
    * Checkout
    */
   checkout: checkoutBaseUrl,
+  checkoutJobAd: `${checkoutBaseUrl}create-job-ad/`,
+  checkoutOrder: `${checkoutBaseUrl}checkout/`,
   checkoutAddress: `${checkoutBaseUrl}address`,
   checkoutPayment: `${checkoutBaseUrl}payment`,
   checkoutPaymentConfirm: `${checkoutBaseUrl}payment-confirm`,

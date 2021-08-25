@@ -28,7 +28,7 @@ enum MetadataErrorCode {
   REQUIRED,
 }
 
-type MetadataError = {
+export type MetadataError = {
   field: String;
   message: String;
   code: MetadataErrorCode;
@@ -49,6 +49,8 @@ export interface MetadataUpdateVariables {
   id: string;
   metadata: MetadataInput[];
 }
+
+export { updateMetadata as updateMetadataQuery };
 
 export const TypedMetadataUpdateMutation = TypedMutation<
   MetadataUpdate,

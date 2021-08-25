@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 import { useEffect, useState } from "react";
 
 import { useLocalStorage } from "./useLocalStorage";
@@ -10,7 +8,7 @@ export const useCheckoutMetadata = () => {
     setValue: setCheckoutData,
   } = useLocalStorage("data_checkout");
 
-  const [metadata, setStoredMetadata] = useState(checkoutData?.metadata);
+  const [metadata, setStoredMetadata] = useState<any>(checkoutData?.metadata);
 
   useEffect(() => {
     setCheckoutData({
@@ -39,5 +37,10 @@ export const useCheckoutMetadata = () => {
     });
   };
 
-  return { metadata, setMetadata, appendMetadata, setMetadataField };
+  return {
+    metadata,
+    setMetadata,
+    appendMetadata,
+    setMetadataField,
+  };
 };
