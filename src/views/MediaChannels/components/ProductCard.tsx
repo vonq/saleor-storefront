@@ -30,7 +30,7 @@ const useStyles = makeStyles<Theme>(theme => ({
   },
   duration: {
     display: "flex",
-    alignContent: "center",
+    alignItems: "center",
     fontSize: "1.25rem",
     "& > svg": {
       marginRight: "0.25rem",
@@ -38,7 +38,7 @@ const useStyles = makeStyles<Theme>(theme => ({
   },
   price: {
     display: "flex",
-    alignContent: "center",
+    alignItems: "center",
     fontSize: "1.25rem",
     justifyContent: "flex-end",
     "& > svg": {

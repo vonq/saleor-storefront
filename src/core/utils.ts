@@ -195,3 +195,15 @@ export const removeEmptySpaces = (text: string) => text.replace(/\s+/g, "");
  */
 export const generatePath = (curentPathname: string, url: UrlObject) =>
   resolveHref(curentPathname, url, true)[1];
+
+export function isValidHttpUrl(string: string) {
+  let url;
+
+  try {
+    url = new URL(string);
+  } catch (_) {
+    return false;
+  }
+
+  return url.protocol === "http:" || url.protocol === "https:";
+}
